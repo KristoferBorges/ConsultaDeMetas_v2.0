@@ -1,4 +1,3 @@
-import datetime
 import platform
 from modulo import dateVerification
 from kivy.app import App
