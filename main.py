@@ -1,5 +1,5 @@
 import platform
-from modulo import dateVerification
+from modulo import dateVerification, abatimento
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
@@ -14,6 +14,9 @@ if platform.system() == "Windows":
     sistema_windows = True
 else:
     sistema_windows = False
+
+# Variável para testar inserções de dados
+teste = False
 
 
 class MenuPrincipal(Screen):
@@ -66,17 +69,75 @@ class RegistrosRDMarcas(Screen):
         """
         try:
             data = self.ids.data_input.text
-            meta = self.ids.meta_input.text
-            vendas = self.ids.venda_input.text
+            metaDia = self.ids.meta_input.text
+            vendaDia = self.ids.venda_input.text
 
-            meta = float(meta)
-            vendas = float(vendas)
+            metaDia = float(metaDia)
+            vendaDia = float(vendaDia)
             data = dateVerification(data)
-            if vendas >= meta:
-                result = "META ATINGIDA"
+
+            metaAcRDMARCAS = 0
+            vendaAcRDMARCAS = 0
+            porcentagemRDMARCAS = 0
+
+            # Cálculo de Metas acumuladas
+            with open("storage/metaAcumuladaRDMARCAS.txt", "a") as metaAcumuladaRDMARCAS:
+                metaAcumuladaRDMARCAS.write(f"{metaDia}\n")
+            with open("storage/metaAcumuladaRDMARCAS.txt", "r") as metaAcumuladaRDMARCAS:
+                linhas = metaAcumuladaRDMARCAS.readlines()
+
+            for linha in linhas:
+                metaAcRDMARCAS = metaAcRDMARCAS + float(linha.strip())
+
+            # Cálculo de Vendas acumuladas
+            with open("storage/vendaAcumuladaRDMARCAS.txt", "a") as vendaAcumuladaRDMARCAS:
+                vendaAcumuladaRDMARCAS.write(f"{vendaDia}\n")
+            with open("storage/vendaAcumuladaRDMARCAS.txt", "r") as vendaAcumuladaRDMARCAS:
+                linhas2 = vendaAcumuladaRDMARCAS.readlines()
+
+            for linha in linhas2:
+                vendaAcRDMARCAS = vendaAcRDMARCAS + float(linha.strip())
+
+            # Cálculo de porcentagem
+            if vendaAcRDMARCAS < metaAcRDMARCAS:
+                sobrasRD = (metaAcRDMARCAS - vendaAcRDMARCAS)
+            elif metaAcRDMARCAS < vendaAcRDMARCAS:
+                sobrasRD = (vendaAcRDMARCAS - metaAcRDMARCAS)
             else:
-                result = "META NÃO ATINGIDA"
-            return print(f"DATA: {data}\nMETA: {meta}\nVENDAS: {vendas}\nRESULTADO: {result}")
+                sobrasRD = 0
+            if vendaAcRDMARCAS != 0 and metaAcRDMARCAS != 0:
+                porcentagemRDMARCAS = (vendaAcRDMARCAS / metaAcRDMARCAS) * 100
+
+            # Análise alcance de metas
+            devedor = abatimento(metaAcRDMARCAS, vendaAcRDMARCAS)
+            # Inserção de dados
+            with open("storage/listaRDMARCAS.txt", "a") as listaRDMARCAS:
+                listaRDMARCAS.write(f"{data}|R${metaDia:.2f}|R${metaAcRDMARCAS:.2f}|R${vendaDia:.2f}|"
+                                    f"R${vendaAcRDMARCAS:.2f}|"
+                                    f"{devedor}R${sobrasRD:.2f}|"
+                                    f"{porcentagemRDMARCAS:.2f}%\n")
+
+            # Limpa os dados anteriormente informados (Somente teste = False)
+            if not teste:
+                self.ids.data_input.text = ""
+                self.ids.meta_input.text = ""
+                self.ids.venda_input.text = ""
+
+                # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
+
+                # Popup de resumo
+                content = BoxLayout(orientation='vertical', padding=10)
+                label = Label(text=f'Resumo(RD-Marcas)\n\nData: {data}\n'
+                                   f'Meta: {metaAcRDMARCAS}\nVendas: {vendaAcRDMARCAS}\n')
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+                content.add_widget(label)
+                content.add_widget(close_button)
+
+                popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None), size=(360, 250))
+                close_button.bind(on_release=popup.dismiss)
+                popup.open()
+
 
         except Exception as error:
             print(error)
