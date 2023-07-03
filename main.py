@@ -42,15 +42,13 @@ class RegistrosRDMarcas(Screen):
     """
 
     def avisoInput(self):
-        data_input = self.ids.data_input.text
         meta_input = self.ids.meta_input.text
         venda_input = self.ids.venda_input.text
 
-        data_input = str(data_input)
         meta_input = str(meta_input)
         venda_input = str(venda_input)
 
-        if data_input == '' or meta_input == '' or venda_input == '':
+        if meta_input == '' or venda_input == '':
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
             close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
@@ -67,6 +65,7 @@ class RegistrosRDMarcas(Screen):
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
         :return: Retorna os dados devidamente formatados.
         """
+        global situacao
         try:
             data = self.ids.data_input.text
             metaDia = self.ids.meta_input.text
@@ -124,20 +123,25 @@ class RegistrosRDMarcas(Screen):
                 self.ids.venda_input.text = ""
 
                 # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
+                if devedor == '-':
+                    situacao = "Metas não atingidas!"
+                elif devedor == '':
+                    situacao = "Metas atingitas!"
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
-                label = Label(text=f'Resumo(RD-Marcas)\n\nData: {data}\n'
-                                   f'Meta: {metaAcRDMARCAS}\nVendas: {vendaAcRDMARCAS}\n')
-                close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+                label = Label(text=f'Resumo Acumulado (RD-Marcas)\n\nData: {data}\n'
+                                   f'Meta: R$ {metaAcRDMARCAS}\nVendas: R$ {vendaAcRDMARCAS}\n\n'
+                                   f'Sobras: {devedor}R$ {sobrasRD}\nSituação: {situacao}\n')
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
                 content.add_widget(close_button)
 
-                popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None), size=(360, 250))
+                popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None),
+                              size=(360, 280))
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
-
 
         except Exception as error:
             print(error)
