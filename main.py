@@ -59,12 +59,33 @@ class RegistrosRDMarcas(Screen):
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
+    def pega_input_rdmarcas(self):
+        """
+        --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
+        :return: Retorna os dados devidamente formatados.
+        """
+        try:
+            data = self.ids.data_input.text
+            meta = self.ids.meta_input.text
+            vendas = self.ids.venda_input.text
+
+            meta = float(meta)
+            vendas = float(vendas)
+            data = dateVerification(data)
+            if vendas >= meta:
+                result = "META ATINGIDA"
+            else:
+                result = "META NÃO ATINGIDA"
+            return print(f"DATA: {data}\nMETA: {meta}\nVENDAS: {vendas}\nRESULTADO: {result}")
+
+        except Exception as error:
+            print(error)
+
 
 class RegistrosPerfumaria(Screen):
     """
     Opção do menu principal após clicar na opção de registros (Perfumaria).
     """
-
     def avisoInput(self):
         data_input = self.ids.data_input.text
         meta_input = self.ids.data_input.text
@@ -158,28 +179,6 @@ class Tela(App):
         self.title = 'ConsultaDeMetas_v2.0'
         adm = ScreenManager()
         return adm
-
-    @staticmethod
-    def pega_input_rdmarcas(data, meta, vendas):
-        """
-        --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
-        :param data: Valor de Data inserida na interface
-        :param meta: Valor de Meta inserida na interface
-        :param vendas: Valor de Venda inserida na interface
-        :return: Retorna os dados devidamente formatados.
-        """
-        try:
-            meta = float(meta)
-            vendas = float(vendas)
-            data = dateVerification(data)
-            if vendas >= meta:
-                result = "META ATINGIDA"
-            else:
-                result = "META NÃO ATINGIDA"
-            return print(f"DATA: {data}\nMETA: {meta}\nVENDAS: {vendas}\nRESULTADO: {result}")
-
-        except Exception as error:
-            print(error)
 
 
 if __name__ == '__main__':
