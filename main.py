@@ -56,7 +56,7 @@ class RegistrosRDMarcas(Screen):
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(400, 200))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -167,7 +167,7 @@ class RegistrosPerfumaria(Screen):
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(400, 200))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -280,7 +280,7 @@ class RegistrosDermo(Screen):
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(400, 200))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
