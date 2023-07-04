@@ -130,9 +130,9 @@ class RegistrosRDMarcas(Screen):
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
-                label = Label(text=f'Resumo Acumulado (RD-Marcas)\n\nData: {data}\n'
-                                   f'Meta: R$ {metaAcRDMARCAS}\nVendas: R$ {vendaAcRDMARCAS}\n\n'
-                                   f'Sobras: {devedor}R$ {sobrasRD}\nSituação: {situacaoRD}\n')
+                label = Label(text=f'Resumo Acumulado (RD-Marcas)\n\n'
+                                   f'Meta: R$ {metaAcRDMARCAS:.2f}\nVendas: R$ {vendaAcRDMARCAS:.2f}\n'
+                                   f'Sobras: {devedor}R$ {sobrasRD:.2f}\nSituação: {situacaoRD}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
@@ -241,9 +241,9 @@ class RegistrosPerfumaria(Screen):
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
-                label = Label(text=f'Resumo Acumulado (PERFUMARIA)\n\nData: {data}\n'
-                                   f'Meta: R$ {metaAcPERFUMARIA}\nVendas: R$ {vendaAcPERFUMARIA}\n\n'
-                                   f'Sobras: {devedor}R$ {sobrasPERFUMARIA}\nSituação: {situacaoPERFUMARIA}\n')
+                label = Label(text=f'Resumo Acumulado (PERFUMARIA)\n\n'
+                                   f'Meta: R$ {metaAcPERFUMARIA:.2f}\nVendas: R$ {vendaAcPERFUMARIA:.2f}\n'
+                                   f'Sobras: {devedor}R$ {sobrasPERFUMARIA:.2f}\nSituação: {situacaoPERFUMARIA}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
@@ -368,9 +368,9 @@ class RegistrosDermo(Screen):
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
-                label = Label(text=f'Resumo Acumulado (DERMO)\n\nData: {data}\n'
-                                   f'Meta: R$ {metaAcDERMO}\nVendas: R$ {vendaAcDERMO}\nPeças: {pecaAc} Un\n'
-                                   f'Sobras: {devedor}R$ {sobrasDERMO}\nSituação: {situacaoDERMO}\n')
+                label = Label(text=f'Resumo Acumulado (DERMO)\n\n'
+                                   f'Meta: R$ {metaAcDERMO:.2f}\nVendas: R$ {vendaAcDERMO:.2f}\nPeças: {pecaAc} Un\n'
+                                   f'Sobras: {devedor}R$ {sobrasDERMO:.2f}\nSituação: {situacaoDERMO}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
