@@ -65,7 +65,7 @@ class RegistrosRDMarcas(Screen):
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
         :return: Retorna os dados devidamente formatados.
         """
-        global situacao
+        global situacaoRD
         try:
             data = self.ids.data_input.text
             metaDia = self.ids.meta_input.text
@@ -124,15 +124,15 @@ class RegistrosRDMarcas(Screen):
 
                 # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
                 if devedor == '-':
-                    situacao = "Metas não atingidas!"
+                    situacaoRD = "Metas não atingidas!"
                 elif devedor == '':
-                    situacao = "Metas atingitas!"
+                    situacaoRD = "Metas atingitas!"
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
                 label = Label(text=f'Resumo Acumulado (RD-Marcas)\n\nData: {data}\n'
                                    f'Meta: R$ {metaAcRDMARCAS}\nVendas: R$ {vendaAcRDMARCAS}\n\n'
-                                   f'Sobras: {devedor}R$ {sobrasRD}\nSituação: {situacao}\n')
+                                   f'Sobras: {devedor}R$ {sobrasRD}\nSituação: {situacaoRD}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
@@ -151,16 +151,15 @@ class RegistrosPerfumaria(Screen):
     """
     Opção do menu principal após clicar na opção de registros (Perfumaria).
     """
+
     def avisoInput(self):
-        data_input = self.ids.data_input.text
-        meta_input = self.ids.data_input.text
+        meta_input = self.ids.meta_input.text
         venda_input = self.ids.venda_input.text
 
-        data_input = str(data_input)
         meta_input = str(meta_input)
         venda_input = str(venda_input)
 
-        if data_input == '' or meta_input == '' or venda_input == '':
+        if meta_input == '' or venda_input == '':
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
             close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
@@ -171,24 +170,109 @@ class RegistrosPerfumaria(Screen):
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(400, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
+
+    def pega_input_perfumaria(self):
+        """
+        --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'PERFUMARIA'.
+        :return: Retorna os dados devidamente formatados.
+        """
+        global situacaoPERFUMARIA
+        try:
+            data = self.ids.data_input.text
+            metaDia = self.ids.meta_input.text
+            vendaDia = self.ids.venda_input.text
+
+            metaDia = float(metaDia)
+            vendaDia = float(vendaDia)
+            data = dateVerification(data)
+
+            metaAcPERFUMARIA = 0
+            vendaAcPERFUMARIA = 0
+            porcentagemPERFUMARIA = 0
+
+            # Cálculo de Metas acumuladas
+            with open("storage/metaAcumuladaPERFUMARIA.txt", "a") as metaAcumuladaPERFUMARIA:
+                metaAcumuladaPERFUMARIA.write(f"{metaDia}\n")
+            with open("storage/metaAcumuladaPERFUMARIA.txt", "r") as metaAcumuladaPERFUMARIA:
+                linhas = metaAcumuladaPERFUMARIA.readlines()
+
+            for linha in linhas:
+                metaAcPERFUMARIA = metaAcPERFUMARIA + float(linha.strip())
+
+            # Cálculo de Vendas acumuladas
+            with open("storage/vendaAcumuladaPERFUMARIA.txt", "a") as vendaAcumuladaPERFUMARIA:
+                vendaAcumuladaPERFUMARIA.write(f"{vendaDia}\n")
+            with open("storage/vendaAcumuladaPERFUMARIA.txt", "r") as vendaAcumuladaPERFUMARIA:
+                linhas2 = vendaAcumuladaPERFUMARIA.readlines()
+
+            for linha in linhas2:
+                vendaAcPERFUMARIA = vendaAcPERFUMARIA + float(linha.strip())
+
+            # Cálculo de porcentagem
+            if vendaAcPERFUMARIA < metaAcPERFUMARIA:
+                sobrasPERFUMARIA = (metaAcPERFUMARIA - vendaAcPERFUMARIA)
+            elif metaAcPERFUMARIA < vendaAcPERFUMARIA:
+                sobrasPERFUMARIA = (vendaAcPERFUMARIA - metaAcPERFUMARIA)
+            else:
+                sobrasPERFUMARIA = 0
+            if vendaAcPERFUMARIA != 0 and metaAcPERFUMARIA != 0:
+                porcentagemPERFUMARIA = (vendaAcPERFUMARIA / metaAcPERFUMARIA) * 100
+
+            # Análise alcance de metas
+            devedor = abatimento(metaAcPERFUMARIA, vendaAcPERFUMARIA)
+            # Inserção de dados
+            with open("storage/listaPERFUMARIA.txt", "a") as listaPERFUMARIA:
+                listaPERFUMARIA.write(f"{data}|R${metaDia:.2f}|R${metaAcPERFUMARIA:.2f}|R${vendaDia:.2f}|"
+                                      f"R${vendaAcPERFUMARIA:.2f}|"
+                                      f"{devedor}R${sobrasPERFUMARIA:.2f}|"
+                                      f"{porcentagemPERFUMARIA:.2f}%\n")
+
+            # Limpa os dados anteriormente informados (Somente teste = False)
+            if not teste:
+                self.ids.data_input.text = ""
+                self.ids.meta_input.text = ""
+                self.ids.venda_input.text = ""
+
+                # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
+                if devedor == '-':
+                    situacaoPERFUMARIA = "Metas não atingidas!"
+                elif devedor == '':
+                    situacaoPERFUMARIA = "Metas atingitas!"
+
+                # Popup de resumo
+                content = BoxLayout(orientation='vertical', padding=10)
+                label = Label(text=f'Resumo Acumulado (PERFUMARIA)\n\nData: {data}\n'
+                                   f'Meta: R$ {metaAcPERFUMARIA}\nVendas: R$ {vendaAcPERFUMARIA}\n\n'
+                                   f'Sobras: {devedor}R$ {sobrasPERFUMARIA}\nSituação: {situacaoPERFUMARIA}\n')
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
+
+                content.add_widget(label)
+                content.add_widget(close_button)
+
+                popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None),
+                              size=(360, 280))
+                close_button.bind(on_release=popup.dismiss)
+                popup.open()
+
+        except Exception as error:
+            print(error)
 
 
 class RegistrosDermo(Screen):
     """
     Opção do menu principal após clicar na opção de registros (Dermo).
     """
+
     def avisoInput(self):
-        data_input = self.ids.data_input.text
-        meta_input = self.ids.data_input.text
+        meta_input = self.ids.meta_input.text
         venda_input = self.ids.venda_input.text
         peca_input = self.ids.peca_input.text
 
-        data_input = str(data_input)
         meta_input = str(meta_input)
         venda_input = str(venda_input)
         peca_input = str(peca_input)
 
-        if data_input == '' or meta_input == '' or venda_input == '' or peca_input == '':
+        if meta_input == '' or venda_input == '' or peca_input == '':
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
             close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
@@ -199,6 +283,106 @@ class RegistrosDermo(Screen):
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(400, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
+
+    def pega_input_dermo(self):
+        """
+        --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'DERMO'.
+        :return: Retorna os dados devidamente formatados.
+        """
+        global situacaoDERMO
+        try:
+            data = self.ids.data_input.text
+            metaDia = self.ids.meta_input.text
+            vendaDia = self.ids.venda_input.text
+            pecaDia = self.ids.peca_input.text
+
+            metaDia = float(metaDia)
+            vendaDia = float(vendaDia)
+            data = dateVerification(data)
+            pecaDia = int(pecaDia)
+
+            metaAcDERMO = 0
+            vendaAcDERMO = 0
+            pecaAc = 0
+            porcentagemDERMO = 0
+
+            # Cálculo de Metas acumuladas
+            with open("storage/metaAcumuladaDERMO.txt", "a") as metaAcumuladaDERMO:
+                metaAcumuladaDERMO.write(f"{metaDia}\n")
+            with open("storage/metaAcumuladaDERMO.txt", "r") as metaAcumuladaDERMO:
+                linhas = metaAcumuladaDERMO.readlines()
+
+            for linha in linhas:
+                metaAcDERMO = metaAcDERMO + float(linha.strip())
+
+            # Cálculo de Vendas acumuladas
+            with open("storage/vendaAcumuladaDERMO.txt", "a") as vendaAcumuladaDERMO:
+                vendaAcumuladaDERMO.write(f"{vendaDia}\n")
+            with open("storage/vendaAcumuladaDERMO.txt", "r") as vendaAcumuladaDERMO:
+                linhas2 = vendaAcumuladaDERMO.readlines()
+
+            for linha in linhas2:
+                vendaAcDERMO = vendaAcDERMO + float(linha.strip())
+
+            # Cálculo de Peças acumuladas
+            with open("storage/pecaAcumuladaDERMO.txt", "a") as pecaAcumuladaDERMO:
+                pecaAcumuladaDERMO.write(f'{pecaDia}\n')
+            with open("storage/pecaAcumuladaDERMO.txt", "r") as pecaAcumuladaDERMO:
+                linhasPeca = pecaAcumuladaDERMO.readlines()
+
+            for linha in linhasPeca:
+                pecaAc = pecaAc + int(linha.strip())
+
+            # Cálculo de porcentagem
+            if vendaAcDERMO < metaAcDERMO:
+                sobrasDERMO = (metaAcDERMO - vendaAcDERMO)
+            elif metaAcDERMO < vendaAcDERMO:
+                sobrasDERMO = (vendaAcDERMO - metaAcDERMO)
+            else:
+                sobrasDERMO = 0
+            if vendaAcDERMO != 0 and metaAcDERMO != 0:
+                porcentagemDERMO = (vendaAcDERMO / metaAcDERMO) * 100
+
+            # Análise alcance de metas
+            devedor = abatimento(metaAcDERMO, vendaAcDERMO)
+            # Inserção de dados
+            with open("storage/listaDERMO.txt", "a") as listaDERMO:
+                listaDERMO.write(f"{data} | R${metaDia:.2f} | R${metaAcDERMO:.2f} | R${vendaDia:.2f} |"
+                                 f" R${vendaAcDERMO:.2f} | "
+                                 f" {pecaAc}Un | "
+                                 f" {devedor}R${sobrasDERMO:.2f} | "
+                                 f"{porcentagemDERMO:.2f}%\n")
+
+            # Limpa os dados anteriormente informados (Somente teste = False)
+            if not teste:
+                self.ids.data_input.text = ""
+                self.ids.meta_input.text = ""
+                self.ids.venda_input.text = ""
+                self.ids.peca_input.text = ""
+
+                # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
+                if devedor == '-':
+                    situacaoDERMO = "Metas não atingidas!"
+                elif devedor == '':
+                    situacaoDERMO = "Metas atingitas!"
+
+                # Popup de resumo
+                content = BoxLayout(orientation='vertical', padding=10)
+                label = Label(text=f'Resumo Acumulado (DERMO)\n\nData: {data}\n'
+                                   f'Meta: R$ {metaAcDERMO}\nVendas: R$ {vendaAcDERMO}\nPeças: {pecaAc} Un\n'
+                                   f'Sobras: {devedor}R$ {sobrasDERMO}\nSituação: {situacaoDERMO}\n')
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
+
+                content.add_widget(label)
+                content.add_widget(close_button)
+
+                popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None),
+                              size=(360, 280))
+                close_button.bind(on_release=popup.dismiss)
+                popup.open()
+
+        except Exception as error:
+            print(error)
 
 
 class LimparDados(Screen):
