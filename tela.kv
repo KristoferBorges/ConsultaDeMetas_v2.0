@@ -415,32 +415,41 @@
             size_hint: (0.5, 0.5)
 
         Button:
-            text: 'RD MARCAS'
+            text: 'RD MARCAS' # Esse nome é utilizado para excluir as listas (Não alterar)
             font_size: 26
             color: 1, 1, 0, 1
+            on_release:
+                root.apagarLista_popup(self)
 
         Button:
-            text: 'PERFUMARIA'
+            text: 'PERFUMARIA' # Esse nome é utilizado para excluir as listas (Não alterar)
             font_size: 26
             color: 1, 1, 0, 1
+            on_release:
+                root.apagarLista_popup(self)
 
         Button:
-            text: 'DERMO'
+            text: 'DERMO' # Esse nome é utilizado para excluir as listas (Não alterar)
             font_size: 26
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
+            on_release:
+                root.apagarLista_popup(self)
 
         Button:
-            text: 'TODAS AS LISTAS'
+            text: 'TODAS AS LISTAS' # Esse nome é utilizado para excluir as listas (Não alterar)
             font_size: 26
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
+            on_release:
+                root.apagarLista_popup(self)
 
         Button:
             text: 'VOLTAR'
             font_size: 26
             on_release:
                 root.manager.current = 'menu_1'
+
 
 # Fim das opções do Menu principal  (LIMPARDADOS)
 

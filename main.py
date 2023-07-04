@@ -391,6 +391,104 @@ class LimparDados(Screen):
     lista que deseja limpar os dados,
     poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
     """
+
+    def apagarLista_popup(self, button):
+        lista = button.text
+
+        content = BoxLayout(orientation='vertical', padding=10)
+        label = Label(text=f'Você está prestes a apagar a lista "{lista}"')
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+        content.add_widget(label)
+        content.add_widget(close_button)
+        content.add_widget(confirm_button)
+
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+
+        close_button.bind(on_release=popup.dismiss)
+
+        confirm_button.bind(on_release=lambda btn: self.apagarLista(lista))
+        confirm_button.bind(on_release=popup.dismiss)
+        popup.open()
+
+    def apagarLista(self, lista):
+        if lista == "RD MARCAS":
+            # Exclusão RD MARCAS
+            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
+                listaRDMARCAS.write("")
+            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
+                metaAcumuladaRDMARCAS.write("")
+            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
+                vendaAcumuladaRDMARCAS.write("")
+
+        elif lista == "PERFUMARIA":
+            # Exclusão Perfumaria
+            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
+                listaPERFUMARIA.write("")
+            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
+                metaAcumuladaPERFUMARIA.write("")
+            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
+                vendaAcumuladaPERFUMARIA.write("")
+
+        elif lista == "DERMO":
+            # Exclusão Dermo
+            with open("storage/listaDERMO.txt", "w") as listaDERMO:
+                listaDERMO.write("")
+            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
+                metaAcumuladaDERMO.write("")
+            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
+                vendaAcumuladaDERMO.write("")
+            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
+                pecaAcumuladaDERMO.write("")
+
+        elif lista == "TODAS AS LISTAS":
+            # Exclusão TODAS AS LISTAS
+            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
+                listaRDMARCAS.write("")
+            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
+                metaAcumuladaRDMARCAS.write("")
+            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
+                vendaAcumuladaRDMARCAS.write("")
+
+            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
+                listaPERFUMARIA.write("")
+            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
+                metaAcumuladaPERFUMARIA.write("")
+            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
+                vendaAcumuladaPERFUMARIA.write("")
+
+            with open("storage/listaDERMO.txt", "w") as listaDERMO:
+                listaDERMO.write("")
+            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
+                metaAcumuladaDERMO.write("")
+            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
+                vendaAcumuladaDERMO.write("")
+            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
+                pecaAcumuladaDERMO.write("")
+
+
+class LimparRD(Screen):
+    """
+    """
+    pass
+
+
+class LimparPERFUMARIA(Screen):
+    """
+    """
+    pass
+
+
+class LimparDERMO(Screen):
+    """
+    """
+    pass
+
+
+class LimparTodasAsListas(Screen):
+    """
+    """
     pass
 
 
