@@ -16,7 +16,7 @@ else:
     sistema_windows = False
 
 # Variável para testar inserções de dados
-teste = True
+teste = False
 
 
 class MenuPrincipal(Screen):
@@ -42,6 +42,10 @@ class RegistrosRDMarcas(Screen):
     """
 
     def avisoInput(self):
+        """
+        --> Apresenta um Popup de aviso quando o usuário não preencher os dados necessários.
+        :return: Apenas o Popup.
+        """
         meta_input = self.ids.meta_input.text
         venda_input = self.ids.venda_input.text
 
@@ -396,7 +400,11 @@ class LimparDados(Screen):
         lista = button.text
 
         content = BoxLayout(orientation='vertical', padding=10)
-        label = Label(text=f'Você está prestes a apagar a lista "{lista}"')
+        if lista == "TODAS AS LISTAS":
+            label = Label(text=f'Confirma a exclusão de "{lista}"?')
+        else:
+            label = Label(text=f'Confirma a excluão da lista "{lista}"?')
+
         close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
         confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
 
