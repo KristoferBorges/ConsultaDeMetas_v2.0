@@ -124,7 +124,7 @@ class RegistrosRDMarcas(Screen):
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
 
-        except Exception as error:
+        except ValueError as error:
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
@@ -134,6 +134,20 @@ class RegistrosRDMarcas(Screen):
             content.add_widget(close_button)
 
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
+
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -226,7 +240,7 @@ class RegistrosPerfumaria(Screen):
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
 
-        except Exception as error:
+        except ValueError as error:
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
@@ -236,6 +250,19 @@ class RegistrosPerfumaria(Screen):
             content.add_widget(close_button)
 
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
+
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None), size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -342,7 +369,7 @@ class RegistrosDermo(Screen):
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
 
-        except Exception as error:
+        except ValueError as error:
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
@@ -352,6 +379,20 @@ class RegistrosDermo(Screen):
             content.add_widget(close_button)
 
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
+
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -388,61 +429,75 @@ class LimparDados(Screen):
         popup.open()
 
     def apagarLista(self, lista):
-        if lista == "RD MARCAS":
-            # Exclusão RD MARCAS
-            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
-                listaRDMARCAS.write("")
-            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
-                metaAcumuladaRDMARCAS.write("")
-            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
-                vendaAcumuladaRDMARCAS.write("")
+        try:
+            if lista == "RD MARCAS":
+                # Exclusão RD MARCAS
+                with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
+                    listaRDMARCAS.write("")
+                with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
+                    metaAcumuladaRDMARCAS.write("")
+                with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
+                    vendaAcumuladaRDMARCAS.write("")
 
-        elif lista == "PERFUMARIA":
-            # Exclusão Perfumaria
-            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
-                listaPERFUMARIA.write("")
-            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
-                metaAcumuladaPERFUMARIA.write("")
-            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
-                vendaAcumuladaPERFUMARIA.write("")
+            elif lista == "PERFUMARIA":
+                # Exclusão Perfumaria
+                with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
+                    listaPERFUMARIA.write("")
+                with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
+                    metaAcumuladaPERFUMARIA.write("")
+                with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
+                    vendaAcumuladaPERFUMARIA.write("")
 
-        elif lista == "DERMO":
-            # Exclusão Dermo
-            with open("storage/listaDERMO.txt", "w") as listaDERMO:
-                listaDERMO.write("")
-            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
-                metaAcumuladaDERMO.write("")
-            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
-                vendaAcumuladaDERMO.write("")
-            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
-                pecaAcumuladaDERMO.write("")
+            elif lista == "DERMO":
+                # Exclusão Dermo
+                with open("storage/listaDERMO.txt", "w") as listaDERMO:
+                    listaDERMO.write("")
+                with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
+                    metaAcumuladaDERMO.write("")
+                with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
+                    vendaAcumuladaDERMO.write("")
+                with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
+                    pecaAcumuladaDERMO.write("")
 
-        elif lista == "TODAS AS LISTAS":
-            # Exclusão TODAS AS LISTAS
-            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
-                listaRDMARCAS.write("")
-            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
-                metaAcumuladaRDMARCAS.write("")
-            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
-                vendaAcumuladaRDMARCAS.write("")
+            elif lista == "TODAS AS LISTAS":
+                # Exclusão TODAS AS LISTAS
+                with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
+                    listaRDMARCAS.write("")
+                with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
+                    metaAcumuladaRDMARCAS.write("")
+                with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
+                    vendaAcumuladaRDMARCAS.write("")
 
-            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
-                listaPERFUMARIA.write("")
-            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
-                metaAcumuladaPERFUMARIA.write("")
-            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
-                vendaAcumuladaPERFUMARIA.write("")
+                with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
+                    listaPERFUMARIA.write("")
+                with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
+                    metaAcumuladaPERFUMARIA.write("")
+                with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
+                    vendaAcumuladaPERFUMARIA.write("")
 
-            with open("storage/listaDERMO.txt", "w") as listaDERMO:
-                listaDERMO.write("")
-            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
-                metaAcumuladaDERMO.write("")
-            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
-                vendaAcumuladaDERMO.write("")
-            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
-                pecaAcumuladaDERMO.write("")
+                with open("storage/listaDERMO.txt", "w") as listaDERMO:
+                    listaDERMO.write("")
+                with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
+                    metaAcumuladaDERMO.write("")
+                with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
+                    vendaAcumuladaDERMO.write("")
+                with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
+                    pecaAcumuladaDERMO.write("")
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None), size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
 
 
+# Essas classes serão preenchidas na versão 2.1 Utilizando edição das listas por linha selecionada.
 class LimparRD(Screen):
     """
     """
