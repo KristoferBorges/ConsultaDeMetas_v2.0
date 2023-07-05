@@ -41,29 +41,6 @@ class RegistrosRDMarcas(Screen):
     Opção do menu principal após clicar na opção de registros (RDMarcas).
     """
 
-    def avisoInput(self):
-        """
-        --> Apresenta um Popup de aviso quando o usuário não preencher os dados necessários.
-        :return: Apenas o Popup.
-        """
-        meta_input = self.ids.meta_input.text
-        venda_input = self.ids.venda_input.text
-
-        meta_input = str(meta_input)
-        venda_input = str(venda_input)
-
-        if meta_input == '' or venda_input == '':
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Campos não preenchidos!')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
-
     def pega_input_rdmarcas(self):
         """
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
@@ -149,21 +126,6 @@ class RegistrosRDMarcas(Screen):
 
         except Exception as error:
             print(error)
-
-
-class RegistrosPerfumaria(Screen):
-    """
-    Opção do menu principal após clicar na opção de registros (Perfumaria).
-    """
-
-    def avisoInput(self):
-        meta_input = self.ids.meta_input.text
-        venda_input = self.ids.venda_input.text
-
-        meta_input = str(meta_input)
-        venda_input = str(venda_input)
-
-        if meta_input == '' or venda_input == '':
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
             close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
@@ -174,6 +136,12 @@ class RegistrosPerfumaria(Screen):
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
+
+
+class RegistrosPerfumaria(Screen):
+    """
+    Opção do menu principal após clicar na opção de registros (Perfumaria).
+    """
 
     def pega_input_perfumaria(self):
         """
@@ -260,23 +228,6 @@ class RegistrosPerfumaria(Screen):
 
         except Exception as error:
             print(error)
-
-
-class RegistrosDermo(Screen):
-    """
-    Opção do menu principal após clicar na opção de registros (Dermo).
-    """
-
-    def avisoInput(self):
-        meta_input = self.ids.meta_input.text
-        venda_input = self.ids.venda_input.text
-        peca_input = self.ids.peca_input.text
-
-        meta_input = str(meta_input)
-        venda_input = str(venda_input)
-        peca_input = str(peca_input)
-
-        if meta_input == '' or venda_input == '' or peca_input == '':
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
             close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
@@ -287,6 +238,12 @@ class RegistrosDermo(Screen):
             popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
+
+
+class RegistrosDermo(Screen):
+    """
+    Opção do menu principal após clicar na opção de registros (Dermo).
+    """
 
     def pega_input_dermo(self):
         """
@@ -387,6 +344,16 @@ class RegistrosDermo(Screen):
 
         except Exception as error:
             print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Campos não preenchidos!')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
 
 
 class LimparDados(Screen):
