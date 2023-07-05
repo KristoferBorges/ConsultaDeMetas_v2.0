@@ -16,7 +16,7 @@ else:
     sistema_windows = False
 
 # Variável para testar inserções de dados
-teste = False
+teste = True
 
 
 class MenuPrincipal(Screen):
