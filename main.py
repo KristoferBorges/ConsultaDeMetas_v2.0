@@ -1,3 +1,4 @@
+from time import sleep
 import platform
 from modulo import dateVerification, abatimento
 from kivy.app import App
@@ -406,10 +407,14 @@ class LimparDados(Screen):
     """
 
     def apagarLista_popup(self, button):
+        """
+        :param button:
+        :return:
+        """
         lista = button.text
 
         content = BoxLayout(orientation='vertical', padding=10)
-        if lista == "TODAS AS LISTAS":
+        if lista == "DELETAR LISTAS":
             label = Label(text=f'Confirma a exclusão de "{lista}"?')
         else:
             label = Label(text=f'Confirma a excluão da lista "{lista}"?')
@@ -430,6 +435,7 @@ class LimparDados(Screen):
         popup.open()
 
     def apagarLista(self, lista):
+
         try:
             if lista == "RD MARCAS":
                 # Exclusão RD MARCAS
@@ -460,7 +466,7 @@ class LimparDados(Screen):
                 with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
                     pecaAcumuladaDERMO.write("")
 
-            elif lista == "TODAS AS LISTAS":
+            elif lista == "DELETAR LISTAS":
                 # Exclusão TODAS AS LISTAS
                 with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
                     listaRDMARCAS.write("")
@@ -484,6 +490,20 @@ class LimparDados(Screen):
                     vendaAcumuladaDERMO.write("")
                 with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
                     pecaAcumuladaDERMO.write("")
+
+                # POPUP DE FINALIZAÇÃO
+                sleep(0.3)
+                content = BoxLayout(orientation='vertical', padding=10)
+                label = Label(text="Exclusão Realizada com Sucesso!")
+                confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+                content.add_widget(label)
+                content.add_widget(confirm_button)
+
+                popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+                confirm_button.bind(on_release=popup.dismiss)
+                popup.open()
+                
         except Exception as error:
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)

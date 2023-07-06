@@ -389,6 +389,7 @@
                 size_hint: (0.5, 0.2)
                 on_release:
                     root.manager.current = 'registros'
+
             Button:
                 text: 'FINALIZAR'
                 font_size: 19
@@ -434,12 +435,12 @@
                 root.manager.current = 'limpardermo'
 
         Button:
-            text: 'TODAS AS LISTAS' # Esse nome é utilizado para excluir as listas (Não alterar)
+            text: 'DELETAR LISTAS' # Esse nome é utilizado para excluir as listas (Não alterar)
             font_size: 26
-            color: 1, 1, 0, 1
+            color: 1, 0, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
-                root.manager.current = 'limpartodasaslistas'
+                root.apagarLista_popup(self)
 
         Button:
             text: 'VOLTAR'
@@ -447,11 +448,65 @@
             on_release:
                 root.manager.current = 'menu_1'
 
+
 <LimparRD>
     GridLayout:
         cols: 1
         spacing: 6
         padding: 10
+
+        Label:
+            text: 'RD Marcas'
+            font_size: 20
+            color: 1, 1, 0, 1
+            size_hint: (1, None)
+            text_size: (None, None)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Pesquisar'
+
+            TextInput:
+                id: research_input
+                size_hint: (0.7, 1)
+                multiline: False
+                hint_text: "00/00/0000"
+
+        RelativeLayout:
+
+            Button:
+                text: 'APAGAR LISTA'
+                font_size: 19
+                size_hint: (1, None)
+                height: '50dp'
+                color: 1, 0, 0, 1
+                pos_hint: {'center_x': 0.5, 'y': -0.8}
+
+                on_release:
+                    root.manager.current = ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'VOLTAR'
+                font_size: 19
+                size_hint: (0.5, 0.2)
+                height: '50dp'
+                on_release:
+                    root.manager.current = 'limpardados'
+
+            Button:
+                text: 'BUSCAR'
+                font_size: 19
+                size_hint: (0.5, 0.2)
+                height: '50dp'
+                # implementar função
 
 
 <LimparPERFUMARIA>
@@ -460,6 +515,59 @@
         spacing: 6
         padding: 10
 
+        Label:
+            text: 'Perfumaria'
+            font_size: 20
+            color: 1, 1, 0, 1
+            size_hint: (1, None)
+            text_size: (None, None)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Pesquisar'
+
+            TextInput:
+                id: research_input
+                size_hint: (0.7, 1)
+                multiline: False
+                hint_text: "00/00/0000"
+
+        RelativeLayout:
+
+            Button:
+                text: 'APAGAR LISTA'
+                font_size: 19
+                size_hint: (1, None)
+                height: '50dp'
+                color: 1, 0, 0, 1
+                pos_hint: {'center_x': 0.5, 'y': -0.8}
+
+                on_release:
+                    root.manager.current = ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'VOLTAR'
+                font_size: 19
+                size_hint: (0.5, 0.2)
+                height: '50dp'
+                on_release:
+                    root.manager.current = 'limpardados'
+
+            Button:
+                text: 'BUSCAR'
+                font_size: 19
+                size_hint: (0.5, 0.2)
+                height: '50dp'
+                # implementar função
+
 
 <LimparDERMO>
     GridLayout:
@@ -467,12 +575,58 @@
         spacing: 6
         padding: 10
 
+        Label:
+            text: 'Dermo'
+            font_size: 20
+            color: 1, 1, 0, 1
+            size_hint: (1, None)
+            text_size: (None, None)
 
-<LimparTodasAsListas>
-    GridLayout:
-        cols: 1
-        spacing: 6
-        padding: 10
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Pesquisar'
+
+            TextInput:
+                id: research_input
+                size_hint: (0.7, 1)
+                multiline: False
+                hint_text: "00/00/0000"
+
+        RelativeLayout:
+
+            Button:
+                text: 'APAGAR LISTA'
+                font_size: 19
+                size_hint: (1, None)
+                height: '50dp'
+                color: 1, 0, 0, 1
+                pos_hint: {'center_x': 0.5, 'y': -0.8}
+
+                on_release:
+                    root.manager.current = ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'VOLTAR'
+                font_size: 19
+                size_hint: (0.5, 0.2)
+                height: '50dp'
+                on_release:
+                    root.manager.current = 'limpardados'
+
+            Button:
+                text: 'BUSCAR'
+                font_size: 19
+                size_hint: (0.5, 0.2)
+                height: '50dp'
+                # implementar função
 
 
 # Fim das opções do Menu principal  (LIMPARDADOS)

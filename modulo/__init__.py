@@ -245,3 +245,5 @@ def abatimento(meta, vendas):
     else:
         devedor = "-"
     return devedor
+
+
