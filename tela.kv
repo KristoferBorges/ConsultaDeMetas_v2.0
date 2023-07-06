@@ -416,14 +416,14 @@
             font_size: 26
             color: 1, 1, 0, 1
             on_release:
-                root.apagarLista_popup(self)
+                root.manager.current = 'limparrd'
 
         Button:
             text: 'PERFUMARIA' # Esse nome é utilizado para excluir as listas (Não alterar)
             font_size: 26
             color: 1, 1, 0, 1
             on_release:
-                root.apagarLista_popup(self)
+                root.manager.current = 'limparperfumaria'
 
         Button:
             text: 'DERMO' # Esse nome é utilizado para excluir as listas (Não alterar)
@@ -431,7 +431,7 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
-                root.apagarLista_popup(self)
+                root.manager.current = 'limpardermo'
 
         Button:
             text: 'TODAS AS LISTAS' # Esse nome é utilizado para excluir as listas (Não alterar)
@@ -439,13 +439,40 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
-                root.apagarLista_popup(self)
+                root.manager.current = 'limpartodasaslistas'
 
         Button:
             text: 'VOLTAR'
             font_size: 26
             on_release:
                 root.manager.current = 'menu_1'
+
+<LimparRD>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+
+<LimparPERFUMARIA>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+
+<LimparDERMO>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+
+<LimparTodasAsListas>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
 
 
 # Fim das opções do Menu principal  (LIMPARDADOS)

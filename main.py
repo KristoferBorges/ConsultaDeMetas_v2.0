@@ -262,7 +262,8 @@ class RegistrosPerfumaria(Screen):
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None), size=(375, 200))
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -492,12 +493,12 @@ class LimparDados(Screen):
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None), size=(375, 200))
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
 
-# Essas classes serão preenchidas na versão 2.1 Utilizando edição das listas por linha selecionada.
 class LimparRD(Screen):
     """
     """
