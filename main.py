@@ -17,7 +17,7 @@ else:
     sistema_windows = False
 
 # Variável para testar inserções de dados
-teste = False
+teste = True
 
 
 class MenuPrincipal(Screen):
@@ -406,18 +406,12 @@ class LimparDados(Screen):
     poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
     """
 
-    def apagarLista_popup(self, button):
+    def apagarLista_popup(self):
         """
-        :param button:
-        :return:
         """
-        lista = button.text
 
         content = BoxLayout(orientation='vertical', padding=10)
-        if lista == "DELETAR LISTAS":
-            label = Label(text=f'Confirma a exclusão de "{lista}"?')
-        else:
-            label = Label(text=f'Confirma a excluão da lista "{lista}"?')
+        label = Label(text='Confirma a exclusão das Listas?')
 
         close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
         confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
@@ -430,80 +424,52 @@ class LimparDados(Screen):
 
         close_button.bind(on_release=popup.dismiss)
 
-        confirm_button.bind(on_release=lambda btn: self.apagarLista(lista))
+        confirm_button.bind(on_release=lambda btn: self.apagarLista())
         confirm_button.bind(on_release=popup.dismiss)
         popup.open()
 
-    def apagarLista(self, lista):
+    def apagarLista(self):
+        """
+        """
 
         try:
-            if lista == "RD MARCAS":
-                # Exclusão RD MARCAS
-                with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
-                    listaRDMARCAS.write("")
-                with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
-                    metaAcumuladaRDMARCAS.write("")
-                with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
-                    vendaAcumuladaRDMARCAS.write("")
+            # Exclusão TODAS AS LISTAS
+            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
+                listaRDMARCAS.write("")
+            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
+                metaAcumuladaRDMARCAS.write("")
+            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
+                vendaAcumuladaRDMARCAS.write("")
 
-            elif lista == "PERFUMARIA":
-                # Exclusão Perfumaria
-                with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
-                    listaPERFUMARIA.write("")
-                with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
-                    metaAcumuladaPERFUMARIA.write("")
-                with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
-                    vendaAcumuladaPERFUMARIA.write("")
+            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
+                listaPERFUMARIA.write("")
+            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
+                metaAcumuladaPERFUMARIA.write("")
+            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
+                vendaAcumuladaPERFUMARIA.write("")
 
-            elif lista == "DERMO":
-                # Exclusão Dermo
-                with open("storage/listaDERMO.txt", "w") as listaDERMO:
-                    listaDERMO.write("")
-                with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
-                    metaAcumuladaDERMO.write("")
-                with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
-                    vendaAcumuladaDERMO.write("")
-                with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
-                    pecaAcumuladaDERMO.write("")
+            with open("storage/listaDERMO.txt", "w") as listaDERMO:
+                listaDERMO.write("")
+            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
+                metaAcumuladaDERMO.write("")
+            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
+                vendaAcumuladaDERMO.write("")
+            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
+                pecaAcumuladaDERMO.write("")
 
-            elif lista == "DELETAR LISTAS":
-                # Exclusão TODAS AS LISTAS
-                with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
-                    listaRDMARCAS.write("")
-                with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
-                    metaAcumuladaRDMARCAS.write("")
-                with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
-                    vendaAcumuladaRDMARCAS.write("")
+            # POPUP DE FINALIZAÇÃO
+            sleep(0.3)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text="Exclusão Realizada com Sucesso!")
+            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
 
-                with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
-                    listaPERFUMARIA.write("")
-                with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
-                    metaAcumuladaPERFUMARIA.write("")
-                with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
-                    vendaAcumuladaPERFUMARIA.write("")
+            content.add_widget(label)
+            content.add_widget(confirm_button)
 
-                with open("storage/listaDERMO.txt", "w") as listaDERMO:
-                    listaDERMO.write("")
-                with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
-                    metaAcumuladaDERMO.write("")
-                with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
-                    vendaAcumuladaDERMO.write("")
-                with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
-                    pecaAcumuladaDERMO.write("")
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+            confirm_button.bind(on_release=popup.dismiss)
+            popup.open()
 
-                # POPUP DE FINALIZAÇÃO
-                sleep(0.3)
-                content = BoxLayout(orientation='vertical', padding=10)
-                label = Label(text="Exclusão Realizada com Sucesso!")
-                confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
-
-                content.add_widget(label)
-                content.add_widget(confirm_button)
-
-                popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
-                confirm_button.bind(on_release=popup.dismiss)
-                popup.open()
-                
         except Exception as error:
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
@@ -522,19 +488,203 @@ class LimparDados(Screen):
 class LimparRD(Screen):
     """
     """
-    pass
+
+    def apagarLista_popup_RDMarcas(self):
+        """
+        """
+
+        content = BoxLayout(orientation='vertical', padding=10)
+        label = Label(text='Confirma a exclusão da Lista RD Marcas?')
+
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+        content.add_widget(label)
+        content.add_widget(close_button)
+        content.add_widget(confirm_button)
+
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+
+        close_button.bind(on_release=popup.dismiss)
+
+        confirm_button.bind(on_release=lambda btn: self.apagarLista_RDMarca())
+        confirm_button.bind(on_release=popup.dismiss)
+        popup.open()
+
+    def apagarLista_RDMarca(self):
+        """
+        """
+
+        try:
+            # Exclusão RD MARCAS
+            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
+                listaRDMARCAS.write("")
+            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
+                metaAcumuladaRDMARCAS.write("")
+            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
+                vendaAcumuladaRDMARCAS.write("")
+
+                # POPUP DE FINALIZAÇÃO
+                sleep(0.3)
+                content = BoxLayout(orientation='vertical', padding=10)
+                label = Label(text="Exclusão Realizada com Sucesso!")
+                confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+                content.add_widget(label)
+                content.add_widget(confirm_button)
+
+                popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+                confirm_button.bind(on_release=popup.dismiss)
+                popup.open()
+
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
 
 
 class LimparPERFUMARIA(Screen):
     """
     """
-    pass
+
+    def apagarLista_popup_Perfumaria(self):
+        """
+        """
+
+        content = BoxLayout(orientation='vertical', padding=10)
+        label = Label(text='Confirma a exclusão da Lista Perfumaria?')
+
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+        content.add_widget(label)
+        content.add_widget(close_button)
+        content.add_widget(confirm_button)
+
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+
+        close_button.bind(on_release=popup.dismiss)
+
+        confirm_button.bind(on_release=lambda btn: self.apagarLista_Perfumaria())
+        confirm_button.bind(on_release=popup.dismiss)
+        popup.open()
+
+    def apagarLista_Perfumaria(self):
+        """
+        """
+        try:
+            # Exclusão Perfumaria
+            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
+                listaPERFUMARIA.write("")
+            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
+                metaAcumuladaPERFUMARIA.write("")
+            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
+                vendaAcumuladaPERFUMARIA.write("")
+
+            # POPUP DE FINALIZAÇÃO
+            sleep(0.3)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text="Exclusão Realizada com Sucesso!")
+            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+            content.add_widget(label)
+            content.add_widget(confirm_button)
+
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+            confirm_button.bind(on_release=popup.dismiss)
+            popup.open()
+
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
 
 
 class LimparDERMO(Screen):
     """
     """
-    pass
+
+    def apagarLista_popup_Dermo(self):
+        """
+        """
+
+        content = BoxLayout(orientation='vertical', padding=10)
+        label = Label(text='Confirma a exclusão da Lista Dermo?')
+
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+        content.add_widget(label)
+        content.add_widget(close_button)
+        content.add_widget(confirm_button)
+
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+
+        close_button.bind(on_release=popup.dismiss)
+
+        confirm_button.bind(on_release=lambda btn: self.apagarLista_Dermo())
+        confirm_button.bind(on_release=popup.dismiss)
+        popup.open()
+
+    def apagarLista_Dermo(self):
+        """
+        """
+
+        try:
+            # Exclusão Dermo
+            with open("storage/listaDERMO.txt", "w") as listaDERMO:
+                listaDERMO.write("")
+            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
+                metaAcumuladaDERMO.write("")
+            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
+                vendaAcumuladaDERMO.write("")
+            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
+                pecaAcumuladaDERMO.write("")
+
+            # POPUP DE FINALIZAÇÃO
+            sleep(0.3)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text="Exclusão Realizada com Sucesso!")
+            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+            content.add_widget(label)
+            content.add_widget(confirm_button)
+
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+            confirm_button.bind(on_release=popup.dismiss)
+            popup.open()
+
+        except Exception as error:
+            print(error)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                          size=(375, 200))
+            close_button.bind(on_release=popup.dismiss)
+            popup.open()
 
 
 class LimparTodasAsListas(Screen):
