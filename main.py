@@ -1,5 +1,6 @@
 from time import sleep
 import platform
+import pandas as pd
 from modulo import dateVerification, abatimento
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -17,7 +18,7 @@ else:
     sistema_windows = False
 
 # Variável para testar inserções de dados
-teste = True
+teste = False
 
 
 class MenuPrincipal(Screen):
@@ -47,7 +48,6 @@ class RegistrosRDMarcas(Screen):
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
         :return: Retorna os dados devidamente formatados.
         """
-        global situacaoRD
         try:
             data = self.ids.data_input.text
             metaDia = self.ids.meta_input.text
@@ -57,46 +57,61 @@ class RegistrosRDMarcas(Screen):
             vendaDia = float(vendaDia)
             data = dateVerification(data)
 
-            metaAcRDMARCAS = 0
-            vendaAcRDMARCAS = 0
-            porcentagemRDMARCAS = 0
+            # Exibição no terminal
+            pd.set_option('display.max_columns', None)  # Exibe todas as colunas
+            pd.set_option('display.max_rows', None)  # Exibe todas as linhas
+            pd.set_option('display.width', 1000)  # Largura máxima da exibição
 
-            # Cálculo de Metas acumuladas
-            with open("storage/metaAcumuladaRDMARCAS.txt", "a") as metaAcumuladaRDMARCAS:
-                metaAcumuladaRDMARCAS.write(f"{metaDia}\n")
-            with open("storage/metaAcumuladaRDMARCAS.txt", "r") as metaAcumuladaRDMARCAS:
-                linhas = metaAcumuladaRDMARCAS.readlines()
+            # Carrega o arquivo
+            df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
+            calc_lista_RDMarcas = pd.read_excel('storage/lista_calc_RDMarcas.xlsx')
 
-            for linha in linhas:
-                metaAcRDMARCAS = metaAcRDMARCAS + float(linha.strip())
+            novoCalc = {
+                'Meta': f'{metaDia}',
+                'Venda': f'{vendaDia}',
+            }
 
-            # Cálculo de Vendas acumuladas
-            with open("storage/vendaAcumuladaRDMARCAS.txt", "a") as vendaAcumuladaRDMARCAS:
-                vendaAcumuladaRDMARCAS.write(f"{vendaDia}\n")
-            with open("storage/vendaAcumuladaRDMARCAS.txt", "r") as vendaAcumuladaRDMARCAS:
-                linhas2 = vendaAcumuladaRDMARCAS.readlines()
+            # Insere o dado na lista
+            calc_lista_RDMarcas.loc[len(calc_lista_RDMarcas)] = novoCalc
 
-            for linha in linhas2:
-                vendaAcRDMARCAS = vendaAcRDMARCAS + float(linha.strip())
+            metaAC = calc_lista_RDMarcas['Meta'].astype(float).sum()
+            vendaAC = calc_lista_RDMarcas['Venda'].astype(float).sum()
 
-            # Cálculo de porcentagem
-            if vendaAcRDMARCAS < metaAcRDMARCAS:
-                sobrasRD = (metaAcRDMARCAS - vendaAcRDMARCAS)
-            elif metaAcRDMARCAS < vendaAcRDMARCAS:
-                sobrasRD = (vendaAcRDMARCAS - metaAcRDMARCAS)
+            if vendaAC < metaAC:
+                sobras = (metaAC - vendaAC)
+            elif metaAC < vendaAC:
+                sobras = (vendaAC - metaAC)
             else:
-                sobrasRD = 0
-            if vendaAcRDMARCAS != 0 and metaAcRDMARCAS != 0:
-                porcentagemRDMARCAS = (vendaAcRDMARCAS / metaAcRDMARCAS) * 100
+                sobras = 0
+
+            if vendaAC != 0 and metaAC != 0:
+                porcentagem = (vendaAC / metaAC) * 100
+            else:
+                porcentagem = 'Error'
 
             # Análise alcance de metas
-            devedor = abatimento(metaAcRDMARCAS, vendaAcRDMARCAS)
-            # Inserção de dados
-            with open("storage/listaRDMARCAS.txt", "a") as listaRDMARCAS:
-                listaRDMARCAS.write(f"{data}|R${metaDia:.2f}|R${metaAcRDMARCAS:.2f}|R${vendaDia:.2f}|"
-                                    f"R${vendaAcRDMARCAS:.2f}|"
-                                    f"{devedor}R${sobrasRD:.2f}|"
-                                    f"{porcentagemRDMARCAS:.2f}%\n")
+            devedor = abatimento(metaAC, vendaAC)
+
+            # Cria uma linha de inserção de dados
+            novoDado = {
+                'Data': f'{data}',
+                'Meta': f'{metaDia:.2f}',
+                'Meta.AC': f'{metaAC:.2f}',
+                'Venda': f'{vendaDia:.2f}',
+                'Venda.AC': f'{vendaAC:.2f}',
+                'Sobras': f'{sobras:.2f}',
+                'P': f'{porcentagem:.2f}'
+            }
+
+            # Insere o dado na lista
+            df_lista_RDMarcas.loc[len(df_lista_RDMarcas)] = novoDado
+            print(df_lista_RDMarcas)
+            print(f'Meta: {metaAC}')
+            print(f'Venda: {vendaAC}')
+
+            # Salva o arquivo com o novo dado
+            df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
+            calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
 
             # Limpa os dados anteriormente informados (Somente teste = False)
             if not teste:
@@ -106,15 +121,15 @@ class RegistrosRDMarcas(Screen):
 
                 # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
                 if devedor == '-':
-                    situacaoRD = "Metas não atingidas!"
-                elif devedor == '':
-                    situacaoRD = "Metas atingitas!"
+                    situacao = "Metas não atingidas!"
+                else:
+                    situacao = "Metas atingitas!"
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
                 label = Label(text=f'Resumo Acumulado (RD-Marcas)\n\n'
-                                   f'Meta: R$ {metaAcRDMARCAS:.2f}\nVendas: R$ {vendaAcRDMARCAS:.2f}\n'
-                                   f'Sobras: {devedor}R$ {sobrasRD:.2f}\nSituação: {situacaoRD}\n')
+                                   f'Meta: R$ {metaAC:.2f}\nVendas: R$ {vendaAC:.2f}\n'
+                                   f'Sobras: {devedor}R$ {sobras:.2f}\nSituação: {situacao}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
@@ -163,7 +178,6 @@ class RegistrosPerfumaria(Screen):
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'PERFUMARIA'.
         :return: Retorna os dados devidamente formatados.
         """
-        global situacaoPERFUMARIA
         try:
             data = self.ids.data_input.text
             metaDia = self.ids.meta_input.text
@@ -173,46 +187,61 @@ class RegistrosPerfumaria(Screen):
             vendaDia = float(vendaDia)
             data = dateVerification(data)
 
-            metaAcPERFUMARIA = 0
-            vendaAcPERFUMARIA = 0
-            porcentagemPERFUMARIA = 0
+            # Exibição no terminal
+            pd.set_option('display.max_columns', None)  # Exibe todas as colunas
+            pd.set_option('display.max_rows', None)  # Exibe todas as linhas
+            pd.set_option('display.width', 1000)  # Largura máxima da exibição
 
-            # Cálculo de Metas acumuladas
-            with open("storage/metaAcumuladaPERFUMARIA.txt", "a") as metaAcumuladaPERFUMARIA:
-                metaAcumuladaPERFUMARIA.write(f"{metaDia}\n")
-            with open("storage/metaAcumuladaPERFUMARIA.txt", "r") as metaAcumuladaPERFUMARIA:
-                linhas = metaAcumuladaPERFUMARIA.readlines()
+            # Carrega o arquivo
+            df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
+            calc_lista_Perfumaria = pd.read_excel('storage/lista_calc_Perfumaria.xlsx')
 
-            for linha in linhas:
-                metaAcPERFUMARIA = metaAcPERFUMARIA + float(linha.strip())
+            novoCalc = {
+                'Meta': f'{metaDia}',
+                'Venda': f'{vendaDia}',
+            }
 
-            # Cálculo de Vendas acumuladas
-            with open("storage/vendaAcumuladaPERFUMARIA.txt", "a") as vendaAcumuladaPERFUMARIA:
-                vendaAcumuladaPERFUMARIA.write(f"{vendaDia}\n")
-            with open("storage/vendaAcumuladaPERFUMARIA.txt", "r") as vendaAcumuladaPERFUMARIA:
-                linhas2 = vendaAcumuladaPERFUMARIA.readlines()
+            # Insere o dado na lista
+            calc_lista_Perfumaria.loc[len(calc_lista_Perfumaria)] = novoCalc
 
-            for linha in linhas2:
-                vendaAcPERFUMARIA = vendaAcPERFUMARIA + float(linha.strip())
+            metaAC = calc_lista_Perfumaria['Meta'].astype(float).sum()
+            vendaAC = calc_lista_Perfumaria['Venda'].astype(float).sum()
 
-            # Cálculo de porcentagem
-            if vendaAcPERFUMARIA < metaAcPERFUMARIA:
-                sobrasPERFUMARIA = (metaAcPERFUMARIA - vendaAcPERFUMARIA)
-            elif metaAcPERFUMARIA < vendaAcPERFUMARIA:
-                sobrasPERFUMARIA = (vendaAcPERFUMARIA - metaAcPERFUMARIA)
+            if vendaAC < metaAC:
+                sobras = (metaAC - vendaAC)
+            elif metaAC < vendaAC:
+                sobras = (vendaAC - metaAC)
             else:
-                sobrasPERFUMARIA = 0
-            if vendaAcPERFUMARIA != 0 and metaAcPERFUMARIA != 0:
-                porcentagemPERFUMARIA = (vendaAcPERFUMARIA / metaAcPERFUMARIA) * 100
+                sobras = 0
+
+            if vendaAC != 0 and metaAC != 0:
+                porcentagem = (vendaAC / metaAC) * 100
+            else:
+                porcentagem = 'Error'
 
             # Análise alcance de metas
-            devedor = abatimento(metaAcPERFUMARIA, vendaAcPERFUMARIA)
-            # Inserção de dados
-            with open("storage/listaPERFUMARIA.txt", "a") as listaPERFUMARIA:
-                listaPERFUMARIA.write(f"{data}|R${metaDia:.2f}|R${metaAcPERFUMARIA:.2f}|R${vendaDia:.2f}|"
-                                      f"R${vendaAcPERFUMARIA:.2f}|"
-                                      f"{devedor}R${sobrasPERFUMARIA:.2f}|"
-                                      f"{porcentagemPERFUMARIA:.2f}%\n")
+            devedor = abatimento(metaAC, vendaAC)
+
+            # Cria uma linha de inserção de dados
+            novoDado = {
+                'Data': f'{data}',
+                'Meta': f'{metaDia:.2f}',
+                'Meta.AC': f'{metaAC:.2f}',
+                'Venda': f'{vendaDia:.2f}',
+                'Venda.AC': f'{vendaAC:.2f}',
+                'Sobras': f'{sobras:.2f}',
+                'P': f'{porcentagem:.2f}'
+            }
+
+            # Insere o dado na lista
+            df_lista_Perfumaria.loc[len(df_lista_Perfumaria)] = novoDado
+            print(df_lista_Perfumaria)
+            print(f'Meta: {metaAC}')
+            print(f'Venda: {vendaAC}')
+
+            # Salva o arquivo com o novo dado
+            df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
+            calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
 
             # Limpa os dados anteriormente informados (Somente teste = False)
             if not teste:
@@ -222,15 +251,15 @@ class RegistrosPerfumaria(Screen):
 
                 # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
                 if devedor == '-':
-                    situacaoPERFUMARIA = "Metas não atingidas!"
-                elif devedor == '':
-                    situacaoPERFUMARIA = "Metas atingitas!"
+                    situacao = "Metas não atingidas!"
+                else:
+                    situacao = "Metas atingitas!"
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
                 label = Label(text=f'Resumo Acumulado (PERFUMARIA)\n\n'
-                                   f'Meta: R$ {metaAcPERFUMARIA:.2f}\nVendas: R$ {vendaAcPERFUMARIA:.2f}\n'
-                                   f'Sobras: {devedor}R$ {sobrasPERFUMARIA:.2f}\nSituação: {situacaoPERFUMARIA}\n')
+                                   f'Meta: R$ {metaAC:.2f}\nVendas: R$ {vendaAC:.2f}\n'
+                                   f'Sobras: {devedor}R$ {sobras:.2f}\nSituação: {situacao}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)
@@ -279,7 +308,6 @@ class RegistrosDermo(Screen):
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'DERMO'.
         :return: Retorna os dados devidamente formatados.
         """
-        global situacaoDERMO
         try:
             data = self.ids.data_input.text
             metaDia = self.ids.meta_input.text
@@ -291,57 +319,65 @@ class RegistrosDermo(Screen):
             data = dateVerification(data)
             pecaDia = int(pecaDia)
 
-            metaAcDERMO = 0
-            vendaAcDERMO = 0
-            pecaAc = 0
-            porcentagemDERMO = 0
+            # Exibição no terminal
+            pd.set_option('display.max_columns', None)  # Exibe todas as colunas
+            pd.set_option('display.max_rows', None)  # Exibe todas as linhas
+            pd.set_option('display.width', 1000)  # Largura máxima da exibição
 
-            # Cálculo de Metas acumuladas
-            with open("storage/metaAcumuladaDERMO.txt", "a") as metaAcumuladaDERMO:
-                metaAcumuladaDERMO.write(f"{metaDia}\n")
-            with open("storage/metaAcumuladaDERMO.txt", "r") as metaAcumuladaDERMO:
-                linhas = metaAcumuladaDERMO.readlines()
+            # Carrega o arquivo
+            df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
+            calc_lista_Dermo = pd.read_excel('storage/lista_calc_Dermo.xlsx')
 
-            for linha in linhas:
-                metaAcDERMO = metaAcDERMO + float(linha.strip())
+            novoCalc = {
+                'Meta': f'{metaDia}',
+                'Venda': f'{vendaDia}',
+                'Pecas': f'{pecaDia}',
+            }
 
-            # Cálculo de Vendas acumuladas
-            with open("storage/vendaAcumuladaDERMO.txt", "a") as vendaAcumuladaDERMO:
-                vendaAcumuladaDERMO.write(f"{vendaDia}\n")
-            with open("storage/vendaAcumuladaDERMO.txt", "r") as vendaAcumuladaDERMO:
-                linhas2 = vendaAcumuladaDERMO.readlines()
+            # Insere o dado na lista
+            calc_lista_Dermo.loc[len(calc_lista_Dermo)] = novoCalc
 
-            for linha in linhas2:
-                vendaAcDERMO = vendaAcDERMO + float(linha.strip())
+            metaAC = calc_lista_Dermo['Meta'].astype(float).sum()
+            vendaAC = calc_lista_Dermo['Venda'].astype(float).sum()
+            pecaAC = calc_lista_Dermo['Pecas'].astype(float).sum()
 
-            # Cálculo de Peças acumuladas
-            with open("storage/pecaAcumuladaDERMO.txt", "a") as pecaAcumuladaDERMO:
-                pecaAcumuladaDERMO.write(f'{pecaDia}\n')
-            with open("storage/pecaAcumuladaDERMO.txt", "r") as pecaAcumuladaDERMO:
-                linhasPeca = pecaAcumuladaDERMO.readlines()
-
-            for linha in linhasPeca:
-                pecaAc = pecaAc + int(linha.strip())
-
-            # Cálculo de porcentagem
-            if vendaAcDERMO < metaAcDERMO:
-                sobrasDERMO = (metaAcDERMO - vendaAcDERMO)
-            elif metaAcDERMO < vendaAcDERMO:
-                sobrasDERMO = (vendaAcDERMO - metaAcDERMO)
+            if vendaAC < metaAC:
+                sobras = (metaAC - vendaAC)
+            elif metaAC < vendaAC:
+                sobras = (vendaAC - metaAC)
             else:
-                sobrasDERMO = 0
-            if vendaAcDERMO != 0 and metaAcDERMO != 0:
-                porcentagemDERMO = (vendaAcDERMO / metaAcDERMO) * 100
+                sobras = 0
+
+            if vendaAC != 0 and metaAC != 0:
+                porcentagem = (vendaAC / metaAC) * 100
+            else:
+                porcentagem = 'Error'
 
             # Análise alcance de metas
-            devedor = abatimento(metaAcDERMO, vendaAcDERMO)
-            # Inserção de dados
-            with open("storage/listaDERMO.txt", "a") as listaDERMO:
-                listaDERMO.write(f"{data} | R${metaDia:.2f} | R${metaAcDERMO:.2f} | R${vendaDia:.2f} |"
-                                 f" R${vendaAcDERMO:.2f} | "
-                                 f" {pecaAc}Un | "
-                                 f" {devedor}R${sobrasDERMO:.2f} | "
-                                 f"{porcentagemDERMO:.2f}%\n")
+            devedor = abatimento(metaAC, vendaAC)
+
+            # Cria uma linha de inserção de dados
+            novoDado = {
+                'Data': f'{data}',
+                'Meta': f'{metaDia:.2f}',
+                'Meta.AC': f'{metaAC:.2f}',
+                'Venda': f'{vendaDia:.2f}',
+                'Venda.AC': f'{vendaAC:.2f}',
+                'Pecas.AC': f'{pecaAC}',
+                'Sobras': f'{sobras:.2f}',
+                'P': f'{porcentagem:.2f}'
+            }
+
+            # Insere o dado na lista
+            df_lista_Dermo.loc[len(df_lista_Dermo)] = novoDado
+            print(df_lista_Dermo)
+            print(f'Meta: {metaAC}')
+            print(f'Venda: {vendaAC}')
+            print(f'Peças: {pecaAC}')
+
+            # Salva o arquivo com o novo dado
+            df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
+            calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
 
             # Limpa os dados anteriormente informados (Somente teste = False)
             if not teste:
@@ -352,15 +388,15 @@ class RegistrosDermo(Screen):
 
                 # Baseado na variável (devedor) o sistema passará a situação da meta/vendas no popup
                 if devedor == '-':
-                    situacaoDERMO = "Metas não atingidas!"
-                elif devedor == '':
-                    situacaoDERMO = "Metas atingitas!"
+                    situacao = "Metas não atingidas!"
+                else:
+                    situacao = "Metas atingitas!"
 
                 # Popup de resumo
                 content = BoxLayout(orientation='vertical', padding=10)
                 label = Label(text=f'Resumo Acumulado (DERMO)\n\n'
-                                   f'Meta: R$ {metaAcDERMO:.2f}\nVendas: R$ {vendaAcDERMO:.2f}\nPeças: {pecaAc} Un\n'
-                                   f'Sobras: {devedor}R$ {sobrasDERMO:.2f}\nSituação: {situacaoDERMO}\n')
+                                   f'Meta: R$ {metaAC:.2f}\nVendas: R$ {vendaAC:.2f}\nPeças: {pecaAC} Un\n'
+                                   f'Sobras: {devedor}R$ {sobras:.2f}\nSituação: {situacao}\n')
                 close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
 
                 content.add_widget(label)

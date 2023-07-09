@@ -1,5 +1,6 @@
 import pandas as pd
 import openpyxl
+import numpy as np
 from modulo import dateVerification
 
 # Define as opções de exibição
@@ -23,9 +24,9 @@ vendaAC = df_lista_RDMarcas['Venda'].sum().astype(float)
 print(metaAC, vendaAC)
 
 data_input = "10/05/2002"
-metaDia_input = "12000.05"
+metaDia_input = 12710.75
 metaAC = metaAC + float(metaDia_input)
-vendasDia_input = "10000.64"
+vendasDia_input = 49700.64
 vendaAC = vendaAC + float(vendasDia_input)
 
 if vendaAC < metaAC:
@@ -42,22 +43,24 @@ porcentagem = (vendaAC / metaAC) * 100
 novoDado = pd.DataFrame([[data_input, metaDia_input, metaAC, vendasDia_input, vendaAC, sobras, porcentagem]],
                         columns=df_lista_RDMarcas.columns)
 
-# Tentativa de formatação
-df_lista_RDMarcas['Meta'] = 'R$' + df_lista_RDMarcas['Meta'].map('{:.2f}'.format)
-df_lista_RDMarcas['Venda'] = 'R$' + df_lista_RDMarcas['Venda'].map('{:.2f}'.format)
-
-if vendaAC < metaAC:
-    sobras = metaAC - vendaAC
-    df_lista_RDMarcas['Sobras'] = df_lista_RDMarcas['Sobras'].apply(lambda x: '-R$' + '{:.2f}'.format(x) if isinstance(x, (int, float)) else x)
-else:
-    df_lista_RDMarcas['Sobras'] = df_lista_RDMarcas['Sobras'].apply(lambda x: 'R$' + '{:.2f}'.format(x) if isinstance(x, (int, float)) else x)
-
-df_lista_RDMarcas['P'] = df_lista_RDMarcas['P'].apply(lambda x: '{:.2f}%'.format(x) if isinstance(x, (int, float)) else x)
-
-
 
 # Concatela com os dados anteriores da lista
 df_lista_RDMarcas = pd.concat([df_lista_RDMarcas, novoDado], ignore_index=True)
 
+# Tentativa de formatação
+df_lista_RDMarcas['Meta'] = df_lista_RDMarcas['Meta'].map('{:.2f}'.format)
+df_lista_RDMarcas['Meta.AC'] = df_lista_RDMarcas['Meta.AC'].map('{:.2f}'.format)
+df_lista_RDMarcas['Venda'] = df_lista_RDMarcas['Venda'].map('{:.2f}'.format)
+df_lista_RDMarcas['Venda.AC'] = df_lista_RDMarcas['Venda.AC'].map('{:.2f}'.format)
+df_lista_RDMarcas['P'] = df_lista_RDMarcas['P'].apply(lambda x: '{:.2f}%'.format(x) if isinstance(x, (int, float)) else x)
+
+
+df_lista_RDMarcas['Sobras'] = np.where(df_lista_RDMarcas['Venda.AC'] < df_lista_RDMarcas['Meta.AC'],
+                                       "-" + df_lista_RDMarcas['Sobras'].apply('{:.2f}'.format),
+                                       df_lista_RDMarcas['Sobras'].apply('{:.2f}'.format))
+
+
+
 # Salva as alterações
 df_lista_RDMarcas.to_excel('storage/listaRDMARCAS.xlsx', index=False)
+
