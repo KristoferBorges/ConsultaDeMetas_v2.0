@@ -477,6 +477,96 @@
                 multiline: False
                 hint_text: "00/00/0000"
 
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '90dp'
+
+            Label:
+                id: busca_resultado
+                size_hint: (0.3, 1)
+                color: 1, 1, 0, 1
+                font_size: 15
+                text: ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '20dp'
+
+            Label:
+                id: resultado_linha
+                size_hint: (0.3, 1)
+                font_size: 12
+                text: ''
+
+
+
+        BoxLayout: # Pequeno espaço
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '20dp'
+
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Data'
+
+            TextInput:
+                id: data_input
+                size_hint: (0.7, 1)
+                multiline: False
+                hint_text: "00/00/0000"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Meta* (Dia)'
+
+            TextInput:
+                id: meta_input
+                size_hint: (0.7, 1)
+                input_filter: 'float'
+                multiline: False
+                hint_text: "R$ 1000.00"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Vendas* (Dia)'
+
+            TextInput:
+                id: venda_input
+                size_hint: (0.7, 1)
+                input_filter: 'float'
+                multiline: False
+                hint_text: "R$ 1000.00"
+
+        RelativeLayout:
+
+            Button:
+                text: 'FAZER ALTERAÇÃO'
+                font_size: 19
+                size_hint: (1, None)
+                height: '50dp'
+                pos_hint: {'center_x': 0.5, 'y': -0.8}
+                on_release:
+                    root.executarAlteracao()
+
         RelativeLayout:
 
             Button:
@@ -505,7 +595,8 @@
                 font_size: 19
                 size_hint: (0.5, 0.2)
                 height: '50dp'
-                # implementar função
+                on_release:
+                    root.buscarPesquisa()
 
 
 <LimparPERFUMARIA>

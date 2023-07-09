@@ -61,18 +61,36 @@ except ValueError as error:
     print(error)"""
 
 
+#
+# Fazer as alterações das variávels conforme o uso dos inputs com o front-end
+#
 # Primeira forma de editar um arquivo
 # Carregar o arquivo (O arquivo de calculo e o arquivo da lista de visualização)
 calc_lista_RDMarcas = pd.read_excel('storage/lista_calc_RDMarcas.xlsx')
 df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
 
-# Localiza a linha
-index_value = 1
+# Localiza a linha com base no input do usuário
+busca = 2  # Filtra pela data
+# busca = 3 # Filtra pela linha
+if len(str(busca)) > 4:
+    linha_filtrada = df_lista_RDMarcas[df_lista_RDMarcas['Data'] == busca]
+else:
+    busca = busca - 2
+    linha_filtrada = df_lista_RDMarcas[df_lista_RDMarcas.index == busca]
+
+index_value = linha_filtrada.index[0]
+print(index_value)
+
+# Define a quantidade de repetições iniciais
 qnt = 1
+
+# Verifica a quantidade máxima de linhas dentro do arquivo
 max_lines = len(calc_lista_RDMarcas)
+
 # Cálculo dos dados
-metaDia = 10050  # input
-vendaDia = 9950  # input
+metaDia = 500  # input
+vendaDia = 500  # input
+
 try:
     for linha in calc_lista_RDMarcas.iterrows():
         if qnt == 1:
@@ -156,5 +174,8 @@ try:
 
         else:
             print('Houve um problema')
+except KeyError as error:
+    print("Fim")
 except Exception as error:
-    print('Fim')
+    print(error)
+

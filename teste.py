@@ -66,12 +66,34 @@ df_lista_RDMarcas.to_excel('storage/listaRDMARCAS.xlsx', index=False)
 """
 
 
-calc_lista_RDMarcas = pd.read_excel('storage/lista_calc_RDMarcas.xlsx')
-max_lines = len(calc_lista_RDMarcas)
-index_value = 1
-"""metaDia = calc_lista_RDMarcas.at[index_value, 'Meta']"""
-metaDia = calc_lista_RDMarcas.loc[5, 'Meta']
-print(metaDia)
-"""for _, linha in calc_lista_RDMarcas.iterrows():
-    print(linha)"""
+"""df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
+busca = 5  # Filtra pela data
+# busca = 3 # Filtra pela linha
+if len(str(busca)) > 4:
+    linha_filtrada = df_lista_RDMarcas[df_lista_RDMarcas['Data'] == busca]
+else:
+    busca = busca - 2
+    linha_filtrada = df_lista_RDMarcas[df_lista_RDMarcas.index == busca]
+
+index_value = linha_filtrada.index[0]
+print(index_value)
+max_lines = len(df_lista_RDMarcas)
+print(max_lines)"""
+
+
+class Pai:
+    def __init__(self):
+        self.x = None
+
+    def filho(self):
+        self.x = 10
+        return self.x
+
+    def filha(self):
+        print(self.x)
+
+
+pessoa = Pai()
+pessoa.filho()
+pessoa.filha()
 
