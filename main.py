@@ -2,6 +2,7 @@ from time import sleep
 import platform
 import pandas as pd
 from modulo import dateVerification, abatimento
+from openpyxl import load_workbook
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
@@ -553,25 +554,46 @@ class LimparRD(Screen):
 
         try:
             # Exclusão RD MARCAS
-            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
-                listaRDMARCAS.write("")
-            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
-                metaAcumuladaRDMARCAS.write("")
-            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
-                vendaAcumuladaRDMARCAS.write("")
+            # Carrega o arquivo
+            lista = 'storage/listaRDMarcas.xlsx'
+            calculo = 'storage/lista_calc_RDMarcas.xlsx'
+            bk_lista = load_workbook(lista)
+            bk_calculo = load_workbook(calculo)
 
-                # POPUP DE FINALIZAÇÃO
-                sleep(0.3)
-                content = BoxLayout(orientation='vertical', padding=10)
-                label = Label(text="Exclusão Realizada com Sucesso!")
-                confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+            # Pega a primeira planilha do arquivo de lista
+            sheet_lista = bk_lista.active
 
-                content.add_widget(label)
-                content.add_widget(confirm_button)
+            # Pega a primeira planilha do arquivo de cálculo
+            sheet_calculo = bk_calculo.active
 
-                popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
-                confirm_button.bind(on_release=popup.dismiss)
-                popup.open()
+            # Exclui as linhas tirando a primeira (Nome das colunas/Key)
+            sheet_lista.delete_rows(2, sheet_lista.max_row)
+            sheet_calculo.delete_rows(2, sheet_calculo.max_row)
+
+            # Salva as alterações
+            bk_lista.save(lista)
+            bk_calculo.save(calculo)
+
+            # Passa as alterações para uma variável
+            df_lista_RDMarcas = pd.read_excel(lista)
+            calc_lista_RDMarcas = pd.read_excel(calculo)
+
+            # Salva o arquivo com as alterações no DataFrame
+            df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
+            calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
+
+            # POPUP DE FINALIZAÇÃO
+            sleep(0.3)
+            content = BoxLayout(orientation='vertical', padding=10)
+            label = Label(text="Exclusão Realizada com Sucesso!")
+            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+            content.add_widget(label)
+            content.add_widget(confirm_button)
+
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+            confirm_button.bind(on_release=popup.dismiss)
+            popup.open()
 
         except Exception as error:
             print(error)
@@ -618,13 +640,34 @@ class LimparPERFUMARIA(Screen):
         """
         """
         try:
-            # Exclusão Perfumaria
-            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
-                listaPERFUMARIA.write("")
-            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
-                metaAcumuladaPERFUMARIA.write("")
-            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
-                vendaAcumuladaPERFUMARIA.write("")
+            # Exclusão PERFUMARIA
+            # Carrega o arquivo
+            lista = 'storage/listaPerfumaria.xlsx'
+            calculo = 'storage/lista_calc_Perfumaria.xlsx'
+            bk_lista = load_workbook(lista)
+            bk_calculo = load_workbook(calculo)
+
+            # Pega a primeira planilha do arquivo de lista
+            sheet_lista = bk_lista.active
+
+            # Pega a primeira planilha do arquivo de cálculo
+            sheet_calculo = bk_calculo.active
+
+            # Exclui as linhas tirando a primeira (Nome das colunas/Key)
+            sheet_lista.delete_rows(2, sheet_lista.max_row)
+            sheet_calculo.delete_rows(2, sheet_calculo.max_row)
+
+            # Salva as alterações
+            bk_lista.save(lista)
+            bk_calculo.save(calculo)
+
+            # Passa as alterações para uma variável
+            df_lista_Perfumaria = pd.read_excel(lista)
+            calc_lista_Perfumaria = pd.read_excel(calculo)
+
+            # Salva o arquivo com as alterações no DataFrame
+            df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
+            calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)
@@ -686,14 +729,33 @@ class LimparDERMO(Screen):
 
         try:
             # Exclusão Dermo
-            with open("storage/listaDERMO.txt", "w") as listaDERMO:
-                listaDERMO.write("")
-            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
-                metaAcumuladaDERMO.write("")
-            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
-                vendaAcumuladaDERMO.write("")
-            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
-                pecaAcumuladaDERMO.write("")
+            # Carrega o arquivo
+            lista = 'storage/listaDermo.xlsx'
+            calculo = 'storage/lista_calc_Dermo.xlsx'
+            bk_lista = load_workbook(lista)
+            bk_calculo = load_workbook(calculo)
+
+            # Pega a primeira planilha do arquivo de lista
+            sheet_lista = bk_lista.active
+
+            # Pega a primeira planilha do arquivo de cálculo
+            sheet_calculo = bk_calculo.active
+
+            # Exclui as linhas tirando a primeira (Nome das colunas/Key)
+            sheet_lista.delete_rows(2, sheet_lista.max_row)
+            sheet_calculo.delete_rows(2, sheet_calculo.max_row)
+
+            # Salva as alterações
+            bk_lista.save(lista)
+            bk_calculo.save(calculo)
+
+            # Passa as alterações para uma variável
+            df_lista_Dermo = pd.read_excel(lista)
+            calc_lista_Dermo = pd.read_excel(calculo)
+
+            # Salva o arquivo com as alterações no DataFrame
+            df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
+            calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)
