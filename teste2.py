@@ -2,7 +2,7 @@ import pandas as pd
 import openpyxl
 
 
-# Inclusão de dados
+"""# Inclusão de dados
 try:
     pd.set_option('display.max_columns', None)  # Exibe todas as colunas
     pd.set_option('display.max_rows', None)  # Exibe todas as linhas
@@ -58,48 +58,103 @@ try:
     df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
     calc_lista_RDMarcas.to_excel('storage/calc_listas.xlsx', index=False)
 except ValueError as error:
-    print(error)
+    print(error)"""
 
-"""# Carregar o arquivo (O arquivo de calculo e o arquivo da lista de visualização)
-calc_lista_RDMarcas = pd.read_excel('storage/calc_listas.xlsx')
+
+# Primeira forma de editar um arquivo
+# Carregar o arquivo (O arquivo de calculo e o arquivo da lista de visualização)
+calc_lista_RDMarcas = pd.read_excel('storage/lista_calc_RDMarcas.xlsx')
 df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
 
-# Localizar a linha tendo que inserir 2 índices a menos para acertar a linha solicitada
-index_value = (3 - 2)
-
+# Localiza a linha
+index_value = 1
+qnt = 1
+max_lines = len(calc_lista_RDMarcas)
 # Cálculo dos dados
-metaDia = 5000  # input
-vendaDia = 5000  # input
-metaAC = calc_lista_RDMarcas.loc[index_value:, 'Meta.RD'].astype(float).sum()
-vendaAC = calc_lista_RDMarcas.loc[index_value:, 'Venda.RD'].astype(float).sum()
-if vendaAC < metaAC:
-    sobras = (metaAC - vendaAC)
-elif metaAC < vendaAC:
-    sobras = (vendaAC - metaAC)
-else:
-    sobras = 0
+metaDia = 10050  # input
+vendaDia = 9950  # input
+try:
+    for linha in calc_lista_RDMarcas.iterrows():
+        if qnt == 1:
+            qnt = qnt + 1
+            # Insere os valores (MetaDia/VendaDia), logo em seguida é feito o cálculo já pegando o valor alterado
+            calc_lista_RDMarcas.loc[index_value] = [metaDia, vendaDia]
 
-if vendaAC != 0 and metaAC != 0:
-    porcentagem = (vendaAC / metaAC) * 100
-else:
-    porcentagem = 'Error'
+            metaAC = calc_lista_RDMarcas.loc[:index_value, 'Meta'].astype(float).sum()
+            vendaAC = calc_lista_RDMarcas.loc[:index_value, 'Venda'].astype(float).sum()
+            if vendaAC < metaAC:
+                sobras = (metaAC - vendaAC)
+            elif metaAC < vendaAC:
+                sobras = (vendaAC - metaAC)
+            else:
+                sobras = 0
 
+            if vendaAC != 0 and metaAC != 0:
+                porcentagem = (vendaAC / metaAC) * 100
+            else:
+                porcentagem = 'Error'
 
-# Input de dados
-novoDado = {
-        'Data': '2023-05-20',
-        'Meta': f'{metaDia:.2f}',
-        'Meta.AC': f'{metaAC:.2f}',
-        'Venda': f'{vendaDia:.2f}',
-        'Venda.AC': f'{vendaAC:.2f}',
-        'Sobras': f'{sobras:.2f}',
-        'P': f'{porcentagem:.2f}'
-    }
+            # Input de dados
+            novoDado = {
+                    'Data': '05/06/2023',
+                    'Meta': f'{metaDia:.2f}',
+                    'Meta.AC': f'{metaAC:.2f}',
+                    'Venda': f'{vendaDia:.2f}',
+                    'Venda.AC': f'{vendaAC:.2f}',
+                    'Sobras': f'{sobras:.2f}',
+                    'P': f'{porcentagem:.2f}'
+                }
 
-# Modifica os valores da linha (MetaDia/VendaDia) | Modifica os dados da linha por completo com os devidos cálculos
-calc_lista_RDMarcas.loc[index_value] = [metaDia, vendaDia]
-df_lista_RDMarcas.loc[index_value] = novoDado
+            # Modifica os valores da linha (MetaDia/VendaDia) | Modifica os dados da
+            # linha por completo com os devidos cálculos
+            df_lista_RDMarcas.loc[index_value] = novoDado
 
-# Salva o arquivo
-df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
-calc_lista_RDMarcas.to_excel('storage/calc_listas.xlsx', index=False)"""
+            # Salva o arquivo
+            df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
+            calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
+
+            # print(df_lista_RDMarcas.loc[:index_value])
+        elif max_lines >= index_value:
+            index_value = index_value + 1
+
+            metaDia = calc_lista_RDMarcas.at[index_value, 'Meta']
+            vendaDia = calc_lista_RDMarcas.at[index_value, 'Venda']
+            data = df_lista_RDMarcas.at[index_value, 'Data']
+            calc_lista_RDMarcas.loc[index_value] = [metaDia, vendaDia]
+
+            metaAC = calc_lista_RDMarcas.loc[:index_value, 'Meta'].astype(float).sum()
+            vendaAC = calc_lista_RDMarcas.loc[:index_value, 'Venda'].astype(float).sum()
+
+            if vendaAC < metaAC:
+                sobras = (metaAC - vendaAC)
+            elif metaAC < vendaAC:
+                sobras = (vendaAC - metaAC)
+            else:
+                sobras = 0
+
+            if vendaAC != 0 and metaAC != 0:
+                porcentagem = (vendaAC / metaAC) * 100
+            else:
+                porcentagem = 'Error'
+
+            # Input de dados
+            novoDado = {
+                    'Data': f'{data}',
+                    'Meta': f'{metaDia:.2f}',
+                    'Meta.AC': f'{metaAC:.2f}',
+                    'Venda': f'{vendaDia:.2f}',
+                    'Venda.AC': f'{vendaAC:.2f}',
+                    'Sobras': f'{sobras:.2f}',
+                    'P': f'{porcentagem:.2f}'
+                }
+
+            df_lista_RDMarcas.loc[index_value] = novoDado
+
+            # Salva o arquivo
+            df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
+            calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
+
+        else:
+            print('Houve um problema')
+except Exception as error:
+    print('Fim')

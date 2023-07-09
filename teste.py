@@ -3,7 +3,7 @@ import openpyxl
 import numpy as np
 from modulo import dateVerification
 
-# Define as opções de exibição
+"""# Define as opções de exibição
 pd.set_option('display.max_columns', None)  # Exibe todas as colunas
 pd.set_option('display.max_rows', None)  # Exibe todas as linhas
 pd.set_option('display.width', 1000)  # Largura máxima da exibição
@@ -63,4 +63,15 @@ df_lista_RDMarcas['Sobras'] = np.where(df_lista_RDMarcas['Venda.AC'] < df_lista_
 
 # Salva as alterações
 df_lista_RDMarcas.to_excel('storage/listaRDMARCAS.xlsx', index=False)
+"""
+
+
+calc_lista_RDMarcas = pd.read_excel('storage/lista_calc_RDMarcas.xlsx')
+max_lines = len(calc_lista_RDMarcas)
+index_value = 1
+"""metaDia = calc_lista_RDMarcas.at[index_value, 'Meta']"""
+metaDia = calc_lista_RDMarcas.loc[5, 'Meta']
+print(metaDia)
+"""for _, linha in calc_lista_RDMarcas.iterrows():
+    print(linha)"""
 
