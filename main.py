@@ -1,7 +1,7 @@
 from time import sleep
 import platform
 import pandas as pd
-from modulo import dateVerification, abatimento
+from modulo import dateVerification, abatimento, popup_Confirmacao_Exclusao, popupError
 from openpyxl import load_workbook
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -156,17 +156,7 @@ class RegistrosRDMarcas(Screen):
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class RegistrosPerfumaria(Screen):
@@ -286,17 +276,7 @@ class RegistrosPerfumaria(Screen):
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class RegistrosDermo(Screen):
@@ -423,17 +403,7 @@ class RegistrosDermo(Screen):
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class LimparDados(Screen):
@@ -445,6 +415,7 @@ class LimparDados(Screen):
 
     def apagarLista_popup(self):
         """
+        --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão das listas.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
@@ -467,59 +438,104 @@ class LimparDados(Screen):
 
     def apagarLista(self):
         """
+        --> Função que apaga todas as listas após confirmar no popup o procedimento.
         """
 
         try:
-            # Exclusão TODAS AS LISTAS
-            with open("storage/listaRDMARCAS.txt", "w") as listaRDMARCAS:
-                listaRDMARCAS.write("")
-            with open("storage/metaAcumuladaRDMARCAS.txt", "w") as metaAcumuladaRDMARCAS:
-                metaAcumuladaRDMARCAS.write("")
-            with open("storage/vendaAcumuladaRDMARCAS.txt", "w") as vendaAcumuladaRDMARCAS:
-                vendaAcumuladaRDMARCAS.write("")
+            # Exclusão RD MARCAS
+            # Carrega o arquivo
+            lista = 'storage/listaRDMarcas.xlsx'
+            calculo = 'storage/lista_calc_RDMarcas.xlsx'
+            bk_lista = load_workbook(lista)
+            bk_calculo = load_workbook(calculo)
 
-            with open("storage/listaPERFUMARIA.txt", "w") as listaPERFUMARIA:
-                listaPERFUMARIA.write("")
-            with open("storage/metaAcumuladaPERFUMARIA.txt", "w") as metaAcumuladaPERFUMARIA:
-                metaAcumuladaPERFUMARIA.write("")
-            with open("storage/vendaAcumuladaPERFUMARIA.txt", "w") as vendaAcumuladaPERFUMARIA:
-                vendaAcumuladaPERFUMARIA.write("")
+            # Pega a primeira planilha do arquivo de lista
+            sheet_lista = bk_lista.active
 
-            with open("storage/listaDERMO.txt", "w") as listaDERMO:
-                listaDERMO.write("")
-            with open("storage/metaAcumuladaDERMO.txt", "w") as metaAcumuladaDERMO:
-                metaAcumuladaDERMO.write("")
-            with open("storage/vendaAcumuladaDERMO.txt", "w") as vendaAcumuladaDERMO:
-                vendaAcumuladaDERMO.write("")
-            with open("storage/pecaAcumuladaDERMO.txt", "w") as pecaAcumuladaDERMO:
-                pecaAcumuladaDERMO.write("")
+            # Pega a primeira planilha do arquivo de cálculo
+            sheet_calculo = bk_calculo.active
+
+            # Exclui as linhas tirando a primeira (Nome das colunas/Key)
+            sheet_lista.delete_rows(2, sheet_lista.max_row)
+            sheet_calculo.delete_rows(2, sheet_calculo.max_row)
+
+            # Salva as alterações
+            bk_lista.save(lista)
+            bk_calculo.save(calculo)
+
+            # Passa as alterações para uma variável
+            df_lista_RDMarcas = pd.read_excel(lista)
+            calc_lista_RDMarcas = pd.read_excel(calculo)
+
+            # Salva o arquivo com as alterações no DataFrame
+            df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
+            calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
+
+            # Exclusão PERFUMARIA
+            # Carrega o arquivo
+            lista = 'storage/listaPerfumaria.xlsx'
+            calculo = 'storage/lista_calc_Perfumaria.xlsx'
+            bk_lista = load_workbook(lista)
+            bk_calculo = load_workbook(calculo)
+
+            # Pega a primeira planilha do arquivo de lista
+            sheet_lista = bk_lista.active
+
+            # Pega a primeira planilha do arquivo de cálculo
+            sheet_calculo = bk_calculo.active
+
+            # Exclui as linhas tirando a primeira (Nome das colunas/Key)
+            sheet_lista.delete_rows(2, sheet_lista.max_row)
+            sheet_calculo.delete_rows(2, sheet_calculo.max_row)
+
+            # Salva as alterações
+            bk_lista.save(lista)
+            bk_calculo.save(calculo)
+
+            # Passa as alterações para uma variável
+            df_lista_Perfumaria = pd.read_excel(lista)
+            calc_lista_Perfumaria = pd.read_excel(calculo)
+
+            # Salva o arquivo com as alterações no DataFrame
+            df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
+            calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
+
+            # Exclusão Dermo
+            # Carrega o arquivo
+            lista = 'storage/listaDermo.xlsx'
+            calculo = 'storage/lista_calc_Dermo.xlsx'
+            bk_lista = load_workbook(lista)
+            bk_calculo = load_workbook(calculo)
+
+            # Pega a primeira planilha do arquivo de lista
+            sheet_lista = bk_lista.active
+
+            # Pega a primeira planilha do arquivo de cálculo
+            sheet_calculo = bk_calculo.active
+
+            # Exclui as linhas tirando a primeira (Nome das colunas/Key)
+            sheet_lista.delete_rows(2, sheet_lista.max_row)
+            sheet_calculo.delete_rows(2, sheet_calculo.max_row)
+
+            # Salva as alterações
+            bk_lista.save(lista)
+            bk_calculo.save(calculo)
+
+            # Passa as alterações para uma variável
+            df_lista_Dermo = pd.read_excel(lista)
+            calc_lista_Dermo = pd.read_excel(calculo)
+
+            # Salva o arquivo com as alterações no DataFrame
+            df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
+            calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text="Exclusão Realizada com Sucesso!")
-            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
-
-            content.add_widget(label)
-            content.add_widget(confirm_button)
-
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
-            confirm_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popup_Confirmacao_Exclusao()
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class LimparRD(Screen):
@@ -528,6 +544,7 @@ class LimparRD(Screen):
 
     def apagarLista_popup_RDMarcas(self):
         """
+        --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
@@ -550,6 +567,7 @@ class LimparRD(Screen):
 
     def apagarLista_RDMarca(self):
         """
+        --> Função que apaga a lista RDMarcas após confirmar no popup o procedimento.
         """
 
         try:
@@ -584,30 +602,11 @@ class LimparRD(Screen):
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text="Exclusão Realizada com Sucesso!")
-            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
-
-            content.add_widget(label)
-            content.add_widget(confirm_button)
-
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
-            confirm_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popup_Confirmacao_Exclusao()
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class LimparPERFUMARIA(Screen):
@@ -616,6 +615,7 @@ class LimparPERFUMARIA(Screen):
 
     def apagarLista_popup_Perfumaria(self):
         """
+        --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
@@ -638,6 +638,7 @@ class LimparPERFUMARIA(Screen):
 
     def apagarLista_Perfumaria(self):
         """
+        --> Função que apaga a lista Perfumaria após confirmar no popup o procedimento.
         """
         try:
             # Exclusão PERFUMARIA
@@ -671,30 +672,11 @@ class LimparPERFUMARIA(Screen):
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text="Exclusão Realizada com Sucesso!")
-            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
-
-            content.add_widget(label)
-            content.add_widget(confirm_button)
-
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
-            confirm_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popup_Confirmacao_Exclusao()
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class LimparDERMO(Screen):
@@ -703,6 +685,7 @@ class LimparDERMO(Screen):
 
     def apagarLista_popup_Dermo(self):
         """
+        --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão das listas.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
@@ -725,6 +708,7 @@ class LimparDERMO(Screen):
 
     def apagarLista_Dermo(self):
         """
+        --> Função que apaga a lista Dermo após confirmar no popup o procedimento.
         """
 
         try:
@@ -759,30 +743,11 @@ class LimparDERMO(Screen):
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text="Exclusão Realizada com Sucesso!")
-            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
-
-            content.add_widget(label)
-            content.add_widget(confirm_button)
-
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
-            confirm_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popup_Confirmacao_Exclusao()
 
         except Exception as error:
             print(error)
-            content = BoxLayout(orientation='vertical', padding=10)
-            label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
-
-            content.add_widget(label)
-            content.add_widget(close_button)
-
-            popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                          size=(375, 200))
-            close_button.bind(on_release=popup.dismiss)
-            popup.open()
+            popupError()
 
 
 class LimparTodasAsListas(Screen):

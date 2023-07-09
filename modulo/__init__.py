@@ -2,6 +2,19 @@
 import sys
 import random
 import datetime
+from kivy.uix.boxlayout import BoxLayout
+from time import sleep
+import platform
+import pandas as pd
+from openpyxl import load_workbook
+from kivy.app import App
+from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.core.window import Window
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+
 
 red = '\033[31m'
 green = '\033[32m'
@@ -246,3 +259,29 @@ def abatimento(meta, vendas):
         devedor = "-"
     return devedor
 
+
+def popupError():
+    content = BoxLayout(orientation='vertical', padding=10)
+    label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
+    close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+
+    content.add_widget(label)
+    content.add_widget(close_button)
+
+    popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
+                  size=(375, 200))
+    close_button.bind(on_release=popup.dismiss)
+    popup.open()
+
+
+def popup_Confirmacao_Exclusao():
+    content = BoxLayout(orientation='vertical', padding=10)
+    label = Label(text="Exclusão Realizada com Sucesso!")
+    confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+
+    content.add_widget(label)
+    content.add_widget(confirm_button)
+
+    popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+    confirm_button.bind(on_release=popup.dismiss)
+    popup.open()
