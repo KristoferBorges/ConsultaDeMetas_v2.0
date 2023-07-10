@@ -556,18 +556,39 @@
                 multiline: False
                 hint_text: "R$ 1000.00"
 
-        RelativeLayout:
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'BUSCAR'
+                font_size: 19
+                size_hint: (0.5, 0.4)
+                height: '50dp'
+                on_release:
+                    root.buscarPesquisa()
 
             Button:
                 text: 'FAZER ALTERAÇÃO'
                 font_size: 19
-                size_hint: (1, None)
+                size_hint: (0.5, 0.4)
                 height: '50dp'
-                pos_hint: {'center_x': 0.5, 'y': -0.8}
                 on_release:
                     root.executarAlteracao()
 
-        RelativeLayout:
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '90dp'
+
+            Label:
+                id: finalizar_alteracao
+                size_hint: (0.3, 1)
+                color: 1, 1, 0, 1
+                font_size: 15
+                text: ''
+
+        BoxLayout:
+            orientation: 'horizontal'
 
             Button:
                 text: 'APAGAR LISTA'
@@ -575,7 +596,7 @@
                 size_hint: (1, None)
                 height: '50dp'
                 color: 1, 0, 0, 1
-                pos_hint: {'center_x': 0.5, 'y': -0.8}
+                pos_hint: {'center_x': 0.5, 'y': -0.6}
                 on_release:
                     root.apagarLista_popup_RDMarcas()
 
@@ -585,18 +606,10 @@
             Button:
                 text: 'VOLTAR'
                 font_size: 19
-                size_hint: (0.5, 0.2)
+                size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
                     root.manager.current = 'limpardados'
-
-            Button:
-                text: 'BUSCAR'
-                font_size: 19
-                size_hint: (0.5, 0.2)
-                height: '50dp'
-                on_release:
-                    root.buscarPesquisa()
 
 
 <LimparPERFUMARIA>
@@ -627,6 +640,116 @@
                 multiline: False
                 hint_text: "00/00/0000"
 
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '90dp'
+
+            Label:
+                id: busca_resultado
+                size_hint: (0.3, 1)
+                color: 1, 1, 0, 1
+                font_size: 15
+                text: ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '20dp'
+
+            Label:
+                id: resultado_linha
+                size_hint: (0.3, 1)
+                font_size: 12
+                text: ''
+
+
+
+        BoxLayout: # Pequeno espaço
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '20dp'
+
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Data'
+
+            TextInput:
+                id: data_input
+                size_hint: (0.7, 1)
+                multiline: False
+                hint_text: "00/00/0000"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Meta* (Dia)'
+
+            TextInput:
+                id: meta_input
+                size_hint: (0.7, 1)
+                input_filter: 'float'
+                multiline: False
+                hint_text: "R$ 1000.00"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Vendas* (Dia)'
+
+            TextInput:
+                id: venda_input
+                size_hint: (0.7, 1)
+                input_filter: 'float'
+                multiline: False
+                hint_text: "R$ 1000.00"
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'BUSCAR'
+                font_size: 19
+                size_hint: (0.5, 0.4)
+                height: '50dp'
+                on_release:
+                    root.buscarPesquisa()
+
+            Button:
+                text: 'FAZER ALTERAÇÃO'
+                font_size: 19
+                size_hint: (0.5, 0.4)
+                height: '50dp'
+                on_release:
+                    root.executarAlteracao()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '90dp'
+
+            Label:
+                id: finalizar_alteracao
+                size_hint: (0.3, 1)
+                color: 1, 1, 0, 1
+                font_size: 15
+                text: ''
+
         RelativeLayout:
 
             Button:
@@ -635,7 +758,7 @@
                 size_hint: (1, None)
                 height: '50dp'
                 color: 1, 0, 0, 1
-                pos_hint: {'center_x': 0.5, 'y': -0.8}
+                pos_hint: {'center_x': 0.5, 'y': -0.6}
 
                 on_release:
                     root.apagarLista_popup_Perfumaria()
@@ -646,17 +769,10 @@
             Button:
                 text: 'VOLTAR'
                 font_size: 19
-                size_hint: (0.5, 0.2)
+                size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
                     root.manager.current = 'limpardados'
-
-            Button:
-                text: 'BUSCAR'
-                font_size: 19
-                size_hint: (0.5, 0.2)
-                height: '50dp'
-                # implementar função
 
 
 <LimparDERMO>
@@ -687,6 +803,132 @@
                 multiline: False
                 hint_text: "00/00/0000"
 
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '90dp'
+
+            Label:
+                id: busca_resultado
+                size_hint: (0.3, 1)
+                color: 1, 1, 0, 1
+                font_size: 15
+                text: ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '20dp'
+
+            Label:
+                id: resultado_linha
+                size_hint: (0.3, 1)
+                font_size: 12
+                text: ''
+
+
+
+        BoxLayout: # Pequeno espaço
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '20dp'
+
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Data'
+
+            TextInput:
+                id: data_input
+                size_hint: (0.7, 1)
+                multiline: False
+                hint_text: "00/00/0000"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Meta* (Dia)'
+
+            TextInput:
+                id: meta_input
+                size_hint: (0.7, 1)
+                input_filter: 'float'
+                multiline: False
+                hint_text: "R$ 1000.00"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Vendas* (Dia)'
+
+            TextInput:
+                id: venda_input
+                size_hint: (0.7, 1)
+                input_filter: 'float'
+                multiline: False
+                hint_text: "R$ 1000.00"
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '30dp'
+
+            Label:
+                size_hint: (0.3, 1)
+                text: 'Peças* (Dia)'
+
+            TextInput:
+                id: peca_input
+                size_hint: (0.7, 1)
+                input_filter: 'int'
+                multiline: False
+                hint_text: "30 Unidade(s)"
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                text: 'BUSCAR'
+                font_size: 19
+                size_hint: (0.5, 0.4)
+                height: '50dp'
+                on_release:
+                    root.buscarPesquisa()
+
+            Button:
+                text: 'FAZER ALTERAÇÃO'
+                font_size: 19
+                size_hint: (0.5, 0.4)
+                height: '50dp'
+                on_release:
+                    root.executarAlteracao()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)
+            height: '90dp'
+
+            Label:
+                id: finalizar_alteracao
+                size_hint: (0.3, 1)
+                color: 1, 1, 0, 1
+                font_size: 15
+                text: ''
+
         RelativeLayout:
 
             Button:
@@ -695,7 +937,7 @@
                 size_hint: (1, None)
                 height: '50dp'
                 color: 1, 0, 0, 1
-                pos_hint: {'center_x': 0.5, 'y': -0.8}
+                pos_hint: {'center_x': 0.5, 'y': -0.6}
                 on_release:
                     root.apagarLista_popup_Dermo()
 
@@ -705,17 +947,10 @@
             Button:
                 text: 'VOLTAR'
                 font_size: 19
-                size_hint: (0.5, 0.2)
+                size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
                     root.manager.current = 'limpardados'
-
-            Button:
-                text: 'BUSCAR'
-                font_size: 19
-                size_hint: (0.5, 0.2)
-                height: '50dp'
-                # implementar função
 
 
 # Fim das opções do Menu principal  (LIMPARDADOS)

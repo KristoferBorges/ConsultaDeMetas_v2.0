@@ -636,7 +636,7 @@ class LimparRD(Screen):
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
 
-            elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1:  # busca - 2
+            elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1 and int(busca) >= 2:  # busca - 2
                 busca = int(busca) - 2
                 linha_filtrada = self.df_lista_RDMarcas[self.df_lista_RDMarcas.index == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
@@ -704,7 +704,6 @@ class LimparRD(Screen):
                     self.df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
                     self.calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
 
-                    # print(df_lista_RDMarcas.loc[:index_value])
                 elif self.max_lines >= self.index_value:
                     self.index_value = self.index_value + 1
 
@@ -745,15 +744,23 @@ class LimparRD(Screen):
                     self.df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
                     self.calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
 
-                else:
-                    print('Houve um problema')
+                    # Texto do label de confimação após alterações
+                    self.ids.finalizar_alteracao.text = 'Alterações realizadas'
         except Exception as error:
             print(f'Houve um erro - {error}')
+            self.ids.finalizar_alteracao.text = 'Alterações não realizadas'
 
 
 class LimparPERFUMARIA(Screen):
     """
     """
+
+    def __init__(self, **kw):
+        super().__init__()
+        self.df_lista_Perfumaria = None
+        self.index_value = None
+        self.calc_lista_Perfumaria = None
+        self.max_lines = None
 
     def apagarLista_popup_Perfumaria(self):
         """
@@ -820,10 +827,153 @@ class LimparPERFUMARIA(Screen):
             print(error)
             popupError()
 
+    def buscarPesquisa(self):
+        try:
+            # Carregar o arquivo (O arquivo de calculo e o arquivo da lista de visualização)
+            global linha_filtrada
+            self.calc_lista_Perfumaria = pd.read_excel('storage/lista_calc_Perfumaria.xlsx')
+            self.df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
+
+            # Verifica a quantidade máxima de linhas dentro do arquivo
+            self.max_lines = len(
+                self.calc_lista_Perfumaria)  # Os dois aquivos importados tem a mesma quantidade de linha
+
+            # Localiza a linha com base no input do usuário
+            busca = self.ids.research_input.text
+
+            # Limpa o resultado das buscas anteriores
+            self.ids.resultado_linha.text = ''
+
+            if len(str(busca)) > 4:
+                linha_filtrada = self.df_lista_Perfumaria[self.df_lista_Perfumaria['Data'] == busca]
+                self.ids.busca_resultado.text = f'Informação encontrada!'
+                self.ids.resultado_linha.text = f'{linha_filtrada}'
+
+            elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1 and int(busca) >= 2:  # busca - 2
+                busca = int(busca) - 2
+                linha_filtrada = self.df_lista_Perfumaria[self.df_lista_Perfumaria.index == busca]
+                self.ids.busca_resultado.text = f'Informação encontrada!'
+                self.ids.resultado_linha.text = f'{linha_filtrada}'
+
+            else:
+                self.ids.busca_resultado.text = 'Informação não Localizada!'
+                self.ids.resultado_linha.text = ''
+
+            self.index_value = linha_filtrada.index[0]
+            print(self.index_value)
+
+            return self.calc_lista_Perfumaria, self.df_lista_Perfumaria, self.max_lines, self.index_value
+
+        except Exception as error:
+            print(f'Houve um erro - {error}')
+
+    def executarAlteracao(self):
+        try:
+            # Define a quantidade de repetições iniciais
+            qnt = 1
+
+            # Cálculo dos dados
+            data = self.ids.data_input.text
+            metaDia = float(self.ids.meta_input.text)
+            vendaDia = float(self.ids.venda_input.text)
+            calc_lista_Perfumaria = self.calc_lista_Perfumaria
+            for _ in calc_lista_Perfumaria.iterrows():
+                if qnt == 1:
+                    qnt = qnt + 1
+                    # Insere os valores (MetaDia/VendaDia),
+                    # logo em seguida é feito o cálculo já pegando o valor alterado
+                    self.calc_lista_Perfumaria.loc[self.index_value] = [metaDia, vendaDia]
+
+                    metaAC = self.calc_lista_Perfumaria.loc[:self.index_value, 'Meta'].astype(float).sum()
+                    vendaAC = self.calc_lista_Perfumaria.loc[:self.index_value, 'Venda'].astype(float).sum()
+                    if vendaAC < metaAC:
+                        sobras = (metaAC - vendaAC)
+                    elif metaAC < vendaAC:
+                        sobras = (vendaAC - metaAC)
+                    else:
+                        sobras = 0
+
+                    if vendaAC != 0 and metaAC != 0:
+                        porcentagem = (vendaAC / metaAC) * 100
+                    else:
+                        porcentagem = 'Error'
+
+                    # Input de dados
+                    novoDado = {
+                        'Data': f'{data}',
+                        'Meta': f'{metaDia:.2f}',
+                        'Meta.AC': f'{metaAC:.2f}',
+                        'Venda': f'{vendaDia:.2f}',
+                        'Venda.AC': f'{vendaAC:.2f}',
+                        'Sobras': f'{sobras:.2f}',
+                        'P': f'{porcentagem:.2f}'
+                    }
+
+                    # Modifica os valores da linha (MetaDia/VendaDia) | Modifica os dados da
+                    # linha por completo com os devidos cálculos
+                    self.df_lista_Perfumaria.loc[self.index_value] = novoDado
+
+                    # Salva o arquivo
+                    self.df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
+                    self.calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
+
+                elif self.max_lines >= self.index_value:
+                    self.index_value = self.index_value + 1
+
+                    metaDia = self.calc_lista_Perfumaria.at[self.index_value, 'Meta']
+                    vendaDia = self.calc_lista_Perfumaria.at[self.index_value, 'Venda']
+                    data_atualizada = self.df_lista_Perfumaria.at[self.index_value, 'Data']
+                    self.calc_lista_Perfumaria.loc[self.index_value] = [metaDia, vendaDia]
+
+                    metaAC = self.calc_lista_Perfumaria.loc[:self.index_value, 'Meta'].astype(float).sum()
+                    vendaAC = self.calc_lista_Perfumaria.loc[:self.index_value, 'Venda'].astype(float).sum()
+
+                    if vendaAC < metaAC:
+                        sobras = (metaAC - vendaAC)
+                    elif metaAC < vendaAC:
+                        sobras = (vendaAC - metaAC)
+                    else:
+                        sobras = 0
+
+                    if vendaAC != 0 and metaAC != 0:
+                        porcentagem = (vendaAC / metaAC) * 100
+                    else:
+                        porcentagem = 'Error'
+
+                    # Input de dados
+                    novoDado = {
+                        'Data': f'{data_atualizada}',
+                        'Meta': f'{metaDia:.2f}',
+                        'Meta.AC': f'{metaAC:.2f}',
+                        'Venda': f'{vendaDia:.2f}',
+                        'Venda.AC': f'{vendaAC:.2f}',
+                        'Sobras': f'{sobras:.2f}',
+                        'P': f'{porcentagem:.2f}'
+                    }
+
+                    self.df_lista_Perfumaria.loc[self.index_value] = novoDado
+
+                    # Salva o arquivo
+                    self.df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
+                    self.calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
+
+                    # Texto do label de confimação após alterações
+                    self.ids.finalizar_alteracao.text = 'Alterações realizadas'
+        except Exception as error:
+            print(f'Houve um erro - {error}')
+            self.ids.finalizar_alteracao.text = 'Alterações não realizadas'
+
 
 class LimparDERMO(Screen):
     """
     """
+
+    def __init__(self, **kw):
+        super().__init__()
+        self.index_value = None
+        self.max_lines = None
+        self.df_lista_Dermo = None
+        self.calc_lista_Dermo = None
 
     def apagarLista_popup_Dermo(self):
         """
@@ -890,6 +1040,149 @@ class LimparDERMO(Screen):
         except Exception as error:
             print(error)
             popupError()
+
+    def buscarPesquisa(self):
+        try:
+            # Carregar o arquivo (O arquivo de calculo e o arquivo da lista de visualização)
+            global linha_filtrada
+            self.calc_lista_Dermo = pd.read_excel('storage/lista_calc_Dermo.xlsx')
+            self.df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
+
+            # Verifica a quantidade máxima de linhas dentro do arquivo
+            self.max_lines = len(
+                self.calc_lista_Dermo)  # Os dois aquivos importados tem a mesma quantidade de linha
+
+            # Localiza a linha com base no input do usuário
+            busca = self.ids.research_input.text
+
+            # Limpa o resultado das buscas anteriores
+            self.ids.resultado_linha.text = ''
+
+            if len(str(busca)) > 4:
+                linha_filtrada = self.df_lista_Dermo[self.df_lista_Dermo['Data'] == busca]
+                self.ids.busca_resultado.text = f'Informação encontrada!'
+                self.ids.resultado_linha.text = f'{linha_filtrada}'
+
+            elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1 and int(busca) >= 2:  # busca - 2
+                busca = int(busca) - 2
+                linha_filtrada = self.df_lista_Dermo[self.df_lista_Dermo.index == busca]
+                self.ids.busca_resultado.text = f'Informação encontrada!'
+                self.ids.resultado_linha.text = f'{linha_filtrada}'
+
+            else:
+                self.ids.busca_resultado.text = 'Informação não Localizada!'
+                self.ids.resultado_linha.text = ''
+
+            self.index_value = linha_filtrada.index[0]
+            print(self.index_value)
+
+            return self.calc_lista_Dermo, self.df_lista_Dermo, self.max_lines, self.index_value
+
+        except Exception as error:
+            print(f'Houve um erro - {error}')
+
+    def executarAlteracao(self):
+        try:
+            # Define a quantidade de repetições iniciais
+            qnt = 1
+
+            # Cálculo dos dados
+            data = self.ids.data_input.text
+            metaDia = float(self.ids.meta_input.text)
+            vendaDia = float(self.ids.venda_input.text)
+            pecaDia = int(self.ids.peca_input.text)
+            calc_lista_Dermo = self.calc_lista_Dermo
+            for _ in calc_lista_Dermo.iterrows():
+                if qnt == 1:
+                    qnt = qnt + 1
+                    # Insere os valores (MetaDia/VendaDia),
+                    # logo em seguida é feito o cálculo já pegando o valor alterado
+                    self.calc_lista_Dermo.loc[self.index_value] = [metaDia, vendaDia, pecaDia]
+
+                    metaAC = self.calc_lista_Dermo.loc[:self.index_value, 'Meta'].astype(float).sum()
+                    vendaAC = self.calc_lista_Dermo.loc[:self.index_value, 'Venda'].astype(float).sum()
+                    pecaAC = self.calc_lista_Dermo.loc[:self.index_value, 'Pecas'].astype(int).sum()
+                    if vendaAC < metaAC:
+                        sobras = (metaAC - vendaAC)
+                    elif metaAC < vendaAC:
+                        sobras = (vendaAC - metaAC)
+                    else:
+                        sobras = 0
+
+                    if vendaAC != 0 and metaAC != 0:
+                        porcentagem = (vendaAC / metaAC) * 100
+                    else:
+                        porcentagem = 'Error'
+
+                    # Input de dados
+                    novoDado = {
+                        'Data': f'{data}',
+                        'Meta': f'{metaDia:.2f}',
+                        'Meta.AC': f'{metaAC:.2f}',
+                        'Venda': f'{vendaDia:.2f}',
+                        'Venda.AC': f'{vendaAC:.2f}',
+                        'Pecas.AC': f'{pecaAC}',
+                        'Sobras': f'{sobras:.2f}',
+                        'P': f'{porcentagem:.2f}'
+                    }
+
+                    # Modifica os valores da linha (MetaDia/VendaDia) | Modifica os dados da
+                    # linha por completo com os devidos cálculos
+                    self.df_lista_Dermo.loc[self.index_value] = novoDado
+
+                    # Salva o arquivo
+                    self.df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
+                    self.calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
+
+                elif self.max_lines >= self.index_value:
+                    self.index_value = self.index_value + 1
+
+                    metaDia = self.calc_lista_Dermo.at[self.index_value, 'Meta']
+                    vendaDia = self.calc_lista_Dermo.at[self.index_value, 'Venda']
+                    pecaDia = self.calc_lista_Dermo.at[self.index_value, 'Pecas']
+
+                    data_atualizada = self.df_lista_Dermo.at[self.index_value, 'Data']
+                    self.calc_lista_Dermo.loc[self.index_value] = [metaDia, vendaDia, pecaDia]
+
+                    metaAC = self.calc_lista_Dermo.loc[:self.index_value, 'Meta'].astype(float).sum()
+                    vendaAC = self.calc_lista_Dermo.loc[:self.index_value, 'Venda'].astype(float).sum()
+                    pecaAC = self.calc_lista_Dermo.loc[:self.index_value, 'Pecas'].astype(int).sum()
+
+                    if vendaAC < metaAC:
+                        sobras = (metaAC - vendaAC)
+                    elif metaAC < vendaAC:
+                        sobras = (vendaAC - metaAC)
+                    else:
+                        sobras = 0
+
+                    if vendaAC != 0 and metaAC != 0:
+                        porcentagem = (vendaAC / metaAC) * 100
+                    else:
+                        porcentagem = 'Error'
+
+                    # Input de dados
+                    novoDado = {
+                        'Data': f'{data_atualizada}',
+                        'Meta': f'{metaDia:.2f}',
+                        'Meta.AC': f'{metaAC:.2f}',
+                        'Venda': f'{vendaDia:.2f}',
+                        'Venda.AC': f'{vendaAC:.2f}',
+                        'Pecas.AC': f'{pecaAC}',
+                        'Sobras': f'{sobras:.2f}',
+                        'P': f'{porcentagem:.2f}'
+                    }
+
+                    self.df_lista_Dermo.loc[self.index_value] = novoDado
+
+                    # Salva o arquivo
+                    self.df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
+                    self.calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
+
+                    # Texto do label de confimação após alterações
+                    self.ids.finalizar_alteracao.text = 'Alterações realizadas'
+        except Exception as error:
+            print(f'Houve um erro - {error}')
+            self.ids.finalizar_alteracao.text = 'Alterações não realizadas'
 
 
 class LimparTodasAsListas(Screen):
