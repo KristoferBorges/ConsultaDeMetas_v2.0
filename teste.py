@@ -81,7 +81,7 @@ max_lines = len(df_lista_RDMarcas)
 print(max_lines)"""
 
 
-class Pai:
+"""class Pai:
     def __init__(self):
         self.x = None
 
@@ -95,5 +95,15 @@ class Pai:
 
 pessoa = Pai()
 pessoa.filho()
-pessoa.filha()
+pessoa.filha()"""
+
+df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
+busca = '40/80/8000'
+linha_filtrada = df_lista_RDMarcas[df_lista_RDMarcas['Data'] == busca]
+num_linhas_data = df_lista_RDMarcas.loc[linha_filtrada.index[0]:, 'Data'].shape[0]
+print(f'Linha escolhida: {num_linhas_data}')
+
+index_value = 4 - 2
+num_linhas_index = df_lista_RDMarcas.loc[index_value:, 'Data'].shape[0]
+print(f'Linhas restantes: {num_linhas_index}')
 

@@ -19,7 +19,7 @@ else:
     sistema_windows = False
 
 # Variável para testar inserções de dados
-teste = False
+teste = True
 
 
 class MenuPrincipal(Screen):
@@ -548,6 +548,7 @@ class LimparRD(Screen):
         self.max_lines = None
         self.df_lista_RDMarcas = None
         self.calc_lista_RDMarcas = None
+        self.tipo_busca = None
 
     def apagarLista_popup_RDMarcas(self):
         """
@@ -635,16 +636,20 @@ class LimparRD(Screen):
                 linha_filtrada = self.df_lista_RDMarcas[self.df_lista_RDMarcas['Data'] == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
+                self.tipo_busca = 'data'
 
             elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1 and int(busca) >= 2:  # busca - 2
                 busca = int(busca) - 2
                 linha_filtrada = self.df_lista_RDMarcas[self.df_lista_RDMarcas.index == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
+                self.tipo_busca = 'index'
 
             else:
                 self.ids.busca_resultado.text = 'Informação não Localizada!'
+                self.ids.finalizar_alteracao.text = ''
                 self.ids.resultado_linha.text = ''
+                self.tipo_busca = None
 
             self.index_value = linha_filtrada.index[0]
             print(self.index_value)
@@ -653,6 +658,7 @@ class LimparRD(Screen):
 
         except Exception as error:
             print(f'Houve um erro - {error}')
+            self.ids.busca_resultado.text = 'Informação não Localizada!'
 
     def executarAlteracao(self):
         try:
@@ -704,7 +710,7 @@ class LimparRD(Screen):
                     self.df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
                     self.calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
 
-                elif self.max_lines >= self.index_value:
+                elif self.max_lines >= self.index_value and self.index_value < self.max_lines:
                     self.index_value = self.index_value + 1
 
                     metaDia = self.calc_lista_RDMarcas.at[self.index_value, 'Meta']
@@ -746,9 +752,19 @@ class LimparRD(Screen):
 
                     # Texto do label de confimação após alterações
                     self.ids.finalizar_alteracao.text = 'Alterações realizadas'
+
+                    # Limpa os dados inseridos e coloca a data de alteração no campo de pesquisa
+                    if self.tipo_busca == 'data':
+                        self.ids.research_input.text = f'{data}'
+
         except Exception as error:
             print(f'Houve um erro - {error}')
-            self.ids.finalizar_alteracao.text = 'Alterações não realizadas'
+            if self.tipo_busca == 'data':
+                self.ids.finalizar_alteracao.text = 'Faça outra Busca\n  Para atualizar'
+            elif self.tipo_busca == 'index':
+                self.buscarPesquisa()
+            else:
+                self.ids.finalizar_alteracao.text = 'Faça outra Busca\n  Para atualizar'
 
 
 class LimparPERFUMARIA(Screen):
@@ -757,6 +773,7 @@ class LimparPERFUMARIA(Screen):
 
     def __init__(self, **kw):
         super().__init__()
+        self.tipo_busca = None
         self.df_lista_Perfumaria = None
         self.index_value = None
         self.calc_lista_Perfumaria = None
@@ -848,16 +865,20 @@ class LimparPERFUMARIA(Screen):
                 linha_filtrada = self.df_lista_Perfumaria[self.df_lista_Perfumaria['Data'] == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
+                self.tipo_busca = 'data'
 
             elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1 and int(busca) >= 2:  # busca - 2
                 busca = int(busca) - 2
                 linha_filtrada = self.df_lista_Perfumaria[self.df_lista_Perfumaria.index == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
+                self.tipo_busca = 'index'
 
             else:
                 self.ids.busca_resultado.text = 'Informação não Localizada!'
+                self.ids.finalizar_alteracao.text = ''
                 self.ids.resultado_linha.text = ''
+                self.tipo_busca = None
 
             self.index_value = linha_filtrada.index[0]
             print(self.index_value)
@@ -866,6 +887,7 @@ class LimparPERFUMARIA(Screen):
 
         except Exception as error:
             print(f'Houve um erro - {error}')
+            self.ids.busca_resultado.text = 'Informação não Localizada!'
 
     def executarAlteracao(self):
         try:
@@ -917,7 +939,7 @@ class LimparPERFUMARIA(Screen):
                     self.df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
                     self.calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
 
-                elif self.max_lines >= self.index_value:
+                elif self.max_lines >= self.index_value and self.index_value < self.max_lines:
                     self.index_value = self.index_value + 1
 
                     metaDia = self.calc_lista_Perfumaria.at[self.index_value, 'Meta']
@@ -959,9 +981,19 @@ class LimparPERFUMARIA(Screen):
 
                     # Texto do label de confimação após alterações
                     self.ids.finalizar_alteracao.text = 'Alterações realizadas'
+
+                    # Limpa os dados inseridos e coloca a data de alteração no campo de pesquisa
+                    if self.tipo_busca == 'data':
+                        self.ids.research_input.text = f'{data}'
+
         except Exception as error:
             print(f'Houve um erro - {error}')
-            self.ids.finalizar_alteracao.text = 'Alterações não realizadas'
+            if self.tipo_busca == 'data':
+                self.ids.finalizar_alteracao.text = 'Faça outra Busca\n  Para atualizar'
+            elif self.tipo_busca == 'index':
+                self.buscarPesquisa()
+            else:
+                self.ids.finalizar_alteracao.text = 'Faça outra Busca\n  Para atualizar'
 
 
 class LimparDERMO(Screen):
@@ -970,6 +1002,7 @@ class LimparDERMO(Screen):
 
     def __init__(self, **kw):
         super().__init__()
+        self.tipo_busca = None
         self.index_value = None
         self.max_lines = None
         self.df_lista_Dermo = None
@@ -1062,16 +1095,20 @@ class LimparDERMO(Screen):
                 linha_filtrada = self.df_lista_Dermo[self.df_lista_Dermo['Data'] == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
+                self.tipo_busca = 'data'
 
             elif int(busca.isnumeric()) and int(busca) - 2 <= self.max_lines - 1 and int(busca) >= 2:  # busca - 2
                 busca = int(busca) - 2
                 linha_filtrada = self.df_lista_Dermo[self.df_lista_Dermo.index == busca]
                 self.ids.busca_resultado.text = f'Informação encontrada!'
                 self.ids.resultado_linha.text = f'{linha_filtrada}'
+                self.tipo_busca = 'index'
 
             else:
                 self.ids.busca_resultado.text = 'Informação não Localizada!'
+                self.ids.finalizar_alteracao.text = ''
                 self.ids.resultado_linha.text = ''
+                self.tipo_busca = None
 
             self.index_value = linha_filtrada.index[0]
             print(self.index_value)
@@ -1080,6 +1117,7 @@ class LimparDERMO(Screen):
 
         except Exception as error:
             print(f'Houve um erro - {error}')
+            self.ids.busca_resultado.text = 'Informação não Localizada!'
 
     def executarAlteracao(self):
         try:
@@ -1134,7 +1172,7 @@ class LimparDERMO(Screen):
                     self.df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
                     self.calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
 
-                elif self.max_lines >= self.index_value:
+                elif self.max_lines >= self.index_value and self.index_value < self.max_lines:
                     self.index_value = self.index_value + 1
 
                     metaDia = self.calc_lista_Dermo.at[self.index_value, 'Meta']
@@ -1180,9 +1218,19 @@ class LimparDERMO(Screen):
 
                     # Texto do label de confimação após alterações
                     self.ids.finalizar_alteracao.text = 'Alterações realizadas'
+
+                    # Limpa os dados inseridos e coloca a data de alteração no campo de pesquisa
+                    if self.tipo_busca == 'data':
+                        self.ids.research_input.text = f'{data}'
+
         except Exception as error:
             print(f'Houve um erro - {error}')
-            self.ids.finalizar_alteracao.text = 'Alterações não realizadas'
+            if self.tipo_busca == 'data':
+                self.ids.finalizar_alteracao.text = 'Faça outra Busca\n  Para atualizar'
+            elif self.tipo_busca == 'index':
+                self.buscarPesquisa()
+            else:
+                self.ids.finalizar_alteracao.text = 'Faça outra Busca\n  Para atualizar'
 
 
 class LimparTodasAsListas(Screen):
