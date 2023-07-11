@@ -51,12 +51,9 @@ class RegistrosRDMarcas(Screen):
         """
         try:
             data = self.ids.data_input.text
-            metaDia = self.ids.meta_input.text
-            vendaDia = self.ids.venda_input.text
-
-            metaDia = float(metaDia)
-            vendaDia = float(vendaDia)
             data = dateVerification(data)
+            metaDia = float(self.ids.meta_input.text.replace('-', '').strip())
+            vendaDia = float(self.ids.venda_input.text.replace('-', '').strip())
 
             # Exibição no terminal
             pd.set_option('display.max_columns', None)  # Exibe todas as colunas
@@ -171,12 +168,9 @@ class RegistrosPerfumaria(Screen):
         """
         try:
             data = self.ids.data_input.text
-            metaDia = self.ids.meta_input.text
-            vendaDia = self.ids.venda_input.text
-
-            metaDia = float(metaDia)
-            vendaDia = float(vendaDia)
             data = dateVerification(data)
+            metaDia = float(self.ids.meta_input.text.replace('-', '').strip())
+            vendaDia = float(self.ids.venda_input.text.replace('-', '').strip())
 
             # Exibição no terminal
             pd.set_option('display.max_columns', None)  # Exibe todas as colunas
@@ -291,14 +285,10 @@ class RegistrosDermo(Screen):
         """
         try:
             data = self.ids.data_input.text
-            metaDia = self.ids.meta_input.text
-            vendaDia = self.ids.venda_input.text
-            pecaDia = self.ids.peca_input.text
-
-            metaDia = float(metaDia)
-            vendaDia = float(vendaDia)
             data = dateVerification(data)
-            pecaDia = int(pecaDia)
+            metaDia = float(self.ids.meta_input.text.replace('-', '').strip())
+            vendaDia = float(self.ids.venda_input.text.replace('-', '').strip())
+            pecaDia = int(self.ids.peca_input.text.replace('-', '').strip())
 
             # Exibição no terminal
             pd.set_option('display.max_columns', None)  # Exibe todas as colunas
@@ -667,8 +657,8 @@ class LimparRD(Screen):
 
             # Cálculo dos dados
             data = self.ids.data_input.text
-            metaDia = float(self.ids.meta_input.text)
-            vendaDia = float(self.ids.venda_input.text)
+            metaDia = float(self.ids.meta_input.text.replace('-', '').strip())
+            vendaDia = float(self.ids.venda_input.text.replace('-', '').strip())
             calc_lista_RDMarcas = self.calc_lista_RDMarcas
             for _ in calc_lista_RDMarcas.iterrows():
                 if qnt == 1:
@@ -756,6 +746,11 @@ class LimparRD(Screen):
                     # Limpa os dados inseridos e coloca a data de alteração no campo de pesquisa
                     if self.tipo_busca == 'data':
                         self.ids.research_input.text = f'{data}'
+
+                    # Limpa os inputs preenchidos
+                    self.ids.data_input.text = ''
+                    self.ids.meta_input.text = ''
+                    self.ids.venda_input.text = ''
 
         except Exception as error:
             print(f'Houve um erro - {error}')
@@ -896,8 +891,8 @@ class LimparPERFUMARIA(Screen):
 
             # Cálculo dos dados
             data = self.ids.data_input.text
-            metaDia = float(self.ids.meta_input.text)
-            vendaDia = float(self.ids.venda_input.text)
+            metaDia = float(self.ids.meta_input.text.replace('-', '').strip())
+            vendaDia = float(self.ids.venda_input.text.replace('-', '').strip())
             calc_lista_Perfumaria = self.calc_lista_Perfumaria
             for _ in calc_lista_Perfumaria.iterrows():
                 if qnt == 1:
@@ -985,6 +980,11 @@ class LimparPERFUMARIA(Screen):
                     # Limpa os dados inseridos e coloca a data de alteração no campo de pesquisa
                     if self.tipo_busca == 'data':
                         self.ids.research_input.text = f'{data}'
+
+                    # Limpa os inputs preenchidos
+                    self.ids.data_input.text = ''
+                    self.ids.meta_input.text = ''
+                    self.ids.venda_input.text = ''
 
         except Exception as error:
             print(f'Houve um erro - {error}')
@@ -1126,9 +1126,9 @@ class LimparDERMO(Screen):
 
             # Cálculo dos dados
             data = self.ids.data_input.text
-            metaDia = float(self.ids.meta_input.text)
-            vendaDia = float(self.ids.venda_input.text)
-            pecaDia = int(self.ids.peca_input.text)
+            metaDia = float(self.ids.meta_input.text.replace('-', '').strip())
+            vendaDia = float(self.ids.venda_input.text.replace('-', '').strip())
+            pecaDia = int(self.ids.peca_input.text.replace('-', '').strip())
             calc_lista_Dermo = self.calc_lista_Dermo
             for _ in calc_lista_Dermo.iterrows():
                 if qnt == 1:
@@ -1222,6 +1222,12 @@ class LimparDERMO(Screen):
                     # Limpa os dados inseridos e coloca a data de alteração no campo de pesquisa
                     if self.tipo_busca == 'data':
                         self.ids.research_input.text = f'{data}'
+
+                    # Limpa os inputs preenchidos
+                    self.ids.data_input.text = ''
+                    self.ids.meta_input.text = ''
+                    self.ids.venda_input.text = ''
+                    self.ids.peca_input.text = ''
 
         except Exception as error:
             print(f'Houve um erro - {error}')
