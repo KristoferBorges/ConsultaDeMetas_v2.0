@@ -1012,26 +1012,38 @@
             size_hint: (0.5, 0.5)
 
         Button:
+            id: rdmarcas
             text: 'RD MARCAS'
             font_size: 26
             color: 1, 1, 0, 1
+            on_release:
+                root.fazerBackup_popup(self.text)
 
         Button:
+            id: perfumaria
             text: 'PERFUMARIA'
             font_size: 26
             color: 1, 1, 0, 1
+            on_release:
+                root.fazerBackup_popup(self.text)
 
         Button:
+            id: dermo
             text: 'DERMO'
             font_size: 26
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
+            on_release:
+                root.fazerBackup_popup(self.text)
 
         Button:
+            id: todas_listas
             text: 'TODAS AS LISTAS'
             font_size: 26
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
+            on_release:
+                root.fazerBackup_popup(self.text)
 
         Button:
             text: 'VOLTAR'

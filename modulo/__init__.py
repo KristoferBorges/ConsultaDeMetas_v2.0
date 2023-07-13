@@ -285,3 +285,16 @@ def popup_Confirmacao_Exclusao():
     popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
     confirm_button.bind(on_release=popup.dismiss)
     popup.open()
+
+
+def popup_Confirmacao_Backup():
+    content = BoxLayout(orientation='vertical', padding=10)
+    label = Label(text="Backup Realizado com Sucesso!")
+    confirm_button = Button(text='OK', size_hint=(None, None), size=(313, 50))
+
+    content.add_widget(label)
+    content.add_widget(confirm_button)
+
+    popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+    confirm_button.bind(on_release=popup.dismiss)
+    popup.open()
