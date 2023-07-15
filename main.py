@@ -1249,9 +1249,37 @@ class LimparTodasAsListas(Screen):
 
 class ConsultaDeListas(Screen):
     """
-    Opção para consultar os dados existentes, porém se faz necessário escolher as
+    --> Opção para consultar os dados existentes, porém se faz necessário escolher as
     lista que deseja consultar,
     poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
+    """
+    pass
+
+
+class ConsultaRDMarcas(Screen):
+    """
+    --> Opção que consulta a lista RD Marcas.
+    """
+    pass
+
+
+class ConsultaPerfumaria(Screen):
+    """
+    --> Opção que consulta a lista Perfumaria.
+    """
+    pass
+
+
+class ConsultaDermo(Screen):
+    """
+    --> Opção que consulta a lista Dermo.
+    """
+    pass
+
+
+class ConsultaTodasAsListas(Screen):
+    """
+    --> Opção que consulta todas as listas.
     """
     pass
 
@@ -1354,7 +1382,7 @@ class CriarBackup(Screen):
             df_lista_RDMarcas = formataLista(df_lista_RDMarcas, button='RD MARCAS')
             df_lista_Perfumaria = formataLista(df_lista_Perfumaria, button='PERFUMARIA')
             df_lista_Dermo = formataLista(df_lista_Dermo, button='DERMO')
-            
+
             df_lista_RDMarcas.to_excel(f'backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
             df_lista_Perfumaria.to_excel(f'backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
             df_lista_Dermo.to_excel(f'backup/Dermo/{nomeArquivoDERMO}.xlsx', index=False)

@@ -54,6 +54,22 @@
         id: consultarlistas
         name: 'consultarlistas'
 
+    ConsultaRDMarcas:
+        id: consultardmarcas
+        name: 'consultardmarcas'
+
+    ConsultaPerfumaria:
+        id: consultaperfumaria
+        name: 'consultaperfumaria'
+
+    ConsultaDermo:
+        id: consultadermo
+        name: 'consultadermo'
+
+    ConsultaTodasAsListas:
+        id: consultatodasaslistas
+        name: 'consultatodasaslistas'
+
     CriarBackup:
         id: criarbackup
         name: 'criarbackup'
@@ -972,29 +988,87 @@
             text: 'RD MARCAS'
             font_size: 26
             color: 1, 1, 0, 1
+            on_release:
+                root.manager.current = 'consultardmarcas'
 
         Button:
             text: 'PERFUMARIA'
             font_size: 26
             color: 1, 1, 0, 1
+            on_release:
+                root.manager.current = 'consultaperfumaria'
 
         Button:
             text: 'DERMO'
             font_size: 26
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
+            on_release:
+                root.manager.current = 'consultadermo'
 
         Button:
             text: 'TODAS AS LISTAS'
             font_size: 26
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
+            on_release:
+                root.manager.current = 'consultatodasaslistas'
 
         Button:
             text: 'VOLTAR'
             font_size: 26
             on_release:
                 root.manager.current = 'menu_1'
+
+
+
+<ConsultaRDMarcas>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+        Button:
+            text: 'VOLTAR'
+            font_size: 26
+            on_release:
+                root.manager.current = 'consultarlistas'
+
+<ConsultaPerfumaria>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+        Button:
+            text: 'VOLTAR'
+            font_size: 26
+            on_release:
+                root.manager.current = 'consultarlistas'
+
+<ConsultaDermo>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+        Button:
+            text: 'VOLTAR'
+            font_size: 26
+            on_release:
+                root.manager.current = 'consultarlistas'
+
+<ConsultaTodasAsListas>
+    GridLayout:
+        cols: 1
+        spacing: 6
+        padding: 10
+
+        Button:
+            text: 'VOLTAR'
+            font_size: 26
+            on_release:
+                root.manager.current = 'consultarlistas'
 
 # Fim das opções do Menu principal  (CONSULTARLISTAS)
 
