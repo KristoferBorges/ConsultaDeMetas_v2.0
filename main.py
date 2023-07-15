@@ -3,6 +3,7 @@ import datetime
 import platform
 import pandas as pd
 from modulo import dateVerification, abatimento, popup_Confirmacao_Exclusao, popupError, popup_Confirmacao_Backup
+from modulo import formataLista
 from openpyxl import load_workbook
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -1264,14 +1265,14 @@ class CriarBackup(Screen):
 
     def __init__(self, **kw):
         super().__init__()
-        self.lista = None
+        self.button = None
 
     def fazerBackup_popup(self, button):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
         """
         try:
-            self.lista = button
+            self.button = button
 
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Confirma o Backup?')
@@ -1287,7 +1288,7 @@ class CriarBackup(Screen):
 
             close_button.bind(on_release=popup.dismiss)
 
-            if self.lista == 'RD MARCAS' or self.lista == 'PERFUMARIA' or self.lista == 'DERMO':
+            if self.button == 'RD MARCAS' or self.button == 'PERFUMARIA' or self.button == 'DERMO':
                 confirm_button.bind(on_release=lambda btn: self.realizarBackup())
             else:
                 confirm_button.bind(on_release=lambda btn: self.realizarBackup_All())
@@ -1308,18 +1309,22 @@ class CriarBackup(Screen):
             datahoje = date.strftime("%d-%m-%Y")
             horahoje = hora.strftime("%H;%M;%S")
 
-            if self.lista == 'RD MARCAS':
+            if self.button == 'RD MARCAS':
                 nomeArquivoRD = f"BackupRDMARCAS-{datahoje}-{horahoje}"
                 df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
+                df_lista_RDMarcas = formataLista(df_lista_RDMarcas, self.button)
                 df_lista_RDMarcas.to_excel(f'backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
 
-            elif self.lista == 'PERFUMARIA':
+            elif self.button == 'PERFUMARIA':
                 nomeArquivoPERFUMARIA = f"BackupPERFUMARIA-{datahoje}-{horahoje}"
                 df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
+                df_lista_Perfumaria = formataLista(df_lista_Perfumaria, self.button)
                 df_lista_Perfumaria.to_excel(f'backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
-            elif self.lista == 'DERMO':
+
+            elif self.button == 'DERMO':
                 nomeArquivoDERMO = f"BackupDERMO-{datahoje}-{horahoje}"
                 df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
+                df_lista_Dermo = formataLista(df_lista_Dermo, self.button)
                 df_lista_Dermo.to_excel(f'backup/Dermo/{nomeArquivoDERMO}.xlsx', index=False)
 
             popup_Confirmacao_Backup()
@@ -1346,6 +1351,10 @@ class CriarBackup(Screen):
             df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
             df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
 
+            df_lista_RDMarcas = formataLista(df_lista_RDMarcas, button='RD MARCAS')
+            df_lista_Perfumaria = formataLista(df_lista_Perfumaria, button='PERFUMARIA')
+            df_lista_Dermo = formataLista(df_lista_Dermo, button='DERMO')
+            
             df_lista_RDMarcas.to_excel(f'backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
             df_lista_Perfumaria.to_excel(f'backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
             df_lista_Dermo.to_excel(f'backup/Dermo/{nomeArquivoDERMO}.xlsx', index=False)

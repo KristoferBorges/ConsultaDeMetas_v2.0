@@ -2,10 +2,12 @@
 import sys
 import random
 import datetime
+import pandas
 from kivy.uix.boxlayout import BoxLayout
 from time import sleep
 import platform
 import pandas as pd
+import numpy as np
 from openpyxl import load_workbook
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
@@ -298,3 +300,27 @@ def popup_Confirmacao_Backup():
     popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
     confirm_button.bind(on_release=popup.dismiss)
     popup.open()
+
+
+def formataLista(lista, button):
+    if button == 'RD MARCAS' or button == 'PERFUMARIA':
+        lista['Sobras'] = np.where(lista['Venda.AC'] >= lista['Meta.AC'], lista['Sobras'].apply('R${:.2f}'.format),
+                                   "-" + lista['Sobras'].apply('R${:.2f}'.format))
+
+        lista['Meta'] = lista['Meta'].map('R${:.2f}'.format)
+        lista['Meta.AC'] = lista['Meta.AC'].map('R${:.2f}'.format)
+        lista['Venda'] = lista['Venda'].map('R${:.2f}'.format)
+        lista['Venda.AC'] = lista['Venda.AC'].map('R${:.2f}'.format)
+        lista['P'] = lista['P'].apply(lambda x: '{:.2f}%'.format(x) if isinstance(x, (int, float)) else x)
+    elif button == 'DERMO':
+        lista['Sobras'] = np.where(lista['Venda.AC'] >= lista['Meta.AC'], lista['Sobras'].apply('R${:.2f}'.format),
+                                   "-" + lista['Sobras'].apply('R${:.2f}'.format))
+
+        lista['Meta'] = lista['Meta'].map('R${:.2f}'.format)
+        lista['Meta.AC'] = lista['Meta.AC'].map('R${:.2f}'.format)
+        lista['Venda'] = lista['Venda'].map('R${:.2f}'.format)
+        lista['Venda.AC'] = lista['Venda.AC'].map('R${:.2f}'.format)
+        lista['Pecas.AC'] = lista['Pecas.AC'].map('{:.0f}Un'.format)
+        lista['P'] = lista['P'].apply(lambda x: '{:.2f}%'.format(x) if isinstance(x, (int, float)) else x)
+
+    return lista

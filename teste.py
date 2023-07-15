@@ -3,11 +3,11 @@ import openpyxl
 import numpy as np
 from modulo import dateVerification
 
-"""# Define as opções de exibição
+# Define as opções de exibição
 pd.set_option('display.max_columns', None)  # Exibe todas as colunas
 pd.set_option('display.max_rows', None)  # Exibe todas as linhas
 pd.set_option('display.width', 1000)  # Largura máxima da exibição
-
+"""
 # Lê os DataFrames do arquivo Excel
 df_lista_RDMarcas = pd.read_excel('storage/listaRDMARCAS.xlsx')
 # df_lista_Perfumaria = pd.read_excel('storage/listaPERFUMARIA')
@@ -97,13 +97,37 @@ pessoa = Pai()
 pessoa.filho()
 pessoa.filha()"""
 
-df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
-busca = '40/80/8000'
-linha_filtrada = df_lista_RDMarcas[df_lista_RDMarcas['Data'] == busca]
-num_linhas_data = df_lista_RDMarcas.loc[linha_filtrada.index[0]:, 'Data'].shape[0]
-print(f'Linha escolhida: {num_linhas_data}')
+df_lista = pd.read_excel('storage/listaDermo.xlsx')
+apertei = 'DERMO'
 
-index_value = 4 - 2
-num_linhas_index = df_lista_RDMarcas.loc[index_value:, 'Data'].shape[0]
-print(f'Linhas restantes: {num_linhas_index}')
+
+def formataLista(lista, button):
+    if button == 'RD MARCAS' or button == 'PERFUMARIA':
+        lista['Sobras'] = np.where(lista['Venda.AC'] >= lista['Meta.AC'], lista['Sobras'].apply('R${:.2f}'.format),
+                                   "-" + lista['Sobras'].apply('R${:.2f}'.format))
+
+        lista['Meta'] = lista['Meta'].map('R${:.2f}'.format)
+        lista['Meta.AC'] = lista['Meta.AC'].map('R${:.2f}'.format)
+        lista['Venda'] = lista['Venda'].map('R${:.2f}'.format)
+        lista['Venda.AC'] = lista['Venda.AC'].map('R${:.2f}'.format)
+        lista['P'] = lista['P'].apply(lambda x: '{:.2f}%'.format(x) if isinstance(x, (int, float)) else x)
+    elif button == 'DERMO':
+        lista['Sobras'] = np.where(lista['Venda.AC'] >= lista['Meta.AC'], lista['Sobras'].apply('R${:.2f}'.format),
+                                   "-" + lista['Sobras'].apply('R${:.2f}'.format))
+
+        lista['Meta'] = lista['Meta'].map('R${:.2f}'.format)
+        lista['Meta.AC'] = lista['Meta.AC'].map('R${:.2f}'.format)
+        lista['Venda'] = lista['Venda'].map('R${:.2f}'.format)
+        lista['Venda.AC'] = lista['Venda.AC'].map('R${:.2f}'.format)
+        lista['Pecas.AC'] = lista['Pecas.AC'].map('{:.0f}Un'.format)
+        lista['P'] = lista['P'].apply(lambda x: '{:.2f}%'.format(x) if isinstance(x, (int, float)) else x)
+
+    return lista
+
+
+df_lista_RDMarcas = formataLista(lista=df_lista, button=apertei)
+
+print(df_lista_RDMarcas)
+# Salva as alterações
+# df_lista_RDMarcas.to_excel('storage/listaRDMARCAS.xlsx', index=False)
 
