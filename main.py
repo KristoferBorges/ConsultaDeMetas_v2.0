@@ -1,4 +1,5 @@
 from time import sleep
+from kivy.uix.scrollview import ScrollView
 import datetime
 import platform
 import pandas as pd
@@ -21,7 +22,7 @@ else:
     sistema_windows = False
 
 # Variável para testar inserções de dados
-teste = False
+teste = True
 
 
 class MenuPrincipal(Screen):
@@ -1260,7 +1261,45 @@ class ConsultaRDMarcas(Screen):
     """
     --> Opção que consulta a lista RD Marcas.
     """
-    pass
+
+    def mostrarLista(self):
+        df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
+        df_lista_RDMarcas = formataLista(lista=df_lista_RDMarcas, button='RD MARCAS')
+
+        # Cria um layout para a tabela
+        layout = BoxLayout(orientation='vertical', spacing=10)
+
+        # Cria um ScrollView para permitir a rolagem vertical
+        scrollview = ScrollView()
+
+        # Cria um BoxLayout para conter as labels da tabela
+        table_layout = BoxLayout(orientation='vertical', spacing=5, padding=10, size_hint_y=None)
+
+        # Obtém as colunas da tabela
+        columns = df_lista_RDMarcas.columns
+
+        # Cria labels para os nomes das colunas
+        header_labels = Label(font_size=15, text=''.join(['{:>10}{:>15}{:>15}{:>14}{:>15}{:>12}{:>16}'.format('DATA',
+                                                          'META', 'META.AC', 'VENDAS', 'VENDAS.AC', 'SOBRAS', 'P')]),
+                              size_hint_y=None, height=30)
+        table_layout.add_widget(header_labels)
+
+        # Itera pelas linhas e cria labels para os valores
+        for index, row in df_lista_RDMarcas.iterrows():
+            values = [str(row[column]) for column in columns]
+            row_labels = Label(font_size=15, text=''.join(['{:>19}'.format(value) for value in values]),
+                               size_hint_y=None, height=30)
+            table_layout.add_widget(row_labels)
+
+        # Define a altura do table_layout com base no número de linhas
+        table_layout.height = len(df_lista_RDMarcas) * 40
+
+        scrollview.add_widget(table_layout)
+        layout.add_widget(scrollview)
+
+        # Cria um Popup e define o seu conteúdo como o layout da tabela
+        popup = Popup(title='Tabela RD Marcas', content=layout, size_hint=(0.8, 0.8))
+        popup.open()
 
 
 class ConsultaPerfumaria(Screen):

@@ -1029,8 +1029,16 @@
         padding: 10
 
         Button:
-            text: 'VOLTAR'
+            text: 'MOSTRAR LISTA'
             font_size: 26
+            on_release:
+                root.mostrarLista()
+
+        Button:
+            text: 'VOLTAR'
+            font_size: 19
+            size_hint: (0.5, 0.4)
+            height: '50dp'
             on_release:
                 root.manager.current = 'consultarlistas'
 

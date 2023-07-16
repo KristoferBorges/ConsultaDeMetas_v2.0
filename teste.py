@@ -2,10 +2,16 @@ import pandas as pd
 import openpyxl
 import numpy as np
 from modulo import dateVerification
-
-# Define as opções de exibição
-pd.set_option('display.max_columns', None)  # Exibe todas as colunas
-pd.set_option('display.max_rows', None)  # Exibe todas as linhas
-pd.set_option('display.width', 1000)  # Largura máxima da exibição
+import subprocess
 
 
+def abrir_arquivo(caminho_arquivo):
+    try:
+        # Abre o arquivo usando o programa padrão associado a ele no sistema operacional
+        subprocess.Popen([caminho_arquivo], shell=True)
+    except Exception as e:
+        print(f"Ocorreu um erro ao abrir o arquivo: {e}")
+
+
+caminho = "storage\listaRDMarcas.xlsx"
+abrir_arquivo(caminho)
