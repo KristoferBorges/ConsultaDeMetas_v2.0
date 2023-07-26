@@ -1,4 +1,6 @@
-#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+
 
 <Button>:
     font_size:
@@ -9,7 +11,7 @@
 
 
 <ScreenManager>:
-    transition: FadeTransition()
+    transition: NoTransition()
     MenuPrincipal:
         id: menu_1
         name: 'menu_1'
