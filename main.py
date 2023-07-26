@@ -1272,27 +1272,38 @@ class ConsultaRDMarcas(Screen):
         # Cria um ScrollView para permitir a rolagem vertical
         scrollview = ScrollView()
 
-        # Cria um BoxLayout para conter as labels da tabela
-        table_layout = BoxLayout(orientation='vertical', spacing=5, padding=10, size_hint_y=None)
+        # Cria um BoxLayout para conter os labels do cabeçalho
+        header_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=30)
 
         # Obtém as colunas da tabela
         columns = df_lista_RDMarcas.columns
 
-        # Cria labels para os nomes das colunas
-        header_labels = Label(font_size=15, text=''.join(['{:>10}{:>15}{:>15}{:>14}{:>15}{:>12}{:>16}'.format('DATA',
-                                                          'META', 'META.AC', 'VENDAS', 'VENDAS.AC', 'SOBRAS', 'P')]),
-                              size_hint_y=None, height=30)
-        table_layout.add_widget(header_labels)
+        # Cria labels para os nomes das colunas e adiciona ao header_layout
+        for column in columns:
+            header_label = Label(font_size=16, text=column, size_hint_x=None, width=92, halign='left')
+            header_layout.add_widget(header_label)
+
+        # Adiciona o header_layout ao layout principal
+        layout.add_widget(header_layout)
+
+        # Cria um BoxLayout para conter as labels da tabela
+        table_layout = BoxLayout(orientation='vertical', spacing=5, padding=10, size_hint_y=None)
 
         # Itera pelas linhas e cria labels para os valores
         for index, row in df_lista_RDMarcas.iterrows():
+            # Cria um novo layout para cada linha da tabela
+            row_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=30)
+
             values = [str(row[column]) for column in columns]
-            row_labels = Label(font_size=15, text=''.join(['{:>19}'.format(value) for value in values]),
-                               size_hint_y=None, height=30)
-            table_layout.add_widget(row_labels)
+            for value in values:
+                # Adiciona cada valor em uma label separada dentro do novo layout
+                row_labels = Label(font_size=12, text=value, size_hint_x=None, width=90, halign='left')
+                row_layout.add_widget(row_labels)
+
+            table_layout.add_widget(row_layout)
 
         # Define a altura do table_layout com base no número de linhas
-        table_layout.height = len(df_lista_RDMarcas) * 40
+        table_layout.height = len(df_lista_RDMarcas) * 35
 
         scrollview.add_widget(table_layout)
         layout.add_widget(scrollview)
