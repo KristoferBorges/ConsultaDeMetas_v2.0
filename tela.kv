@@ -68,10 +68,6 @@
         id: consultadermo
         name: 'consultadermo'
 
-    ConsultaTodasAsListas:
-        id: consultatodasaslistas
-        name: 'consultatodasaslistas'
-
     CriarBackup:
         id: criarbackup
         name: 'criarbackup'
@@ -1009,14 +1005,6 @@
                 root.manager.current = 'consultadermo'
 
         Button:
-            text: 'TODAS AS LISTAS'
-            font_size: 26
-            color: 1, 1, 0, 1
-            size_hint: (0.0, 0.9)
-            on_release:
-                root.manager.current = 'consultatodasaslistas'
-
-        Button:
             text: 'VOLTAR'
             font_size: 26
             on_release:
@@ -1037,6 +1025,13 @@
                 root.mostrarLista()
 
         Button:
+            text: 'EDITAR'
+            font_size: 26
+            color: 1, 1, 0, 1
+            on_release:
+                root.manager.current = 'limparrd'
+
+        Button:
             text: 'VOLTAR'
             font_size: 19
             size_hint: (0.5, 0.4)
@@ -1051,6 +1046,19 @@
         padding: 10
 
         Button:
+            text: 'MOSTRAR LISTA'
+            font_size: 26
+            on_release:
+                root.mostrarLista()
+
+        Button:
+            text: 'EDITAR'
+            font_size: 26
+            color: 1, 1, 0, 1
+            on_release:
+                root.manager.current = 'limparperfumaria'
+
+        Button:
             text: 'VOLTAR'
             font_size: 26
             on_release:
@@ -1063,22 +1071,24 @@
         padding: 10
 
         Button:
-            text: 'VOLTAR'
+            text: 'MOSTRAR LISTA'
             font_size: 26
             on_release:
-                root.manager.current = 'consultarlistas'
+                root.mostrarLista()
 
-<ConsultaTodasAsListas>
-    GridLayout:
-        cols: 1
-        spacing: 6
-        padding: 10
+        Button:
+            text: 'EDITAR'
+            font_size: 26
+            color: 1, 1, 0, 1
+            on_release:
+                root.manager.current = 'limpardermo'
 
         Button:
             text: 'VOLTAR'
             font_size: 26
             on_release:
                 root.manager.current = 'consultarlistas'
+
 
 # Fim das opções do Menu principal  (CONSULTARLISTAS)
 

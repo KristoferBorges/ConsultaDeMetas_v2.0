@@ -1317,21 +1317,112 @@ class ConsultaPerfumaria(Screen):
     """
     --> Opção que consulta a lista Perfumaria.
     """
-    pass
+
+    def mostrarLista(self):
+        df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
+        df_lista_Perfumaria = formataLista(lista=df_lista_Perfumaria, button='PERFUMARIA')
+
+        # Cria um layout para a tabela
+        layout = BoxLayout(orientation='vertical', spacing=10)
+
+        # Cria um ScrollView para permitir a rolagem vertical
+        scrollview = ScrollView()
+
+        # Cria um BoxLayout para conter os labels do cabeçalho
+        header_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=30)
+
+        # Obtém as colunas da tabela
+        columns = df_lista_Perfumaria.columns
+
+        # Cria labels para os nomes das colunas e adiciona ao header_layout
+        for column in columns:
+            header_label = Label(font_size=16, text=column, size_hint_x=None, width=92, halign='left')
+            header_layout.add_widget(header_label)
+
+        # Adiciona o header_layout ao layout principal
+        layout.add_widget(header_layout)
+
+        # Cria um BoxLayout para conter as labels da tabela
+        table_layout = BoxLayout(orientation='vertical', spacing=5, padding=10, size_hint_y=None)
+
+        # Itera pelas linhas e cria labels para os valores
+        for index, row in df_lista_Perfumaria.iterrows():
+            # Cria um novo layout para cada linha da tabela
+            row_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=30)
+
+            values = [str(row[column]) for column in columns]
+            for value in values:
+                # Adiciona cada valor em uma label separada dentro do novo layout
+                row_labels = Label(font_size=12, text=value, size_hint_x=None, width=90, halign='left')
+                row_layout.add_widget(row_labels)
+
+            table_layout.add_widget(row_layout)
+
+        # Define a altura do table_layout com base no número de linhas
+        table_layout.height = len(df_lista_Perfumaria) * 35
+
+        scrollview.add_widget(table_layout)
+        layout.add_widget(scrollview)
+
+        # Cria um Popup e define o seu conteúdo como o layout da tabela
+        popup = Popup(title='Tabela Perfumaria', content=layout, size_hint=(0.8, 0.8))
+        popup.open()
 
 
 class ConsultaDermo(Screen):
     """
     --> Opção que consulta a lista Dermo.
     """
-    pass
 
+    def mostrarLista(self):
+        df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
+        df_lista_Dermo = formataLista(lista=df_lista_Dermo, button='DERMO')
 
-class ConsultaTodasAsListas(Screen):
-    """
-    --> Opção que consulta todas as listas.
-    """
-    pass
+        # Cria um layout para a tabela
+        layout = BoxLayout(orientation='vertical', spacing=10)
+
+        # Cria um ScrollView para permitir a rolagem vertical
+        scrollview = ScrollView()
+
+        # Cria um BoxLayout para conter os labels do cabeçalho
+        header_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=30)
+
+        # Obtém as colunas da tabela
+        columns = df_lista_Dermo.columns
+
+        # Cria labels para os nomes das colunas e adiciona ao header_layout
+        for column in columns:
+            header_label = Label(font_size=16, text=column, size_hint_x=None, width=92, halign='left')
+            header_layout.add_widget(header_label)
+
+        # Adiciona o header_layout ao layout principal
+        layout.add_widget(header_layout)
+
+        # Cria um BoxLayout para conter as labels da tabela
+        table_layout = BoxLayout(orientation='vertical', spacing=5, padding=10, size_hint_y=None)
+
+        # Itera pelas linhas e cria labels para os valores
+        for index, row in df_lista_Dermo.iterrows():
+            # Cria um novo layout para cada linha da tabela
+            row_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=30)
+
+            values = [str(row[column]) for column in columns]
+            for value in values:
+                # Adiciona cada valor em uma label separada dentro do novo layout
+                row_labels = Label(font_size=12, text=value, size_hint_x=None, width=90, halign='left')
+                row_layout.add_widget(row_labels)
+
+            table_layout.add_widget(row_layout)
+
+        # Define a altura do table_layout com base no número de linhas
+        table_layout.height = len(df_lista_Dermo) * 35
+
+        scrollview.add_widget(table_layout)
+        layout.add_widget(scrollview)
+
+        # Cria um Popup e define o seu conteúdo como o layout da tabela
+        popup = Popup(title='Tabela Dermo', content=layout, size_hint=(0.8, 0.8))
+        popup.open()
 
 
 class CriarBackup(Screen):
