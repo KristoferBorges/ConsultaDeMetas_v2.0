@@ -13,6 +13,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.properties import NumericProperty
 
 
 # Verifica se o usuário está usando Windows
@@ -22,12 +23,17 @@ if platform.system() == "Windows":
     font_row = 16
     font_button = 35
     font_text = 35
+    font_text_menu = 48
+    font_title = 60
+
 else:
     sistema_windows = False
     font_column = 20
     font_row = 18
     font_button = 55
     font_text = 45
+    font_text_menu = 78
+    font_title = 80
 
 # Variável para testar inserções de dados
 teste = False
@@ -38,7 +44,12 @@ class MenuPrincipal(Screen):
     Menu com as opções principais, NovosRegistros, LimparDados, ConsultaDeListas,
     Criar Backup e FecharPrograma.
     """
-    pass
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
 
 class NovosRegistros(Screen):
@@ -47,13 +58,25 @@ class NovosRegistros(Screen):
     lista que deseja inserir os dados,
     poderá escolher entre: RD Marcas, Perfumaria e Dermo.
     """
-    pass
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
 
 class RegistrosRDMarcas(Screen):
     """
     Opção do menu principal após clicar na opção de registros (RDMarcas).
     """
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def pega_input_rdmarcas(self):
         """
@@ -172,6 +195,13 @@ class RegistrosPerfumaria(Screen):
     Opção do menu principal após clicar na opção de registros (Perfumaria).
     """
 
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
+
     def pega_input_perfumaria(self):
         """
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'PERFUMARIA'.
@@ -288,6 +318,13 @@ class RegistrosDermo(Screen):
     """
     Opção do menu principal após clicar na opção de registros (Dermo).
     """
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def pega_input_dermo(self):
         """

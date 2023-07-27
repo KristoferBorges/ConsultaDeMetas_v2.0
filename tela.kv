@@ -84,35 +84,35 @@
 
         Button:
             text: 'NOVOS REGISTROS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'registros'
 
         Button:
             text: 'EDITAR | LIMPAR'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'limpardados'
 
         Button:
             text: 'CONSULTAR LISTAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'consultarlistas'
 
         Button:
             text: 'CRIAR BACKUP'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'criarbackup'
 
         Button:
             text: 'SAIR'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 0, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -128,27 +128,27 @@
 
         Label:
             text: 'REGISTROS'
-            font_size: 60
+            font_size: root.font_title
             orientation: 'horizontal'
             size_hint: (0.5, 0.5)
 
         Button:
             text: 'RD MARCAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'registrosrdmarcas'
 
         Button:
             text: 'PERFUMARIA'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'registrosperfumaria'
 
         Button:
             text: 'DERMO'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -156,7 +156,7 @@
 
         Button:
             text: 'VOLTAR'
-            font_size: 55
+            font_size: root.font_text_menu
             on_release:
                 root.manager.current = 'menu_1'
 
@@ -169,7 +169,7 @@
 
         Label:
             text: 'Preencha os campos (RD-MARCAS)'
-            font_size: 35
+            font_size: root.font_text
             color: 1, 1, 0, 1
             size_hint: (1, None)
             text_size: (None, None)
@@ -226,14 +226,14 @@
 
             Button:
                 text: 'VOLTAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.2)
                 on_release:
                     root.manager.current = 'registros'
 
             Button:
                 text: 'FINALIZAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.7, 0.2)
                 on_release:
                     root.pega_input_rdmarcas()
@@ -247,7 +247,7 @@
 
         Label:
             text: 'Preencha os campos (PERFUMARIA)'
-            font_size: 35
+            font_size: root.font_text
             color: 1, 1, 0, 1
             size_hint: (1, None)
             text_size: (None, None)
@@ -304,14 +304,14 @@
 
             Button:
                 text: 'VOLTAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.2)
                 on_release:
                     root.manager.current = 'registros'
 
             Button:
                 text: 'FINALIZAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.7, 0.2)
                 on_release:
                     root.pega_input_perfumaria()
@@ -325,7 +325,7 @@
 
         Label:
             text: 'Preencha os campos (DERMO)'
-            font_size: 35
+            font_size: root.font_text
             color: 1, 1, 0, 1
             size_hint: (1, None)
             text_size: (None, None)
@@ -398,14 +398,14 @@
 
             Button:
                 text: 'VOLTAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.2)
                 on_release:
                     root.manager.current = 'registros'
 
             Button:
                 text: 'FINALIZAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.7, 0.2)
                 on_release:
                     root.pega_input_dermo()
