@@ -421,27 +421,27 @@
 
         Label:
             text: 'EDITAR | LIMPAR'
-            font_size: 55
+            font_size: root.font_text_menu
             orientation: 'horizontal'
             size_hint: (0.5, 0.5)
 
         Button:
             text: 'RD MARCAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'limparrd'
 
         Button:
             text: 'PERFUMARIA'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'limparperfumaria'
 
         Button:
             text: 'DERMO'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -449,7 +449,7 @@
 
         Button:
             text: 'DELETAR LISTAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 0, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -457,7 +457,7 @@
 
         Button:
             text: 'VOLTAR'
-            font_size: 55
+            font_size: root.font_text_menu
             on_release:
                 root.manager.current = 'menu_1'
 
@@ -470,7 +470,7 @@
 
         Label:
             text: 'RD Marcas'
-            font_size: 45
+            font_size: root.font_title
             color: 1, 1, 0, 1
             size_hint: (1, None)
             text_size: (None, None)
@@ -574,7 +574,7 @@
 
             Button:
                 text: 'BUSCAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -582,7 +582,7 @@
 
             Button:
                 text: 'FAZER ALTERAÇÃO'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -605,7 +605,7 @@
 
             Button:
                 text: 'APAGAR LISTA'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (1, None)
                 height: '50dp'
                 color: 1, 0, 0, 1
@@ -618,7 +618,7 @@
 
             Button:
                 text: 'VOLTAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -633,7 +633,7 @@
 
         Label:
             text: 'Perfumaria'
-            font_size: 45
+            font_size: root.font_title
             color: 1, 1, 0, 1
             size_hint: (1, None)
             text_size: (None, None)
@@ -737,7 +737,7 @@
 
             Button:
                 text: 'BUSCAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -745,7 +745,7 @@
 
             Button:
                 text: 'FAZER ALTERAÇÃO'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -767,7 +767,7 @@
 
             Button:
                 text: 'APAGAR LISTA'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (1, None)
                 height: '50dp'
                 color: 1, 0, 0, 1
@@ -781,7 +781,7 @@
 
             Button:
                 text: 'VOLTAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -796,7 +796,7 @@
 
         Label:
             text: 'Dermo'
-            font_size: 45
+            font_size: root.font_title
             color: 1, 1, 0, 1
             size_hint: (1, None)
             text_size: (None, None)
@@ -916,7 +916,7 @@
 
             Button:
                 text: 'BUSCAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -924,7 +924,7 @@
 
             Button:
                 text: 'FAZER ALTERAÇÃO'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -946,7 +946,7 @@
 
             Button:
                 text: 'APAGAR LISTA'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (1, None)
                 height: '50dp'
                 color: 1, 0, 0, 1
@@ -959,7 +959,7 @@
 
             Button:
                 text: 'VOLTAR'
-                font_size: 55
+                font_size: root.font_button
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
@@ -977,27 +977,27 @@
 
         Label:
             text: 'CONSULTAR LISTAS'
-            font_size: 60
+            font_size: root.font_text_menu
             orientation: 'horizontal'
             size_hint: (0.5, 0.5)
 
         Button:
             text: 'RD MARCAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'consultardmarcas'
 
         Button:
             text: 'PERFUMARIA'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'consultaperfumaria'
 
         Button:
             text: 'DERMO'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -1005,7 +1005,7 @@
 
         Button:
             text: 'VOLTAR'
-            font_size: 55
+            font_size: root.font_text_menu
             on_release:
                 root.manager.current = 'menu_1'
 
@@ -1019,20 +1019,20 @@
 
         Button:
             text: 'MOSTRAR LISTA'
-            font_size: 70
+            font_size: root.font_button
             on_release:
                 root.mostrarLista()
 
         Button:
             text: 'EDITAR'
-            font_size: 70
+            font_size: root.font_button
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'limparrd'
 
         Button:
             text: 'VOLTAR'
-            font_size: 70
+            font_size: root.font_button
             size_hint: (0.5, 0.4)
             height: '50dp'
             on_release:
@@ -1046,20 +1046,20 @@
 
         Button:
             text: 'MOSTRAR LISTA'
-            font_size: 70
+            font_size: root.font_button
             on_release:
                 root.mostrarLista()
 
         Button:
             text: 'EDITAR'
-            font_size: 70
+            font_size: root.font_button
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'limparperfumaria'
 
         Button:
             text: 'VOLTAR'
-            font_size: 70
+            font_size: root.font_button
             on_release:
                 root.manager.current = 'consultarlistas'
 
@@ -1071,20 +1071,20 @@
 
         Button:
             text: 'MOSTRAR LISTA'
-            font_size: 70
+            font_size: root.font_button
             on_release:
                 root.mostrarLista()
 
         Button:
             text: 'EDITAR'
-            font_size: 70
+            font_size: root.font_button
             color: 1, 1, 0, 1
             on_release:
                 root.manager.current = 'limpardermo'
 
         Button:
             text: 'VOLTAR'
-            font_size: 70
+            font_size: root.font_button
             on_release:
                 root.manager.current = 'consultarlistas'
 
@@ -1107,7 +1107,7 @@
         Button:
             id: rdmarcas
             text: 'RD MARCAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.fazerBackup_popup(self.text)
@@ -1115,7 +1115,7 @@
         Button:
             id: perfumaria
             text: 'PERFUMARIA'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
                 root.fazerBackup_popup(self.text)
@@ -1123,7 +1123,7 @@
         Button:
             id: dermo
             text: 'DERMO'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -1132,7 +1132,7 @@
         Button:
             id: todas_listas
             text: 'TODAS AS LISTAS'
-            font_size: 55
+            font_size: root.font_text_menu
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
@@ -1140,7 +1140,7 @@
 
         Button:
             text: 'VOLTAR'
-            font_size: 55
+            font_size: root.font_text_menu
             on_release:
                 root.manager.current = 'menu_1'
 

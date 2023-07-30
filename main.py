@@ -451,6 +451,13 @@ class LimparDados(Screen):
     poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
     """
 
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
+
     def apagarLista_popup(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão das listas.
@@ -587,6 +594,13 @@ class LimparRD(Screen):
         self.df_lista_RDMarcas = None
         self.calc_lista_RDMarcas = None
         self.tipo_busca = None
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def apagarLista_popup_RDMarcas(self):
         """
@@ -822,6 +836,13 @@ class LimparPERFUMARIA(Screen):
         self.calc_lista_Perfumaria = None
         self.max_lines = None
 
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
+
     def apagarLista_popup_Perfumaria(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
@@ -1055,6 +1076,13 @@ class LimparDERMO(Screen):
         self.max_lines = None
         self.df_lista_Dermo = None
         self.calc_lista_Dermo = None
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def apagarLista_popup_Dermo(self):
         """
@@ -1299,13 +1327,26 @@ class ConsultaDeListas(Screen):
     lista que deseja consultar,
     poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
     """
-    pass
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
 
 class ConsultaRDMarcas(Screen):
     """
     --> Opção que consulta a lista RD Marcas.
     """
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def mostrarLista(self):
         df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
@@ -1363,6 +1404,13 @@ class ConsultaPerfumaria(Screen):
     --> Opção que consulta a lista Perfumaria.
     """
 
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
+
     def mostrarLista(self):
         df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
         df_lista_Perfumaria = formataLista(lista=df_lista_Perfumaria, button='PERFUMARIA')
@@ -1418,6 +1466,13 @@ class ConsultaDermo(Screen):
     """
     --> Opção que consulta a lista Dermo.
     """
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def mostrarLista(self):
         df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
@@ -1476,6 +1531,13 @@ class CriarBackup(Screen):
     lista que deseja fazer o backup,
     poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
     """
+
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
 
     def __init__(self, **kw):
         super().__init__()
