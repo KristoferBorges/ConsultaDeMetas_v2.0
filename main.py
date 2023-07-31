@@ -26,13 +26,6 @@ if platform.system() == "Windows":
     font_text_menu = 48
     font_title = 60
 
-    # Popup_size
-    popup_size_w = 475
-    popup_size_h = 300
-    button_popup_w = 100
-    button_popup_h = 50
-    large_button_popup_w = 430
-
 else:
     sistema_windows = False
     font_column = 20
@@ -41,13 +34,6 @@ else:
     font_text = 40
     font_text_menu = 60
     font_title = 80
-
-    # Popup_size
-    popup_size_w = 815
-    popup_size_h = 740
-    button_popup_w = 200
-    button_popup_h = 80
-    large_button_popup_w = 720
 
 # Variável para testar inserções de dados
 teste = False
@@ -91,11 +77,6 @@ class RegistrosRDMarcas(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
-
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
 
     def pega_input_rdmarcas(self):
         """
@@ -220,11 +201,6 @@ class RegistrosPerfumaria(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
-
     def pega_input_perfumaria(self):
         """
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'PERFUMARIA'.
@@ -347,11 +323,6 @@ class RegistrosDermo(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
-
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
 
     def pega_input_dermo(self):
         """
@@ -483,12 +454,6 @@ class LimparDados(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
-
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
-    large_button_popup_w = NumericProperty(large_button_popup_w)
 
     def apagarLista_popup(self):
         """
@@ -633,12 +598,6 @@ class LimparRD(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
-
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
-    large_button_popup_w = NumericProperty(large_button_popup_w)
 
     def apagarLista_popup_RDMarcas(self):
         """
@@ -881,12 +840,6 @@ class LimparPERFUMARIA(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
-    large_button_popup_w = NumericProperty(large_button_popup_w)
-
     def apagarLista_popup_Perfumaria(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
@@ -1127,12 +1080,6 @@ class LimparDERMO(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
-
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
-    large_button_popup_w = NumericProperty(large_button_popup_w)
 
     def apagarLista_popup_Dermo(self):
         """
@@ -1588,12 +1535,6 @@ class CriarBackup(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
-
-    popup_size_w = NumericProperty(popup_size_w)
-    popup_size_h = NumericProperty(popup_size_h)
-    button_popup_w = NumericProperty(button_popup_w)
-    button_popup_h = NumericProperty(button_popup_h)
-    large_button_popup_w = NumericProperty(large_button_popup_w)
 
     def __init__(self, **kw):
         super().__init__()
