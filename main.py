@@ -5,7 +5,7 @@ class Tela(App):
 
     def build(self):
         self.title = 'Consulta De Metas'
-        setup = Setup()
+        Setup()
         adm = ScreenManager()
         return adm
 
