@@ -1,5 +1,6 @@
 import platform
 import pandas as pd
+from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 from modulo import formataLista
 from modulo import popup_Confirmacao_Exclusao
@@ -413,6 +414,8 @@ class ConsultaRDMarcas(Screen):
     font_title = NumericProperty(font_title)
 
     def mostrarLista(self):
+        if sistema_windows:
+            Window.size = (1130, 810)
         df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
         df_lista_RDMarcas = formataLista(lista=df_lista_RDMarcas, button='RD MARCAS')
 

@@ -1,5 +1,6 @@
 import platform
 import pandas as pd
+from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 from modulo import formataLista
 from modulo import popup_Confirmacao_Exclusao
@@ -426,6 +427,8 @@ class ConsultaPerfumaria(Screen):
     font_title = NumericProperty(font_title)
 
     def mostrarLista(self):
+        if sistema_windows:
+            Window.size = (1130, 810)
         df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
         df_lista_Perfumaria = formataLista(lista=df_lista_Perfumaria, button='PERFUMARIA')
 
