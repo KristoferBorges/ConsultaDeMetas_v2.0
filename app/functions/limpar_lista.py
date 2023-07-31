@@ -1,15 +1,4 @@
-from modulo import popup_Confirmacao_Exclusao
-from time import sleep
-import platform
-import pandas as pd
-from modulo import popupError
-from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.popup import Popup
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.properties import NumericProperty
-from openpyxl import load_workbook
+from app import *
 
 # Verifica se o usuário está usando Windows
 if platform.system() == "Windows":
@@ -35,7 +24,7 @@ class LimparDados(Screen):
     """
     Opção para limpar dos dados, porém se faz necessário escolher as
     lista que deseja limpar os dados,
-    poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
+    poderá escolher entre: RD Marcas, Perfumaria, dermo ou todas ao mesmo tempo.
     """
 
     font_column = NumericProperty(font_column)
@@ -76,8 +65,8 @@ class LimparDados(Screen):
         try:
             # Exclusão RD MARCAS
             # Carrega o arquivo
-            lista = 'storage/listaRDMarcas.xlsx'
-            calculo = 'storage/lista_calc_RDMarcas.xlsx'
+            lista = db_rdmarcas
+            calculo = db_calc_rdmarcas
             bk_lista = load_workbook(lista)
             bk_calculo = load_workbook(calculo)
 
@@ -100,13 +89,13 @@ class LimparDados(Screen):
             calc_lista_RDMarcas = pd.read_excel(calculo)
 
             # Salva o arquivo com as alterações no DataFrame
-            df_lista_RDMarcas.to_excel('storage/listaRDMarcas.xlsx', index=False)
-            calc_lista_RDMarcas.to_excel('storage/lista_calc_RDMarcas.xlsx', index=False)
+            df_lista_RDMarcas.to_excel(db_rdmarcas, index=False)
+            calc_lista_RDMarcas.to_excel(db_calc_rdmarcas, index=False)
 
             # Exclusão PERFUMARIA
             # Carrega o arquivo
-            lista = 'storage/listaPerfumaria.xlsx'
-            calculo = 'storage/lista_calc_Perfumaria.xlsx'
+            lista = db_perfumaria
+            calculo = db_calc_perfumaria
             bk_lista = load_workbook(lista)
             bk_calculo = load_workbook(calculo)
 
@@ -129,13 +118,13 @@ class LimparDados(Screen):
             calc_lista_Perfumaria = pd.read_excel(calculo)
 
             # Salva o arquivo com as alterações no DataFrame
-            df_lista_Perfumaria.to_excel('storage/listaPerfumaria.xlsx', index=False)
-            calc_lista_Perfumaria.to_excel('storage/lista_calc_Perfumaria.xlsx', index=False)
+            df_lista_Perfumaria.to_excel(db_perfumaria, index=False)
+            calc_lista_Perfumaria.to_excel(db_calc_perfumaria, index=False)
 
-            # Exclusão Dermo
+            # Exclusão dermo
             # Carrega o arquivo
-            lista = 'storage/listaDermo.xlsx'
-            calculo = 'storage/lista_calc_Dermo.xlsx'
+            lista = db_dermo
+            calculo = db_calc_dermo
             bk_lista = load_workbook(lista)
             bk_calculo = load_workbook(calculo)
 
@@ -158,8 +147,8 @@ class LimparDados(Screen):
             calc_lista_Dermo = pd.read_excel(calculo)
 
             # Salva o arquivo com as alterações no DataFrame
-            df_lista_Dermo.to_excel('storage/listaDermo.xlsx', index=False)
-            calc_lista_Dermo.to_excel('storage/lista_calc_Dermo.xlsx', index=False)
+            df_lista_Dermo.to_excel(db_dermo, index=False)
+            calc_lista_Dermo.to_excel(db_calc_dermo, index=False)
 
             # POPUP DE FINALIZAÇÃO
             sleep(0.3)

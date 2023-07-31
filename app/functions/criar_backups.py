@@ -1,14 +1,4 @@
-import platform
-import datetime
-import pandas as pd
-from modulo import popupError, popup_Confirmacao_Backup
-from modulo import formataLista
-from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.popup import Popup
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.properties import NumericProperty
+from app import *
 
 # Variável para testar inserções de dados
 teste = False
@@ -37,7 +27,7 @@ class CriarBackup(Screen):
     """
     Opção para fazer backup dos dados existentes, porém se faz necessário escolher as
     lista que deseja fazer o backup,
-    poderá escolher entre: RD Marcas, Perfumaria, Dermo ou todas ao mesmo tempo.
+    poderá escolher entre: RD Marcas, Perfumaria, dermo ou todas ao mesmo tempo.
     """
 
     font_column = NumericProperty(font_column)
@@ -95,21 +85,21 @@ class CriarBackup(Screen):
 
             if self.button == 'RD MARCAS':
                 nomeArquivoRD = f"BackupRDMARCAS-{datahoje}-{horahoje}"
-                df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
+                df_lista_RDMarcas = pd.read_excel(db_rdmarcas)
                 df_lista_RDMarcas = formataLista(df_lista_RDMarcas, self.button)
-                df_lista_RDMarcas.to_excel(f'backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
+                df_lista_RDMarcas.to_excel(f'app/data/backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
 
             elif self.button == 'PERFUMARIA':
                 nomeArquivoPERFUMARIA = f"BackupPERFUMARIA-{datahoje}-{horahoje}"
-                df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
+                df_lista_Perfumaria = pd.read_excel(db_perfumaria)
                 df_lista_Perfumaria = formataLista(df_lista_Perfumaria, self.button)
-                df_lista_Perfumaria.to_excel(f'backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
+                df_lista_Perfumaria.to_excel(f'app/data/backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
 
             elif self.button == 'DERMO':
                 nomeArquivoDERMO = f"BackupDERMO-{datahoje}-{horahoje}"
-                df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
+                df_lista_Dermo = pd.read_excel(db_dermo)
                 df_lista_Dermo = formataLista(df_lista_Dermo, self.button)
-                df_lista_Dermo.to_excel(f'backup/Dermo/{nomeArquivoDERMO}.xlsx', index=False)
+                df_lista_Dermo.to_excel(f'app/data/backup/dermo/{nomeArquivoDERMO}.xlsx', index=False)
 
             popup_Confirmacao_Backup()
 
@@ -131,17 +121,17 @@ class CriarBackup(Screen):
             nomeArquivoPERFUMARIA = f"BackupPERFUMARIA-{datahoje}-{horahoje}"
             nomeArquivoDERMO = f"BackupDERMO-{datahoje}-{horahoje}"
 
-            df_lista_RDMarcas = pd.read_excel('storage/listaRDMarcas.xlsx')
-            df_lista_Perfumaria = pd.read_excel('storage/listaPerfumaria.xlsx')
-            df_lista_Dermo = pd.read_excel('storage/listaDermo.xlsx')
+            df_lista_RDMarcas = pd.read_excel(db_rdmarcas)
+            df_lista_Perfumaria = pd.read_excel(db_perfumaria)
+            df_lista_Dermo = pd.read_excel(db_dermo)
 
             df_lista_RDMarcas = formataLista(df_lista_RDMarcas, button='RD MARCAS')
             df_lista_Perfumaria = formataLista(df_lista_Perfumaria, button='PERFUMARIA')
             df_lista_Dermo = formataLista(df_lista_Dermo, button='DERMO')
 
-            df_lista_RDMarcas.to_excel(f'backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
-            df_lista_Perfumaria.to_excel(f'backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
-            df_lista_Dermo.to_excel(f'backup/Dermo/{nomeArquivoDERMO}.xlsx', index=False)
+            df_lista_RDMarcas.to_excel(f'app/data/backup/RDMarcas/{nomeArquivoRD}.xlsx', index=False)
+            df_lista_Perfumaria.to_excel(f'app/data/backup/Perfumaria/{nomeArquivoPERFUMARIA}.xlsx', index=False)
+            df_lista_Dermo.to_excel(f'app/data/backup/dermo/{nomeArquivoDERMO}.xlsx', index=False)
             popup_Confirmacao_Backup()
 
         except Exception as error:
