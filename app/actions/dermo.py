@@ -40,7 +40,7 @@ class RegistrosDermo(Screen):
     def pega_input_dermo(self):
         """
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'DERMO'.
-        :return: Retorna os dados devidamente formatados.
+        :return: Retorna os dados devidamente formatados .
         """
         try:
             data = self.ids.data_input.text
@@ -243,8 +243,8 @@ class LimparDermo(Screen):
         try:
             # Carregar o arquivo (O arquivo de calculo e o arquivo da lista de visualização)
             global linha_filtrada
-            self.calc_lista_Dermo = pd.read_excel(db_dermo)
-            self.df_lista_Dermo = pd.read_excel(db_calc_dermo)
+            self.calc_lista_Dermo = pd.read_excel(db_calc_dermo)
+            self.df_lista_Dermo = pd.read_excel(db_dermo)
 
             # Verifica a quantidade máxima de linhas dentro do arquivo
             self.max_lines = len(
