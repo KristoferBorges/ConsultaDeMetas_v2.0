@@ -1416,7 +1416,7 @@ class ConsultaRDMarcas(Screen):
 
         # Cria labels para os nomes das colunas e adiciona ao header_layout
         for column in columns:
-            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=116, halign='left')
+            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=104, halign='left')
             header_layout.add_widget(header_label)
 
         # Adiciona o header_layout ao layout principal
@@ -1433,7 +1433,7 @@ class ConsultaRDMarcas(Screen):
             values = [str(row[column]) for column in columns]
             for value in values:
                 # Adiciona cada valor em uma label separada dentro do novo layout
-                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=114, halign='left')
+                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=102, halign='left')
                 row_layout.add_widget(row_labels)
 
             table_layout.add_widget(row_layout)
@@ -1479,7 +1479,7 @@ class ConsultaPerfumaria(Screen):
 
         # Cria labels para os nomes das colunas e adiciona ao header_layout
         for column in columns:
-            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=116, halign='left')
+            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=104, halign='left')
             header_layout.add_widget(header_label)
 
         # Adiciona o header_layout ao layout principal
@@ -1496,7 +1496,7 @@ class ConsultaPerfumaria(Screen):
             values = [str(row[column]) for column in columns]
             for value in values:
                 # Adiciona cada valor em uma label separada dentro do novo layout
-                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=114, halign='left')
+                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=102, halign='left')
                 row_layout.add_widget(row_labels)
 
             table_layout.add_widget(row_layout)
@@ -1542,7 +1542,7 @@ class ConsultaDermo(Screen):
 
         # Cria labels para os nomes das colunas e adiciona ao header_layout
         for column in columns:
-            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=116, halign='left')
+            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=104, halign='left')
             header_layout.add_widget(header_label)
 
         # Adiciona o header_layout ao layout principal
@@ -1559,7 +1559,7 @@ class ConsultaDermo(Screen):
             values = [str(row[column]) for column in columns]
             for value in values:
                 # Adiciona cada valor em uma label separada dentro do novo layout
-                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=114, halign='left')
+                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=102, halign='left')
                 row_layout.add_widget(row_labels)
 
             table_layout.add_widget(row_layout)
@@ -1709,7 +1709,7 @@ class Tela(App):
 
     def build(self):
         if sistema_windows:
-            Window.size = (1130, 810)
+            Window.size = (1030, 810)
         self.title = 'ConsultaDeMetas_v2.0'
         adm = ScreenManager()
         return adm
