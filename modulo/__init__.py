@@ -17,6 +17,38 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 
+# Verifica se o usuário está usando Windows
+if platform.system() == "Windows":
+    sistema_windows = True
+    font_column = 18
+    font_row = 16
+    font_button = 35
+    font_text = 35
+    font_text_menu = 48
+    font_title = 60
+
+    # Popup_size
+    popup_size_w = 475
+    popup_size_h = 300
+    button_popup_w = 100
+    button_popup_h = 50
+    large_button_popup_w = 430
+
+else:
+    sistema_windows = False
+    font_column = 20
+    font_row = 25
+    font_button = 55
+    font_text = 45
+    font_text_menu = 78
+    font_title = 80
+
+    # Popup_size
+    popup_size_w = 815
+    popup_size_h = 740
+    button_popup_w = 200
+    button_popup_h = 80
+    large_button_popup_w = 720
 
 red = '\033[31m'
 green = '\033[32m'
@@ -265,13 +297,13 @@ def abatimento(meta, vendas):
 def popupError():
     content = BoxLayout(orientation='vertical', padding=10)
     label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
-    close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+    close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
     content.add_widget(label)
     content.add_widget(close_button)
 
     popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(None, None),
-                  size=(375, 200))
+                  size=(popup_size_w, popup_size_h))
     close_button.bind(on_release=popup.dismiss)
     popup.open()
 
@@ -279,12 +311,12 @@ def popupError():
 def popup_Confirmacao_Exclusao():
     content = BoxLayout(orientation='vertical', padding=10)
     label = Label(text="Exclusão Realizada com Sucesso!")
-    confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+    confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
     content.add_widget(label)
     content.add_widget(confirm_button)
 
-    popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+    popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
     confirm_button.bind(on_release=popup.dismiss)
     popup.open()
 
@@ -292,12 +324,12 @@ def popup_Confirmacao_Exclusao():
 def popup_Confirmacao_Backup():
     content = BoxLayout(orientation='vertical', padding=10)
     label = Label(text="Backup Realizado com Sucesso!")
-    confirm_button = Button(text='OK', size_hint=(None, None), size=(313, 50))
+    confirm_button = Button(text='OK', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
     content.add_widget(label)
     content.add_widget(confirm_button)
 
-    popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+    popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
     confirm_button.bind(on_release=popup.dismiss)
     popup.open()
 

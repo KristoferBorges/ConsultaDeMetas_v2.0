@@ -26,14 +26,28 @@ if platform.system() == "Windows":
     font_text_menu = 48
     font_title = 60
 
+    # Popup_size
+    popup_size_w = 475
+    popup_size_h = 300
+    button_popup_w = 100
+    button_popup_h = 50
+    large_button_popup_w = 430
+
 else:
     sistema_windows = False
     font_column = 20
-    font_row = 18
+    font_row = 19
     font_button = 55
     font_text = 45
     font_text_menu = 78
     font_title = 80
+
+    # Popup_size
+    popup_size_w = 815
+    popup_size_h = 740
+    button_popup_w = 200
+    button_popup_h = 80
+    large_button_popup_w = 720
 
 # Variável para testar inserções de dados
 teste = False
@@ -77,6 +91,11 @@ class RegistrosRDMarcas(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
 
     def pega_input_rdmarcas(self):
         """
@@ -162,13 +181,13 @@ class RegistrosRDMarcas(Screen):
                 label = Label(text=f'Resumo Acumulado (RD-Marcas)\n\n'
                                    f'Meta: R$ {metaAC:.2f}\nVendas: R$ {vendaAC:.2f}\n'
                                    f'Sobras: {devedor}R$ {sobras:.2f}\nSituação: {situacao}\n')
-                close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
                 content.add_widget(label)
                 content.add_widget(close_button)
 
                 popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None),
-                              size=(360, 280))
+                              size=(popup_size_w, popup_size_h))
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
 
@@ -176,12 +195,12 @@ class RegistrosRDMarcas(Screen):
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -201,6 +220,11 @@ class RegistrosPerfumaria(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
 
     def pega_input_perfumaria(self):
         """
@@ -286,13 +310,13 @@ class RegistrosPerfumaria(Screen):
                 label = Label(text=f'Resumo Acumulado (PERFUMARIA)\n\n'
                                    f'Meta: R$ {metaAC:.2f}\nVendas: R$ {vendaAC:.2f}\n'
                                    f'Sobras: {devedor}R$ {sobras:.2f}\nSituação: {situacao}\n')
-                close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
                 content.add_widget(label)
                 content.add_widget(close_button)
 
                 popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None),
-                              size=(360, 280))
+                              size=(popup_size_w, popup_size_h))
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
 
@@ -300,12 +324,12 @@ class RegistrosPerfumaria(Screen):
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -325,6 +349,11 @@ class RegistrosDermo(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
 
     def pega_input_dermo(self):
         """
@@ -416,13 +445,13 @@ class RegistrosDermo(Screen):
                 label = Label(text=f'Resumo Acumulado (DERMO)\n\n'
                                    f'Meta: R$ {metaAC:.2f}\nVendas: R$ {vendaAC:.2f}\nPeças: {pecaAC} Un\n'
                                    f'Sobras: {devedor}R$ {sobras:.2f}\nSituação: {situacao}\n')
-                close_button = Button(text='Fechar', size_hint=(None, None), size=(313, 50))
+                close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
                 content.add_widget(label)
                 content.add_widget(close_button)
 
                 popup = Popup(title='Dados armazenados com Sucesso!', content=content, size_hint=(None, None),
-                              size=(360, 280))
+                              size=(popup_size_w, popup_size_h))
                 close_button.bind(on_release=popup.dismiss)
                 popup.open()
 
@@ -430,12 +459,12 @@ class RegistrosDermo(Screen):
             print(error)
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Campos não preenchidos!')
-            close_button = Button(text='Fechar', size_hint=(None, None), size=(100, 50))
+            close_button = Button(text='Fechar', size_hint=(None, None), size=(button_popup_w, button_popup_h))
 
             content.add_widget(label)
             content.add_widget(close_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(375, 200))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
             close_button.bind(on_release=popup.dismiss)
             popup.open()
 
@@ -458,6 +487,12 @@ class LimparDados(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
+    large_button_popup_w = NumericProperty(large_button_popup_w)
+
     def apagarLista_popup(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão das listas.
@@ -466,14 +501,14 @@ class LimparDados(Screen):
         content = BoxLayout(orientation='vertical', padding=10)
         label = Label(text='Confirma a exclusão das Listas?')
 
-        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
-        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
         content.add_widget(label)
         content.add_widget(close_button)
         content.add_widget(confirm_button)
 
-        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
 
         close_button.bind(on_release=popup.dismiss)
 
@@ -602,22 +637,28 @@ class LimparRD(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
+    large_button_popup_w = NumericProperty(large_button_popup_w)
+
     def apagarLista_popup_RDMarcas(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
-        label = Label(text='Confirma a exclusão da Lista RD Marcas?')
+        label = Label(text='Confirma a exclusão da Lista\nRD Marcas?')
 
-        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
-        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
         content.add_widget(label)
         content.add_widget(close_button)
         content.add_widget(confirm_button)
 
-        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
 
         close_button.bind(on_release=popup.dismiss)
 
@@ -843,22 +884,28 @@ class LimparPERFUMARIA(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
+    large_button_popup_w = NumericProperty(large_button_popup_w)
+
     def apagarLista_popup_Perfumaria(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão da lista.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
-        label = Label(text='Confirma a exclusão da Lista Perfumaria?')
+        label = Label(text='Confirma a exclusão da Lista\nPerfumaria?')
 
-        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
-        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
         content.add_widget(label)
         content.add_widget(close_button)
         content.add_widget(confirm_button)
 
-        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
 
         close_button.bind(on_release=popup.dismiss)
 
@@ -1084,22 +1131,28 @@ class LimparDERMO(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
+    large_button_popup_w = NumericProperty(large_button_popup_w)
+
     def apagarLista_popup_Dermo(self):
         """
         --> Função que mostra um Popup de confirmação antes de prosseguir com a exclusão das listas.
         """
 
         content = BoxLayout(orientation='vertical', padding=10)
-        label = Label(text='Confirma a exclusão da Lista Dermo?')
+        label = Label(text='Confirma a exclusão da Lista\nDermo?')
 
-        close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
-        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+        close_button = Button(text='Cancelar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
+        confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
         content.add_widget(label)
         content.add_widget(close_button)
         content.add_widget(confirm_button)
 
-        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+        popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
 
         close_button.bind(on_release=popup.dismiss)
 
@@ -1366,7 +1419,7 @@ class ConsultaRDMarcas(Screen):
 
         # Cria labels para os nomes das colunas e adiciona ao header_layout
         for column in columns:
-            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=92, halign='left')
+            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=100, halign='left')
             header_layout.add_widget(header_label)
 
         # Adiciona o header_layout ao layout principal
@@ -1383,7 +1436,7 @@ class ConsultaRDMarcas(Screen):
             values = [str(row[column]) for column in columns]
             for value in values:
                 # Adiciona cada valor em uma label separada dentro do novo layout
-                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=90, halign='left')
+                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=98, halign='left')
                 row_layout.add_widget(row_labels)
 
             table_layout.add_widget(row_layout)
@@ -1429,7 +1482,7 @@ class ConsultaPerfumaria(Screen):
 
         # Cria labels para os nomes das colunas e adiciona ao header_layout
         for column in columns:
-            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=92, halign='left')
+            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=100, halign='left')
             header_layout.add_widget(header_label)
 
         # Adiciona o header_layout ao layout principal
@@ -1446,7 +1499,7 @@ class ConsultaPerfumaria(Screen):
             values = [str(row[column]) for column in columns]
             for value in values:
                 # Adiciona cada valor em uma label separada dentro do novo layout
-                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=90, halign='left')
+                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=98, halign='left')
                 row_layout.add_widget(row_labels)
 
             table_layout.add_widget(row_layout)
@@ -1492,7 +1545,7 @@ class ConsultaDermo(Screen):
 
         # Cria labels para os nomes das colunas e adiciona ao header_layout
         for column in columns:
-            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=92, halign='left')
+            header_label = Label(font_size=font_column, text=column, size_hint_x=None, width=100, halign='left')
             header_layout.add_widget(header_label)
 
         # Adiciona o header_layout ao layout principal
@@ -1509,7 +1562,7 @@ class ConsultaDermo(Screen):
             values = [str(row[column]) for column in columns]
             for value in values:
                 # Adiciona cada valor em uma label separada dentro do novo layout
-                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=90, halign='left')
+                row_labels = Label(font_size=font_row, text=value, size_hint_x=None, width=98, halign='left')
                 row_layout.add_widget(row_labels)
 
             table_layout.add_widget(row_layout)
@@ -1521,7 +1574,7 @@ class ConsultaDermo(Screen):
         layout.add_widget(scrollview)
 
         # Cria um Popup e define o seu conteúdo como o layout da tabela
-        popup = Popup(title='Tabela Dermo', content=layout, size_hint=(0.8, 0.8))
+        popup = Popup(title='Tabela Dermo', content=layout, size_hint=(0.9, 0.8))
         popup.open()
 
 
@@ -1539,6 +1592,12 @@ class CriarBackup(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    popup_size_w = NumericProperty(popup_size_w)
+    popup_size_h = NumericProperty(popup_size_h)
+    button_popup_w = NumericProperty(button_popup_w)
+    button_popup_h = NumericProperty(button_popup_h)
+    large_button_popup_w = NumericProperty(large_button_popup_w)
+
     def __init__(self, **kw):
         super().__init__()
         self.button = None
@@ -1553,14 +1612,14 @@ class CriarBackup(Screen):
             content = BoxLayout(orientation='vertical', padding=10)
             label = Label(text='Confirma o Backup?')
 
-            close_button = Button(text='Cancelar', size_hint=(None, None), size=(313, 50))
-            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(313, 50))
+            close_button = Button(text='Cancelar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
+            confirm_button = Button(text='Confirmar', size_hint=(None, None), size=(large_button_popup_w, button_popup_h))
 
             content.add_widget(label)
             content.add_widget(close_button)
             content.add_widget(confirm_button)
 
-            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(360, 280))
+            popup = Popup(title='Aviso', content=content, size_hint=(None, None), size=(popup_size_w, popup_size_h))
 
             close_button.bind(on_release=popup.dismiss)
 
