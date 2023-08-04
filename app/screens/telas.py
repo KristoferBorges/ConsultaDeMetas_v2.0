@@ -48,6 +48,7 @@ class NovosRegistros(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+
 class RegistrosDermoTela(Screen):
         """
         Opção do menu principal após clicar na opção de registros (dermo).

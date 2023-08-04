@@ -65,6 +65,7 @@ db_calc_perfumaria = "app/data/db_calc_perfumaria.xlsx"
 db_rdmarcas = "app/data/db_rdmarcas.xlsx"
 db_calc_rdmarcas = "app/data/db_calc_rdmarcas.xlsx"
 
+
 def dateVerification(data):
     """
     --> Pedido do cliente: 'Preciso que o sistema pegue o dia de ontem baseado na data atual'.

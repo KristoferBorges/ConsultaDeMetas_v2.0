@@ -35,8 +35,6 @@ class RegistrosDermo(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
-
-
     def pega_input_dermo(self):
         """
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'DERMO'.
