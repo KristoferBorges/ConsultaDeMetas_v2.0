@@ -1,4 +1,15 @@
-from app import *
+import platform
+import pandas as pd
+from time import sleep
+from kivy.properties import NumericProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import Screen
+from openpyxl.reader.excel import load_workbook
+from app import db_rdmarcas, db_calc_rdmarcas, db_perfumaria, db_calc_perfumaria, db_dermo, db_calc_dermo, \
+    popup_Confirmacao_Exclusao, popupError
 
 # Verifica se o usuário está usando Windows
 if platform.system() == "Windows":

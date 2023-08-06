@@ -1,4 +1,13 @@
-from app import *
+import platform
+from datetime import datetime
+import pandas as pd
+from kivy.properties import NumericProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import Screen
+from app import db_rdmarcas, db_perfumaria, db_dermo, popupError, formataLista, popup_Confirmacao_Backup
 
 # Variável para testar inserções de dados
 teste = False
@@ -77,9 +86,9 @@ class CriarBackup(Screen):
     def realizarBackup(self):
         try:
             # Pega a data formatada no dia atual
-            hora = datetime.datetime.now()
-            date = datetime.datetime.now()
-            date = datetime.datetime.date(date)
+            hora = datetime.now()
+            date = datetime.now()
+            date = datetime.date(date)
             datahoje = date.strftime("%d-%m-%Y")
             horahoje = hora.strftime("%H;%M;%S")
 
@@ -111,9 +120,9 @@ class CriarBackup(Screen):
     def realizarBackup_All():
         try:
             # Pega a data formatada no dia atual
-            hora = datetime.datetime.now()
-            date = datetime.datetime.now()
-            date = datetime.datetime.date(date)
+            hora = datetime.now()
+            date = datetime.now()
+            date = datetime.date(date)
             datahoje = date.strftime("%d-%m-%Y")
             horahoje = hora.strftime("%H;%M;%S")
 

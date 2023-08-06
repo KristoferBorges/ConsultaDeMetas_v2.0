@@ -1,4 +1,17 @@
-from app import *
+import platform
+import pandas as pd
+from time import sleep
+from kivy.core.window import Window
+from kivy.properties import NumericProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import Screen
+from kivy.uix.scrollview import ScrollView
+from openpyxl.reader.excel import load_workbook
+from app import db_rdmarcas, db_calc_rdmarcas, popup_Confirmacao_Exclusao, popupError, dateVerification, abatimento, \
+    formataLista
 
 # Variável para testar inserções de dados
 teste = False

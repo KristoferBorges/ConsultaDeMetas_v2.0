@@ -1,31 +1,12 @@
 # Cores
-import sys
-import random
 import datetime
-import pandas
-from kivy.uix.boxlayout import BoxLayout
-from time import sleep
 import platform
-import pandas as pd
 import numpy as np
-from openpyxl import load_workbook
-from kivy.app import App
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.core.window import Window
-from kivy.uix.scrollview import ScrollView
-from time import sleep
-from openpyxl import load_workbook
-from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.popup import Popup
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.properties import NumericProperty
+
 
 # Verifica se o usuário está usando Windows
 if platform.system() == "Windows":
