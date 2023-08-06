@@ -50,13 +50,13 @@ class NovosRegistros(Screen):
 
 
 class RegistrosDermoTela(Screen):
-        """
-        Opção do menu principal após clicar na opção de registros (dermo).
-        """
+    """
+    Opção do menu principal após clicar na opção de registros (dermo).
+    """
 
-        font_column = NumericProperty(font_column)
-        font_row = NumericProperty(font_row)
-        font_button = NumericProperty(font_button)
-        font_text = NumericProperty(font_text)
-        font_text_menu = NumericProperty(font_text_menu)
-        font_title = NumericProperty(font_title)
+    font_column = NumericProperty(font_column)
+    font_row = NumericProperty(font_row)
+    font_button = NumericProperty(font_button)
+    font_text = NumericProperty(font_text)
+    font_text_menu = NumericProperty(font_text_menu)
+    font_title = NumericProperty(font_title)
