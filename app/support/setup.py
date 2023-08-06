@@ -11,6 +11,7 @@ from app.functions.consultar_listas import ConsultaDeListas
 from app.functions.criar_backups import CriarBackup
 from app.functions.fechar_programa import FecharPrograma
 
+
 class Setup:
     def __init__(self):
         # Verifica se o usuário está usando Windows
