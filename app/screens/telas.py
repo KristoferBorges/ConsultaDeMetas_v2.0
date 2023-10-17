@@ -1,6 +1,7 @@
 import platform
 from kivy.uix.screenmanager import Screen
 from kivy.properties import NumericProperty
+from app import click_button, back_button
 
 # Verifica se o usuário está usando Windows
 if platform.system() == "Windows":
@@ -34,6 +35,9 @@ class MenuPrincipal(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    def pressButton(self):
+        click_button.play()
+
 
 class NovosRegistros(Screen):
     """
@@ -48,6 +52,8 @@ class NovosRegistros(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    def pressButton(self):
+        click_button.play()
 
 class RegistrosDermoTela(Screen):
     """
@@ -60,3 +66,6 @@ class RegistrosDermoTela(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()

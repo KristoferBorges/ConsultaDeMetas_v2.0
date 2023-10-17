@@ -12,6 +12,7 @@ from kivy.uix.scrollview import ScrollView
 from openpyxl.reader.excel import load_workbook
 from app import db_rdmarcas, db_calc_rdmarcas, popup_Confirmacao_Exclusao, popupError, dateVerification, abatimento, \
     formataLista
+from app import click_button, back_button
 
 # Variável para testar inserções de dados
 teste = False
