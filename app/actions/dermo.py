@@ -441,6 +441,12 @@ class ConsultaDermo(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
+
     def mostrarLista(self):
         if sistema_windows:
             Window.size = (1130, 810)

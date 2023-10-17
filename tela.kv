@@ -1018,6 +1018,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'consultardmarcas'
 
         Button:
@@ -1025,6 +1026,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'consultaperfumaria'
 
         Button:
@@ -1033,12 +1035,14 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
+                root.pressButton()
                 root.manager.current = 'consultadermo'
 
         Button:
             text: 'VOLTAR'
             font_size: root.font_text_menu
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'menu_1'
 
 
@@ -1060,6 +1064,7 @@
             font_size: root.font_button
             size_hint: (0.5, 0.5)
             on_release:
+                root.pressButton()
                 root.mostrarLista()
 
         Button:
@@ -1068,6 +1073,7 @@
             size_hint: (0.3, 0.3)
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'limparrd'
 
         Button:
@@ -1076,7 +1082,9 @@
             size_hint: (0.3, 0.3)
             height: '50dp'
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'consultarlistas'
+
 
 <ConsultaPerfumaria>
     GridLayout:
@@ -1095,6 +1103,7 @@
             font_size: root.font_button
             size_hint: (0.5, 0.5)
             on_release:
+                root.pressButton()
                 root.mostrarLista()
 
         Button:
@@ -1103,6 +1112,7 @@
             size_hint: (0.3, 0.3)
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'limparperfumaria'
 
         Button:
@@ -1111,6 +1121,7 @@
             size_hint: (0.3, 0.3)
             height: '50dp'
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'consultarlistas'
 
 <ConsultaDermo>
@@ -1130,6 +1141,7 @@
             font_size: root.font_button
             size_hint: (0.5, 0.5)
             on_release:
+                root.pressButton()
                 root.mostrarLista()
 
         Button:
@@ -1138,6 +1150,7 @@
             size_hint: (0.3, 0.3)
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'limpardermo'
 
         Button:
@@ -1146,6 +1159,7 @@
             size_hint: (0.3, 0.3)
             height: '50dp'
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'consultarlistas'
 
 
@@ -1170,6 +1184,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.fazerBackup_popup(self.text)
 
         Button:
@@ -1178,6 +1193,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.fazerBackup_popup(self.text)
 
         Button:
@@ -1187,6 +1203,7 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
+                root.pressButton()
                 root.fazerBackup_popup(self.text)
 
         Button:
@@ -1196,12 +1213,14 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
+                root.pressButton()
                 root.fazerBackup_popup(self.text)
 
         Button:
             text: 'VOLTAR'
             font_size: root.font_text_menu
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'menu_1'
 
 # Fim das opções do Menu principal  (FAZERBACKUP)

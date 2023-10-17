@@ -1,6 +1,7 @@
 import platform
 from kivy.uix.screenmanager import Screen
 from kivy.properties import NumericProperty
+from app import click_button, back_button
 
 # Variável para testar inserções de dados
 teste = False
@@ -38,3 +39,9 @@ class ConsultaDeListas(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()

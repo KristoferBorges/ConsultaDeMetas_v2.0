@@ -8,6 +8,7 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from app import db_rdmarcas, db_perfumaria, db_dermo, popupError, formataLista, popup_Confirmacao_Backup
+from app import click_button, back_button
 
 # Variável para testar inserções de dados
 teste = False
@@ -45,6 +46,12 @@ class CriarBackup(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
 
     def __init__(self, **kw):
         super().__init__()
