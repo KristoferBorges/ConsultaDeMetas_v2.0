@@ -55,6 +55,10 @@ class NovosRegistros(Screen):
     def pressButton(self):
         click_button.play()
 
+    def pressBackButton(self):
+        back_button.play()
+
+
 class RegistrosDermoTela(Screen):
     """
     Opção do menu principal após clicar na opção de registros (dermo).

@@ -49,6 +49,12 @@ class RegistrosRDMarcas(Screen):
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
 
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
+
     def pega_input_rdmarcas(self):
         """
         --> Função para pegar os dados inseridos na opção 'REGISTROS' -> 'RDMARCAS'.
@@ -178,6 +184,12 @@ class LimparRD(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
 
     def apagarLista_popup_RDMarcas(self):
         """

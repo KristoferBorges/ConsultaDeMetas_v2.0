@@ -142,6 +142,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'registrosrdmarcas'
 
         Button:
@@ -149,6 +150,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'registrosperfumaria'
 
         Button:
@@ -157,12 +159,14 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
+                root.pressButton()
                 root.manager.current = 'registrosdermo'
 
         Button:
             text: 'VOLTAR'
             font_size: root.font_text_menu
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'menu_1'
 
 
@@ -234,6 +238,7 @@
                 font_size: root.font_button
                 size_hint: (0.5, 0.2)
                 on_release:
+                    root.pressBackButton()
                     root.manager.current = 'registros'
 
             Button:
@@ -241,6 +246,7 @@
                 font_size: root.font_button
                 size_hint: (0.7, 0.2)
                 on_release:
+                    root.pressButton()
                     root.pega_input_rdmarcas()
 
 
@@ -312,6 +318,7 @@
                 font_size: root.font_button
                 size_hint: (0.5, 0.2)
                 on_release:
+                    root.pressBackButton()
                     root.manager.current = 'registros'
 
             Button:
@@ -319,6 +326,7 @@
                 font_size: root.font_button
                 size_hint: (0.7, 0.2)
                 on_release:
+                    root.pressButton()
                     root.pega_input_perfumaria()
 
 
@@ -406,6 +414,7 @@
                 font_size: root.font_button
                 size_hint: (0.5, 0.2)
                 on_release:
+                    root.pressBackButton()
                     root.manager.current = 'registros'
 
             Button:
@@ -413,7 +422,9 @@
                 font_size: root.font_button
                 size_hint: (0.7, 0.2)
                 on_release:
+                    root.pressButton()
                     root.pega_input_dermo()
+
 
 # Fim das opções do Menu principal  (REGISTROS)
 
@@ -435,6 +446,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'limparrd'
 
         Button:
@@ -442,6 +454,7 @@
             font_size: root.font_text_menu
             color: 1, 1, 0, 1
             on_release:
+                root.pressButton()
                 root.manager.current = 'limparperfumaria'
 
         Button:
@@ -450,6 +463,7 @@
             color: 1, 1, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
+                root.pressButton()
                 root.manager.current = 'limpardermo'
 
         Button:
@@ -458,12 +472,14 @@
             color: 1, 0, 0, 1
             size_hint: (0.0, 0.9)
             on_release:
+                root.pressButton()
                 root.apagarLista_popup()
 
         Button:
             text: 'VOLTAR'
             font_size: root.font_text_menu
             on_release:
+                root.pressBackButton()
                 root.manager.current = 'menu_1'
 
 
@@ -583,6 +599,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressButton()
                     root.buscarPesquisa()
 
             Button:
@@ -591,6 +608,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressButton()
                     root.executarAlteracao()
 
         BoxLayout:
@@ -616,6 +634,7 @@
                 color: 1, 0, 0, 1
                 pos_hint: {'center_x': 0.5, 'y': -0.6}
                 on_release:
+                    root.pressButton()
                     root.apagarLista_popup_RDMarcas()
 
         BoxLayout:
@@ -627,6 +646,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressBackButton()
                     root.manager.current = 'limpardados'
 
 
@@ -746,6 +766,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressButton()
                     root.buscarPesquisa()
 
             Button:
@@ -754,6 +775,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressButton()
                     root.executarAlteracao()
 
         BoxLayout:
@@ -777,8 +799,8 @@
                 height: '50dp'
                 color: 1, 0, 0, 1
                 pos_hint: {'center_x': 0.5, 'y': -0.6}
-
                 on_release:
+                    root.pressButton()
                     root.apagarLista_popup_Perfumaria()
 
         BoxLayout:
@@ -790,6 +812,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressBackButton()
                     root.manager.current = 'limpardados'
 
 
@@ -925,6 +948,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressButton()
                     root.buscarPesquisa()
 
             Button:
@@ -933,6 +957,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressButton()
                     root.executarAlteracao()
 
         BoxLayout:
@@ -957,6 +982,7 @@
                 color: 1, 0, 0, 1
                 pos_hint: {'center_x': 0.5, 'y': -0.6}
                 on_release:
+                    root.pressButton()
                     root.apagarLista_popup_Dermo()
 
         BoxLayout:
@@ -968,6 +994,7 @@
                 size_hint: (0.5, 0.4)
                 height: '50dp'
                 on_release:
+                    root.pressBackButton()
                     root.manager.current = 'limpardados'
 
 

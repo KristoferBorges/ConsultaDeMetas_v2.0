@@ -12,6 +12,7 @@ from kivy.uix.scrollview import ScrollView
 from openpyxl.reader.excel import load_workbook
 from app import popup_Confirmacao_Exclusao, popupError, dateVerification, abatimento, formataLista, db_perfumaria, \
     db_calc_perfumaria
+from app import click_button, back_button
 
 # Variável para testar inserções de dados
 teste = False
@@ -35,20 +36,6 @@ else:
     font_text_menu = 60
     font_title = 80
 
-
-class RegistrosRDMarcas(Screen):
-    """
-    Opção do menu principal após clicar na opção de registros (RDMarcas).
-    """
-
-    font_column = NumericProperty(font_column)
-    font_row = NumericProperty(font_row)
-    font_button = NumericProperty(font_button)
-    font_text = NumericProperty(font_text)
-    font_text_menu = NumericProperty(font_text_menu)
-    font_title = NumericProperty(font_title)
-
-
 class RegistrosPerfumaria(Screen):
     """
     Opção do menu principal após clicar na opção de registros (Perfumaria).
@@ -60,6 +47,13 @@ class RegistrosPerfumaria(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
+
 
     def pega_input_perfumaria(self):
         """
@@ -190,6 +184,13 @@ class LimparPerfumaria(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
+
 
     def apagarLista_popup_Perfumaria(self):
         """

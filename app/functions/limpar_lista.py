@@ -10,6 +10,7 @@ from kivy.uix.screenmanager import Screen
 from openpyxl.reader.excel import load_workbook
 from app import db_rdmarcas, db_calc_rdmarcas, db_perfumaria, db_calc_perfumaria, db_dermo, db_calc_dermo, \
     popup_Confirmacao_Exclusao, popupError
+from app import click_button, back_button
 
 # Verifica se o usuário está usando Windows
 if platform.system() == "Windows":
@@ -44,6 +45,12 @@ class LimparDados(Screen):
     font_text = NumericProperty(font_text)
     font_text_menu = NumericProperty(font_text_menu)
     font_title = NumericProperty(font_title)
+
+    def pressButton(self):
+        click_button.play()
+
+    def pressBackButton(self):
+        back_button.play()
 
     def apagarLista_popup(self):
         """
