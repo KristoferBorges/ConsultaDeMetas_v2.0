@@ -2,11 +2,12 @@
 import datetime
 import platform
 import numpy as np
+import os
+from pygame import mixer
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-
 
 # Verifica se o usuário está usando Windows
 if platform.system() == "Windows":
@@ -34,6 +35,17 @@ ciano = '\033[36m'
 normal = '\033[m'
 roxo = '\033[35m'
 rosa = '\033[95m'
+
+# Caminhos absolutos para sons
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+
+caminho_click_button = os.path.join(diretorio_atual, 'media', 'sounds', 'click_button.mp3')
+caminho_back_button = os.path.join(diretorio_atual, 'media', 'sounds', 'back_button.MP3')
+
+# Sounds
+mixer.init()
+click_button = mixer.Sound(caminho_click_button)
+back_button = mixer.Sound(caminho_back_button)
 
 # Caminho para o arquivo Excel
 
