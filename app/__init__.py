@@ -101,6 +101,10 @@ def abatimento(meta, vendas):
 
 
 def popupError():
+    def close_popup_and_play_sound(instance):
+        popup.dismiss()
+        click_button.play()
+
     content = BoxLayout(orientation='vertical', padding=10)
     label = Label(text='Erro de execução!\n(O procedimento pode não ter sido realizado).')
     close_button = Button(text='Fechar', size_hint=(1.0, 0.2))
@@ -109,11 +113,15 @@ def popupError():
     content.add_widget(close_button)
 
     popup = Popup(title='Exceção encontrada (Abra um chamado)>', content=content, size_hint=(0.5, 0.5))
-    close_button.bind(on_release=popup.dismiss)
+    close_button.bind(on_release=close_popup_and_play_sound)
     popup.open()
 
 
 def popup_Confirmacao_Exclusao():
+    def close_popup_and_play_sound(instance):
+        popup.dismiss()
+        click_button.play()
+
     content = BoxLayout(orientation='vertical', padding=10)
     label = Label(text="Exclusão Realizada com Sucesso!")
     confirm_button = Button(text='Confirmar', size_hint=(1.0, 0.2))
@@ -122,11 +130,15 @@ def popup_Confirmacao_Exclusao():
     content.add_widget(confirm_button)
 
     popup = Popup(title='Aviso', content=content, size_hint=(0.7, 0.5))
-    confirm_button.bind(on_release=popup.dismiss)
+    confirm_button.bind(on_release=close_popup_and_play_sound)
     popup.open()
 
 
 def popup_Confirmacao_Backup():
+    def close_popup_and_play_sound(instance):
+        popup.dismiss()
+        click_button.play()
+
     content = BoxLayout(orientation='vertical', padding=10)
     label = Label(text="Backup Realizado com Sucesso!")
     confirm_button = Button(text='OK', size_hint=(1.0, 0.2))
@@ -135,7 +147,7 @@ def popup_Confirmacao_Backup():
     content.add_widget(confirm_button)
 
     popup = Popup(title='Aviso', content=content, size_hint=(0.7, 0.5))
-    confirm_button.bind(on_release=popup.dismiss)
+    confirm_button.bind(on_release=close_popup_and_play_sound)
     popup.open()
 
 

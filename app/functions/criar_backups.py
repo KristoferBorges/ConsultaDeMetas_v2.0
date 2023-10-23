@@ -76,14 +76,14 @@ class CriarBackup(Screen):
 
             popup = Popup(title='Aviso', content=content, size_hint=(0.5, 0.4))
 
-            close_button.bind(on_release=popup.dismiss)
+            close_button.bind(on_release=popup.dismiss, on_press=lambda btn: self.pressButton())
 
             if self.button == 'RD MARCAS' or self.button == 'PERFUMARIA' or self.button == 'DERMO':
                 confirm_button.bind(on_release=lambda btn: self.realizarBackup())
             else:
                 confirm_button.bind(on_release=lambda btn: self.realizarBackup_All())
 
-            confirm_button.bind(on_release=popup.dismiss)
+            confirm_button.bind(on_release=popup.dismiss, on_press=lambda btn: self.pressButton())
             popup.open()
 
         except Exception as error:

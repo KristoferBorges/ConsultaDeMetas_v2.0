@@ -164,7 +164,7 @@ class RegistrosDermo(Screen):
             content.add_widget(close_button)
 
             popup = Popup(title='Aviso', content=content, size_hint=(0.5, 0.3))
-            close_button.bind(on_release=popup.dismiss)
+            close_button.bind(on_release=popup.dismiss, on_press=lambda btn: self.pressButton())
             popup.open()
 
         except Exception as error:
@@ -215,10 +215,10 @@ class LimparDermo(Screen):
 
         popup = Popup(title='Aviso', content=content, size_hint=(0.7, 0.5))
 
-        close_button.bind(on_release=popup.dismiss)
+        close_button.bind(on_release=popup.dismiss, on_press=lambda btn: self.pressButton())
 
         confirm_button.bind(on_release=lambda btn: self.apagarLista_Dermo())
-        confirm_button.bind(on_release=popup.dismiss)
+        confirm_button.bind(on_release=popup.dismiss, on_press=lambda btn: self.pressButton())
         popup.open()
 
     def apagarLista_Dermo(self):
